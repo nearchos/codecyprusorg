@@ -16,10 +16,15 @@
     <h1>Code Cyprus</h1>
 
     <img src="images/codecyprus.png" alt="Code Cyprus logo">
-    <p>The Code Cyprus is currently under maintenance. Stay tuned...</p>
-    <p>You can get in touch via hello@codecyprus.org</p>
+    <p>
+      The Code Cyprus site is currently under maintenance. Stay tuned...
+      In the meantime tou can get in touch via hello@codecyprus.org
+    </p>
 
-    <p>You can also check out the <a href="th">Treasure Hunt API</a>.</p>
+    <p>
+      If interested, you can also check out the <a href="th">Treasure Hunt API</a>.
+    </p>
+
   </body>
 
 </html>

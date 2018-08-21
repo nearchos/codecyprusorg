@@ -139,6 +139,13 @@
                     and the <i>server</i> answers them. For instance, a request is to provide a <i>list</i> of the
                     available Treasure Hunts.
                 </p>
+                <p>
+                    To enable maximum security possible, the whole API requires secure connections and thus any requests
+                    applied to <kbd>http://codecyprus.org/th/api/...</kbd> are automatically redirected to their
+                    secure equivalent <kbd>https://codecyprus.org/th/api/...</kbd>. This is in line with best practices
+                    <a href="https://support.google.com/webmasters/answer/6073543?hl=en" target="_blank">recommended by
+                    the likes of Google etc.</a> who even rank websites higher when they are secured with HTTPS.
+                </p>
                 <a name="requests"></a>
                 <div style="height: 52px;"></div>
                 <h4>Requests</h4>
