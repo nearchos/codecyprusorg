@@ -13,10 +13,13 @@
   </head>
 
   <body>
-    <h1>Under maintenance...</h1>
-    <ul>
-      <li><a href="th/admin/index.html">Admin</a></li>
-    </ul>
+    <h1>Code Cyprus</h1>
+
+    <img src="images/codecyprus.png" alt="Code Cyprus logo">
+    <p>The Code Cyprus is currently under maintenance. Stay tuned...</p>
+    <p>You can get in touch via hello@codecyprus.org</p>
+
+    <p>You can also check out the <a href="th">Treasure Hunt API</a>.</p>
   </body>
 
 </html>
