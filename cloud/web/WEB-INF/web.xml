@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         version="2.5">
+
+    <!--Admin JSPs and Servlets-->
+    <servlet>
+        <servlet-name>Guide</servlet-name>
+        <jsp-file>/th/guide.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Guide</servlet-name>
+        <url-pattern>/th/guide</url-pattern>
+        <url-pattern>/th</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AdminTreasureHunt</servlet-name>
+        <jsp-file>/th/admin/TreasureHunt.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminTreasureHunt</servlet-name>
+        <url-pattern>/th/admin/treasure-hunt</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AdminTreasureHunts</servlet-name>
+        <jsp-file>/th/admin/TreasureHunts.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminTreasureHunts</servlet-name>
+        <url-pattern>/th/admin/treasure-hunts</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AdminQuestions</servlet-name>
+        <jsp-file>/th/admin/Questions.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminQuestions</servlet-name>
+        <url-pattern>/th/admin/questions</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AdminQuestion</servlet-name>
+        <jsp-file>/th/admin/Question.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminQuestion</servlet-name>
+        <url-pattern>/th/admin/question</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AdminSessions</servlet-name>
+        <jsp-file>/th/admin/Sessions.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminSessions</servlet-name>
+        <url-pattern>/th/admin/sessions</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AdminUsers</servlet-name>
+        <jsp-file>/th/admin/Users.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminUsers</servlet-name>
+        <url-pattern>/th/admin/users</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AddOrEditTreasureHuntServlet</servlet-name>
+        <servlet-class>org.codecyprus.th.admin.AddOrEditTreasureHuntServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddOrEditTreasureHuntServlet</servlet-name>
+        <url-pattern>/th/admin/add-treasure-hunt</url-pattern>
+        <url-pattern>/th/admin/edit-treasure-hunt</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AddOrEditQuestionServlet</servlet-name>
+        <servlet-class>org.codecyprus.th.admin.AddOrEditQuestionServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddOrEditQuestionServlet</servlet-name>
+        <url-pattern>/th/admin/add-question</url-pattern>
+        <url-pattern>/th/admin/edit-question</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AddOrEditConfiguredQuestionServlet</servlet-name>
+        <servlet-class>org.codecyprus.th.admin.AddOrEditConfiguredQuestionServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddOrEditConfiguredQuestionServlet</servlet-name>
+        <url-pattern>/th/admin/add-configured-question</url-pattern>
+        <url-pattern>/th/admin/edit-configured-question</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AdminDeleteEntity</servlet-name>
+        <servlet-class>org.codecyprus.th.admin.DeleteEntity</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminDeleteEntity</servlet-name>
+        <url-pattern>/th/admin/delete-entity</url-pattern>
+    </servlet-mapping>
+    <!--End of Admin JSPs and Servlets-->
+
+    <!--API Servlets-->
+    <servlet>
+        <servlet-name>ListServlet</servlet-name>
+        <servlet-class>org.codecyprus.th.api.ListServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ListServlet</servlet-name>
+        <url-pattern>/th/api/list</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>StartServlet</servlet-name>
+        <servlet-class>org.codecyprus.th.api.StartServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>StartServlet</servlet-name>
+        <url-pattern>/th/api/start</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>QuestionServlet</servlet-name>
+        <servlet-class>org.codecyprus.th.api.QuestionServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>QuestionServlet</servlet-name>
+        <url-pattern>/th/api/question</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AnswerServlet</servlet-name>
+        <servlet-class>org.codecyprus.th.api.AnswerServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AnswerServlet</servlet-name>
+        <url-pattern>/th/api/answer</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>LocationServlet</servlet-name>
+        <servlet-class>org.codecyprus.th.api.LocationServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LocationServlet</servlet-name>
+        <url-pattern>/th/api/location</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ScoreServlet</servlet-name>
+        <servlet-class>org.codecyprus.th.api.ScoreServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ScoreServlet</servlet-name>
+        <url-pattern>/th/api/score</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>SkipServlet</servlet-name>
+        <servlet-class>org.codecyprus.th.api.SkipServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SkipServlet</servlet-name>
+        <url-pattern>/th/api/skip</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>LeaderboardServlet</servlet-name>
+        <servlet-class>org.codecyprus.th.api.LeaderboardServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LeaderboardServlet</servlet-name>
+        <url-pattern>/th/api/leaderboard</url-pattern>
+    </servlet-mapping>
+    <!--End of API Servlets-->
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>everything</web-resource-name>
+            <url-pattern>/*</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+
+</web-app>

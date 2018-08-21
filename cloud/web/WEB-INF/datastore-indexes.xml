@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<datastore-indexes autoGenerate="true">
+
+    <datastore-index kind="TreasureHunt" ancestor="false" source="manual">
+        <property name="th-ends-on" direction="asc"/>
+        <property name="th-visibility" direction="asc"/>
+        <property name="th-starts-on" direction="asc"/>
+    </datastore-index>
+
+    <datastore-index kind="Question" ancestor="false" source="manual">
+        <property name="q-creator-email" direction="asc"/>
+        <property name="q-creation-timestamp" direction="asc"/>
+    </datastore-index>
+
+    <datastore-index kind="Question" ancestor="false" source="manual">
+        <property name="q-shared" direction="asc"/>
+        <property name="q-creation-timestamp" direction="asc"/>
+    </datastore-index>
+
+    <datastore-index kind="Session" ancestor="false" source="manual">
+        <property name="s-th-id" direction="asc"/>
+        <property name="s-start-time" direction="asc"/>
+    </datastore-index>
+
+    <datastore-index kind="TreasureHunt" ancestor="false" source="manual">
+        <property name="th-visibility" direction="asc"/>
+        <property name="th-ends-on" direction="asc"/>
+        <property name="th-starts-on" direction="asc"/>
+    </datastore-index>
+
+</datastore-indexes>
