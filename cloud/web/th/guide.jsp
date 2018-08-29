@@ -90,7 +90,7 @@
             <p class="lead">A Code Cyprus project</p>
             <hr class="my-4">
             <p>
-                This is the Guide of the Treasure Hunt API. It is available online at <code>http://codecyprus.org/th/guide</code>.
+                This is version <kbd>1.0.0</kbd> of the Treasure Hunt API Guide. It is available online at <code>http://codecyprus.org/th/guide</code>.
             </p>
         </div>
 
