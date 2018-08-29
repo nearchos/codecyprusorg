@@ -27,7 +27,7 @@
 <body>
 
     <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">Treasure Hunt API Guide</a>
+        <a class="navbar-brand" href="#"><img src="../images/pirate.png" height="25" alt="Code Cyprus - Pirate API logo" title="Code Cyprus - Pirate API logo"> Treasure Hunt API Guide</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -49,9 +49,6 @@
                     </div>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="#overview">Overview</a>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#concepts">Concepts</a>
                 </li>
@@ -89,7 +86,7 @@
     <div class="container">
         <div style="height: 64px;"></div>
         <div class="jumbotron">
-            <p class="display-3">Treasure Hunt: API Guide</p>
+            <p class="display-3"><img src="../images/pirate_api.png" alt="Code Cyprus - Pirate API logo" title="Code Cyprus - Pirate API logo" height="120"/> Treasure Hunt: API Guide</p>
             <p class="lead">A Code Cyprus project</p>
             <hr class="my-4">
             <p>
@@ -141,8 +138,8 @@
                 </p>
                 <p>
                     To enable maximum security possible, the whole API requires secure connections and thus any requests
-                    applied to <kbd>http://codecyprus.org/th/api/...</kbd> are automatically redirected to their
-                    secure equivalent <kbd>https://codecyprus.org/th/api/...</kbd>. This is in line with best practices
+                    applied to <code>http://codecyprus.org/th/api/...</code> are automatically redirected to their
+                    secure equivalent <code>https://codecyprus.org/th/api/...</code>. This is in line with best practices
                     <a href="https://support.google.com/webmasters/answer/6073543?hl=en" target="_blank">recommended by
                     the likes of Google etc.</a> who even rank websites higher when they are secured with HTTPS.
                 </p>
