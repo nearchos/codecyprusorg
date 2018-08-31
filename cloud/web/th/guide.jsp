@@ -20,14 +20,14 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 
     <!-- Guide CSS -->
-    <link rel="stylesheet" href="../css/guide.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="th/guide.css" crossorigin="anonymous">
     <!-- Sticky Footer CSS -->
-    <link rel="stylesheet" href="../css/sticky-footer.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="th/sticky-footer.css" crossorigin="anonymous">
 </head>
 <body>
 
     <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
-        <a class="navbar-brand" href="#"><img src="../images/pirate.png" height="25" alt="Code Cyprus - Pirate API logo" title="Code Cyprus - Pirate API logo"> Treasure Hunt API Guide</a>
+        <a class="navbar-brand" href="#"><img src="th/pirate.png" height="25" alt="Code Cyprus - Pirate API logo" title="Code Cyprus - Pirate API logo"> Treasure Hunt API Guide</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -86,7 +86,7 @@
     <div class="container">
         <div style="height: 64px;"></div>
         <div class="jumbotron">
-            <p class="display-3"><img src="../images/pirate_api.png" alt="Code Cyprus - Pirate API logo" title="Code Cyprus - Pirate API logo" height="120"/> Treasure Hunt: API Guide</p>
+            <p class="display-3"><img src="th/pirate_api.png" alt="Code Cyprus - Pirate API logo" title="Code Cyprus - Pirate API logo" height="120"/> Treasure Hunt: API Guide</p>
             <p class="lead">A Code Cyprus project</p>
             <hr class="my-4">
             <p>
@@ -825,7 +825,7 @@
     <script src="https://d3js.org/d3.v3.min.js" language="JavaScript"></script>
 
     <%--Custom JavaScript containing sample replies--%>
-    <script src="../js/sample-results.js" crossorigin="anonymous"></script>
+    <script src="/th/sample-results.js" crossorigin="anonymous"></script>
 
     <script>
         // init clipboard

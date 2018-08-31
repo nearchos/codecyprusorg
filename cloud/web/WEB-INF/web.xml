@@ -4,6 +4,67 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
          version="2.5">
 
+    <!--Static JSPs-->
+    <servlet>
+        <servlet-name>About</servlet-name>
+        <jsp-file>/about/index.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>About</servlet-name>
+        <url-pattern>/about</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>2014</servlet-name>
+        <jsp-file>/2014/index.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>2014</servlet-name>
+        <url-pattern>/2014</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>2015</servlet-name>
+        <jsp-file>/2015/index.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>2015</servlet-name>
+        <url-pattern>/2015</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>2016</servlet-name>
+        <jsp-file>/2016/index.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>2016</servlet-name>
+        <url-pattern>/2016</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>2017</servlet-name>
+        <jsp-file>/2017/index.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>2017</servlet-name>
+        <url-pattern>/2017</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>2018</servlet-name>
+        <jsp-file>/2018/index.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>2018</servlet-name>
+        <url-pattern>/2018</url-pattern>
+        <url-pattern>/current</url-pattern>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>2019</servlet-name>
+        <jsp-file>/2019/index.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>2019</servlet-name>
+        <url-pattern>/2019</url-pattern>
+    </servlet-mapping>
+    <!--End of Static JSPs-->
+
     <!--Admin JSPs and Servlets-->
     <servlet>
         <servlet-name>Guide</servlet-name>

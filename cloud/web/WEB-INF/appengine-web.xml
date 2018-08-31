@@ -5,8 +5,16 @@
   <runtime>java8</runtime>
 
   <resource-files>
+    <include path="/th/*"/>
     <include path="/css/*"/>
     <include path="/images/*"/>
+    <include path="/about/**"/>
+    <include path="/2014/**"/>
+    <include path="/2015/**"/>
+    <include path="/2016/**"/>
+    <include path="/2017/**"/>
+    <include path="/2018/**"/>
+    <include path="/2019/**"/>
   </resource-files>
 
 </appengine-web-app>
