@@ -73,7 +73,9 @@
     <servlet-mapping>
         <servlet-name>Guide</servlet-name>
         <url-pattern>/th/guide</url-pattern>
+        <url-pattern>/th/guide/*</url-pattern>
         <url-pattern>/th</url-pattern>
+        <url-pattern>/th/*</url-pattern>
     </servlet-mapping>
 
     <servlet>

@@ -36,6 +36,7 @@ public class AnswerServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         response.setContentType("text/plain; charset=utf-8");
+        response.setHeader("Access-Control-Allow-Origin", "*");
         final PrintWriter printWriter = response.getWriter();
 
         final ArrayList<String> errorMessages = new ArrayList<>();
@@ -135,7 +136,7 @@ public class AnswerServlet extends HttpServlet {
         private boolean correct;
         private boolean completed;
         private String message;
-        @SerializedName("score-adjustment")
+        @SerializedName("scoreAdjustment")
         private int scoreAdjustment;
 
         public Reply(boolean correct, boolean completed, String message, int scoreAdjustment) {

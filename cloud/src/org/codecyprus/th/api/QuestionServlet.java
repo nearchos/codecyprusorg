@@ -31,6 +31,7 @@ public class QuestionServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         response.setContentType("application/json; charset=utf-8");
+        response.setHeader("Access-Control-Allow-Origin", "*");
         final PrintWriter printWriter = response.getWriter();
 
         final String sessionId = request.getParameter(PARAMETER_SESSION);
@@ -81,22 +82,22 @@ public class QuestionServlet extends HttpServlet {
 
         private boolean completed;
 
-        @SerializedName("question-text")
+        @SerializedName("questionText")
         private String questionText;
 
-        @SerializedName("question-type")
+        @SerializedName("questionType")
         private QuestionType questionType;
 
-        @SerializedName("can-be-skipped")
+        @SerializedName("canBeSkipped")
         private boolean canBeSkipped;
 
-        @SerializedName("requires-location")
+        @SerializedName("requiresLocation")
         private boolean requiresLocation;
 
-        @SerializedName("num-of-questions")
+        @SerializedName("numOfQuestions")
         private int numOfQuestions;
 
-        @SerializedName("current-question-index")
+        @SerializedName("currentQuestionIndex")
         private int currentQuestionIndex;
 
         public Reply(boolean completed, String questionText, QuestionType questionType, boolean canBeSkipped, boolean requiresLocation, int numOfQuestions, int currentQuestionIndex) {

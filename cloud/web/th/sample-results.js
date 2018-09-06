@@ -1,72 +1,72 @@
 var callLeaderboardSortedResult = {
     "status": "OK",
-    "num-of-players": 3,
+    "numOfPlayers": 3,
     "sorted": false,
     "leaderboard": [
         {
             "player": "Lisa",
             "score": 40,
-            "completion-time": 1534834032000
+            "completionTime": 1534834032000
         },
         {
             "player": "Marge",
             "score": 7,
-            "completion-time": 1534834037000
+            "completionTime": 1534834037000
         },
         {
             "player": "Apu",
             "score": 7,
-            "completion-time": 1534834087000
+            "completionTime": 1534834087000
         },
         {
             "player": "Bart",
             "score": 7,
-            "completion-time": 0
+            "completionTime": 0
         },
         {
             "player": "Homer",
             "score": 0,
-            "completion-time": 0
+            "completionTime": 0
         }
     ]
 };
 
 var callLeaderboardUnsortedResult = {
     "status": "OK",
-    "num-of-players": 3,
+    "numOfPlayers": 3,
     "sorted": false,
     "leaderboard": [
         {
             "player": "Marge",
             "score": 7,
-            "completion-time": 1534834037000
+            "completionTime": 1534834037000
         },
         {
             "player": "Bart",
             "score": 7,
-            "completion-time": 0
+            "completionTime": 0
         },
         {
             "player": "Lisa",
             "score": 40,
-            "completion-time": 1534834032000
+            "completionTime": 1534834032000
         },
         {
             "player": "Homer",
             "score": 0,
-            "completion-time": 0
+            "completionTime": 0
         },
         {
             "player": "Apu",
             "score": 7,
-            "completion-time": 1534834087000
+            "completionTime": 1534834087000
         }
     ]
 };
 
 callLeaderboardErrorUnknownSession = {
     "status": "ERROR",
-    "error-messages": [
+    "errorMessages": [
         "Unknown session. The specified session ID could not be found."
     ]
 };
@@ -80,7 +80,7 @@ var callScoreResult = {
 
 var callScoreErrorUnknownSession = {
     "status": "ERROR",
-    "error-messages": [
+    "errorMessages": [
         "Unknown session. The specified session ID could not be found."
     ]
 };
@@ -89,12 +89,12 @@ var callSkipResult = {
     "status": "OK",
     "completed": false,
     "message": "Skipped.",
-    "score-adjustment": -5
+    "scoreAdjustment": -5
 };
 
 var callSkipErrorCannotBeSkipped = {
     "status": "ERROR",
-    "error-messages": [
+    "errorMessages": [
         "Cannot skip. This questions is defined as one that cannot be skipped."
     ]
 };
@@ -111,7 +111,7 @@ var callLocationResultWrongAnswer = {
 
 var callLocationMissingParameters = {
     "status": "ERROR",
-    "error-messages": [
+    "errorMessages": [
         "Missing or empty parameter: session",
         "Missing or empty parameter: longitude",
         "Invalid non-numeric parameter: latitude",
@@ -124,7 +124,7 @@ var callAnswerResultCorrectAnswer = {
     "correct": true,
     "completed": false,
     "message": "Well done.",
-    "score-adjustment": 10
+    "scoreAdjustment": 10
 };
 
 var callAnswerResultWrongAnswer = {
@@ -132,12 +132,12 @@ var callAnswerResultWrongAnswer = {
     "correct": false,
     "completed": false,
     "message": "Wrong answer: 41",
-    "score-adjustment": -3
+    "scoreAdjustment": -3
 };
 
 var callAnswerErrorRunOutOfTime = {
     "status": "ERROR",
-    "error-messages": [
+    "errorMessages": [
         "Finished session. The specified session has run out of time."
     ]
 };
@@ -145,30 +145,30 @@ var callAnswerErrorRunOutOfTime = {
 var callQuestionResult = {
     "status": "OK",
     "completed": false,
-    "question-text": "What is the answer to life?",
-    "question-type": "INTEGER",
-    "can-be-skipped": true,
-    "num-of-questions": 4,
-    "current-question-index": 0
+    "questionText": "What is the answer to life?",
+    "questionType": "INTEGER",
+    "canBeSkipped": true,
+    "numOfQuestions": 4,
+    "currentQuestionIndex": 0
 };
 
 var callQuestionErrorMissingParameter = {
     "status": "ERROR",
-    "error-messages": [
+    "errorMessages": [
         "Missing or empty parameter: session"
     ]
 };
 
 var callQuestionErrorUnknownTH = {
     "status": "ERROR",
-    "error-messages": [
+    "errorMessages": [
         "Unknown session. The specified session ID could not be found."
     ]
 };
 
 var callListResult = {
     "status": "OK",
-    "treasure-hunts": [
+    "treasureHunts": [
         {
             "uuid": "ag9nfmNvZGVjeXBydXNvcmdyGQsSDFRyZWFzdXJlSHVudBiAgICgpJWCCQw",
             "name": "An expired treasure hunt",
@@ -201,26 +201,26 @@ var callListResult = {
 var callStartResult = {
     "status": "OK",
     "session": "ag9nfmNvZGVjeXBydXNvcmdyFAsSB1Nlc3Npb24YgICAoMa0gQoM",
-    "num-of-questions": 4
+    "numOfQuestions": 4
 };
 
 var callStartErrorPlayer = {
     "status": "ERROR",
-    "error-messages": [
+    "errorMessages": [
         "The specified playerName: Homer, is already in use (try a different one)."
     ]
 };
 
 var callStartErrorMissingParameter = {
     "status": "ERROR",
-    "error-messages": [
+    "errorMessages": [
         "Missing or empty parameter: app"
     ]
 };
 
 var callStartErrorUnknownTH = {
     "status": "ERROR",
-    "error-messages": [
+    "errorMessages": [
         "Could not find a treasure hunt for the specified id: ag9nfmNvZGVjeXBydXNvcmdyGQsSDFRyZWFzdXJlSHVudBiAgICAvKGCCg"
     ]
 };

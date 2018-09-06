@@ -31,6 +31,7 @@ public class LeaderboardServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         response.setContentType("text/plain; charset=utf-8");
+        response.setHeader("Access-Control-Allow-Origin", "*");
         final PrintWriter printWriter = response.getWriter();
 
         final String sessionId = request.getParameter(PARAMETER_SESSION);
@@ -79,7 +80,7 @@ public class LeaderboardServlet extends HttpServlet {
     public class Reply implements Serializable {
 
         private String status = "OK";
-        @SerializedName("num-of-players")
+        @SerializedName("numOfPlayers")
         private int numOfPlayers;
         private boolean sorted;
         private Vector<LeaderboardEntry> leaderboard;
@@ -104,7 +105,7 @@ public class LeaderboardServlet extends HttpServlet {
     public class LeaderboardEntry implements Comparable<LeaderboardEntry>, Serializable {
         private String player;
         private long score;
-        @SerializedName("completion-time")
+        @SerializedName("completionTime")
         private long completionTime;
 
         public LeaderboardEntry(String player, long score, long completionTime) {

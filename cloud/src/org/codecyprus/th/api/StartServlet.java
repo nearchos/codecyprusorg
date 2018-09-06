@@ -47,6 +47,7 @@ public class StartServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         response.setContentType("application/json; charset=utf-8");
+        response.setHeader("Access-Control-Allow-Origin", "*");
         final PrintWriter printWriter = response.getWriter();
 
         final ArrayList<String> errorMessages = new ArrayList<>();
@@ -135,7 +136,7 @@ public class StartServlet extends HttpServlet {
         private String status = "OK";
         @SerializedName("session")
         private String sessionId;
-        @SerializedName("num-of-questions")
+        @SerializedName("numOfQuestions")
         private int numOfQuestions;
 
         public Reply(String sessionId, int numOfQuestions) {

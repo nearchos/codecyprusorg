@@ -29,6 +29,7 @@ public class SkipServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/plain; charset=utf-8");
+        response.setHeader("Access-Control-Allow-Origin", "*");
         final PrintWriter printWriter = response.getWriter();
 
         final ArrayList<String> errorMessages = new ArrayList<>();
@@ -85,7 +86,7 @@ public class SkipServlet extends HttpServlet {
         private String status = "OK";
         private boolean completed;
         private String message;
-        @SerializedName("score-adjustment")
+        @SerializedName("scoreAdjustment")
         private int scoreAdjustment;
 
         public Reply(boolean completed, String message, int scoreAdjustment) {

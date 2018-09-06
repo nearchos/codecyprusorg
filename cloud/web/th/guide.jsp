@@ -27,7 +27,7 @@
 <body>
 
     <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
-        <a class="navbar-brand" href="#"><img src="th/pirate.png" height="25" alt="Code Cyprus - Pirate API logo" title="Code Cyprus - Pirate API logo"> Treasure Hunt API Guide</a>
+        <a class="navbar-brand" href="#"><img src="/th/pirate.png" height="25" alt="Code Cyprus - Pirate API logo" title="Code Cyprus - Pirate API logo"> Treasure Hunt API Guide</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -86,11 +86,11 @@
     <div class="container">
         <div style="height: 64px;"></div>
         <div class="jumbotron">
-            <p class="display-3"><img src="th/pirate_api.png" alt="Code Cyprus - Pirate API logo" title="Code Cyprus - Pirate API logo" height="120"/> Treasure Hunt: API Guide</p>
+            <p class="display-3"><img src="/th/pirate_api.png" alt="Code Cyprus - Pirate API logo" title="Code Cyprus - Pirate API logo" height="120"/> Treasure Hunt: API Guide</p>
             <p class="lead">A Code Cyprus project</p>
             <hr class="my-4">
             <p>
-                This is version <kbd>1.0.0</kbd> of the Treasure Hunt API Guide. It is available online at <code>http://codecyprus.org/th/guide</code>.
+                This is version <kbd>1.0.0</kbd> of the Treasure Hunt API Guide. It is available online at <code>http://www.codecyprus.org/th/guide</code>.
             </p>
         </div>
 
@@ -204,7 +204,7 @@
                     <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#2xx_Success" target="_blank">
                     200 OK</a>). In this case, the error will be identified in the reply message, with a <code>status</code>
                     property marked as <code>ERROR</code> and an array of one or more error messages named
-                    <code>error-messages</code>.
+                    <code>errorMessages</code>.
                 </p>
             </div>
         </div>
@@ -282,7 +282,7 @@
                         </div>
                         <p>
                             The output includes the <code>status</code> and the array of available
-                            <code>treasure-hunts</code>.
+                            <code>treasureHunts</code>.
                         </p>
                         <div class="card card-body">
                             <p>
@@ -335,7 +335,7 @@
                             </div>
                         </div>
                         <p>
-                            The output includes the <code>status</code> the total <code>num-of-questions</code> and the
+                            The output includes the <code>status</code> the total <code>numOfQuestions</code> and the
                             <code>session</code> id which is required for subsequent calls, such as to get the current
                             <a href="#question">question</a>.
                         </p>
@@ -405,9 +405,9 @@
                         <p>
                             The output includes the <code>status</code> and some properties of the <code>question</code>.
                             For instance the <code>completed</code> property specifies if the user has already completed
-                            this treasure hunt (i.e. has answered all questions already). The <code>question-text</code>
+                            this treasure hunt (i.e. has answered all questions already). The <code>questionText</code>
                             contains the text-based question, whcih can also be specified in simple HTML. The
-                            <code>question-type</code> specifies the expected type of the answer. The possible answer
+                            <code>questionType</code> specifies the expected type of the answer. The possible answer
                             types are:
                         </p>
                         <ul>
@@ -418,13 +418,13 @@
                             <li><code><%=QuestionType.TEXT.name()%></code> can be any general text, normally a single word</li>
                         </ul>
                         <p>
-                            The <code>can-be-skipped</code> is a Boolean that specifies whether this particular question
+                            The <code>canBeSkipped</code> is a Boolean that specifies whether this particular question
                             can be skipped or must be answered. The <code>requires-location</code> indicates whether
                             this is a location sensitive question where the player must be at a specific location for
-                            their answer to be checked. The <code>num-of-questions</code> specifies the total number of
-                            questions in the treasure hunt, and finally the <code>current-question-index</code> defines
+                            their answer to be checked. The <code>numOfQuestions</code> specifies the total number of
+                            questions in the treasure hunt, and finally the <code>currentQuestionIndex</code> defines
                             the zero-based index of the current question (the first one is 0, and the last one is
-                            <code>num-of-questions</code>-1.
+                            <code>numOfQuestions</code>-1).
                         </p>
                         <div class="card card-body">
                             <p>
@@ -491,7 +491,7 @@
                             The output includes the <code>status</code> and some properties such as whether the provided
                             answer was <code>correct</code>, whether the session is no <code>completed</code> (meaning
                             there are no more unanswered questions), an optional text-based <code>message</code> and
-                            the <code>score-adjustment</code> as an integer that indicates how the score has changed
+                            the <code>scoreAdjustment</code> as an integer that indicates how the score has changed
                             (i.e. points gained or subtracted from the player's score).
                         </p>
                         <div class="card card-body">
@@ -632,7 +632,7 @@
                         <p>
                             The output includes the <code>status</code>, a Boolean indication of whether the treasure
                             hunt is <code>completed</code> after skipping, a text-based <code>message</code> and the
-                            <code>score-adjustment</code> which is normally a negative integer, e.g. -5.
+                            <code>scoreAdjustment</code> which is normally a negative integer, e.g. -5.
                         </p>
                         <div class="card card-body">
                             <p>
@@ -725,7 +725,7 @@
                     <div class="card-body">
                         <p>
                             Naturally multiple players can be competing in a treasure hunt. To access the current
-                            leaderboard us the <code>/th/api/leaderboard</code> calland specify either the current
+                            leaderboard us the <code>/th/api/leaderboard</code> call and specify either the current
                             player <code>session</code> or the selected <code>treasure-hunt-id</code>. Optionally,
                             also use the <code>sorted</code> flag to indicate that you want the list of scores to be
                             sorted from higher to smaller score.
@@ -760,19 +760,19 @@
                             </div>
                         </div>
                         <p>
-                            The output includes the <code>status</code>, the <code>num-of-players</code>, a Boolean
+                            The output includes the <code>status</code>, the <code>numOfPlayers</code>, a Boolean
                             value indicating whether the list is <code>sorted</code> and the <code>leaderboard</code>.
-                            The latter consists of a JSON array containing <code>num-of-players</code> entries, where
+                            The latter consists of a JSON array containing <code>numOfPlayers</code> entries, where
                             each entry has a <code>player</code> name, a <code>score</code> and a
-                            <code>completion-time</code>. The latter is a timestamp of when the player answered the last
+                            <code>completionTime</code>. The latter is a timestamp of when the player answered the last
                             question, expressed in <a href="https://en.wikipedia.org/wiki/Unix_time" target="_blank">
                             Unix epoch in milliseconds</a>. If the player has not finished yet, it is set to zero.
                         </p>
                         <p>
                             Players with higher <code>score</code> are ranked higher irrespective of
-                            <code>completion-time</code>. When players have the same <code>score</code> then the player
-                            with the smallest <code>completion-time</code> is ranked before (as the player answered the
-                            last question earlier). Players with a <code>completion-time</code> of zero ar ranked after
+                            <code>completionTime</code>. When players have the same <code>score</code> then the player
+                            with the smallest <code>completionTime</code> is ranked before (as the player answered the
+                            last question earlier). Players with a <code>completionTime</code> of zero ar ranked after
                             other players with the same <code>score</code>.
                         </p>
                         <div class="card card-body">

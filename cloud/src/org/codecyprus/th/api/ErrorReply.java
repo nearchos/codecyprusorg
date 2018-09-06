@@ -8,7 +8,7 @@ public class ErrorReply {
 
     private final String status = "ERROR";
 
-    @SerializedName("error-messages")
+    @SerializedName("errorMessages")
     private final ArrayList<String> errorMessages = new ArrayList<>();
 
     public ErrorReply(final String errorMessage) {

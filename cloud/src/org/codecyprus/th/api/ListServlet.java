@@ -37,6 +37,7 @@ public class ListServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         response.setContentType("application/json; charset=utf-8");
+        response.setHeader("Access-Control-Allow-Origin", "*");
         final PrintWriter printWriter = response.getWriter();
 
         // get parameters
@@ -52,7 +53,7 @@ public class ListServlet extends HttpServlet {
 
     public class Reply {
         private String status = "OK";
-        @SerializedName("treasure-hunts")
+        @SerializedName("treasureHunts")
         private final Vector<TreasureHunt> selectedTreasureHunts;
 
         public Reply(Vector<TreasureHunt> selectedTreasureHunts) {
