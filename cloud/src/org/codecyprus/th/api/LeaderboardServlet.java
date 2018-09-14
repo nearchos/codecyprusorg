@@ -20,9 +20,12 @@ import java.util.logging.Logger;
 
 public class LeaderboardServlet extends HttpServlet {
 
+    public static final int MIN_LIMIT = 5;
+
     public static final String PARAMETER_SESSION = "session";
     public static final String PARAMETER_TREASURE_HUNT_ID = "treasure-hunt-id";
     public static final String PARAMETER_SORTED = "sorted";
+    public static final String PARAMETER_LIMIT = "limit";
 
     public static final Logger log = Logger.getLogger("codecyprus-th");
 
@@ -37,6 +40,16 @@ public class LeaderboardServlet extends HttpServlet {
         final String sessionId = request.getParameter(PARAMETER_SESSION);
         final String treasureHuntId = request.getParameter(PARAMETER_TREASURE_HUNT_ID);
         final boolean sorted = request.getParameter(PARAMETER_SORTED) != null;
+        final String limitS = request.getParameter(PARAMETER_LIMIT);
+        int limit = Integer.MAX_VALUE;
+        if(sorted) { // try to set a limit only if the sorted flag was set
+            try {
+                limit = Integer.parseInt(limitS);
+                if(limit < MIN_LIMIT) limit = MIN_LIMIT; // limit cannot be less than a positive threshold (min value)
+            } catch (NumberFormatException nfe) {
+                // silently ignore
+            }
+        }
 
         final boolean sessionIdSpecified = sessionId != null && !sessionId.trim().isEmpty();
         final boolean treasureHuntIdSpecified = treasureHuntId != null && !treasureHuntId.trim().isEmpty();
@@ -60,7 +73,7 @@ public class LeaderboardServlet extends HttpServlet {
                         final ErrorReply errorReply = new ErrorReply("No Sessions for Session with laptoTreasure Hunt with id: " + session.getTreasureHuntUuid());
                         printWriter.println(gson.toJson(errorReply));
                     } else {
-                        final Reply reply = new Reply(sorted, sessions);
+                        final Reply reply = new Reply(sorted, limit, sessions);
                         printWriter.println(gson.toJson(reply));
                     }
                 }
@@ -70,7 +83,7 @@ public class LeaderboardServlet extends HttpServlet {
                     final ErrorReply errorReply = new ErrorReply("No Sessions for Treasure Hunt with id: " + treasureHuntId);
                     printWriter.println(gson.toJson(errorReply));
                 } else {
-                    final Reply reply = new Reply(sorted, sessions);
+                    final Reply reply = new Reply(sorted, limit, sessions);
                     printWriter.println(gson.toJson(reply));
                 }
             }
@@ -83,11 +96,13 @@ public class LeaderboardServlet extends HttpServlet {
         @SerializedName("numOfPlayers")
         private int numOfPlayers;
         private boolean sorted;
+        private int limit;
         private Vector<LeaderboardEntry> leaderboard;
 
-        Reply(boolean sorted, Vector<Session> sessions) {
+        Reply(final boolean sorted, final int limit, final Vector<Session> sessions) {
             this.numOfPlayers = sessions.size();
             this.sorted = sorted;
+            this.limit = limit;
             this.leaderboard = new Vector<>();
             // add all entries
             for(final Session session : sessions) {
@@ -96,6 +111,9 @@ public class LeaderboardServlet extends HttpServlet {
 
             if(sorted) { // sort if needed
                 Collections.sort(leaderboard);
+                while(leaderboard.size() > limit) { // remove last item until leaderboard has <= limit
+                    leaderboard.remove(leaderboard.size() - 1);
+                }
             } else { // shuffle
                 Collections.shuffle(leaderboard);
             }

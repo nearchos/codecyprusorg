@@ -2,6 +2,7 @@ var callLeaderboardSortedResult = {
     "status": "OK",
     "numOfPlayers": 3,
     "sorted": false,
+    "limit": 10,
     "leaderboard": [
         {
             "player": "Lisa",
@@ -35,6 +36,7 @@ var callLeaderboardUnsortedResult = {
     "status": "OK",
     "numOfPlayers": 3,
     "sorted": false,
+    "limit": 10,
     "leaderboard": [
         {
             "player": "Marge",
@@ -224,4 +226,3 @@ var callStartErrorUnknownTH = {
         "Could not find a treasure hunt for the specified id: ag9nfmNvZGVjeXBydXNvcmdyGQsSDFRyZWFzdXJlSHVudBiAgICAvKGCCg"
     ]
 };
-

@@ -1,6 +1,7 @@
 <%@ page import="org.codecyprus.th.model.QuestionType" %>
 <%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="java.util.Date" %><%--
+<%@ page import="java.util.Date" %>
+<%@ page import="org.codecyprus.th.api.LeaderboardServlet" %><%--
   Created by IntelliJ IDEA.
   User: Nearchos
   Date: 19-Aug-18
@@ -728,22 +729,23 @@
                             leaderboard us the <code>/th/api/leaderboard</code> call and specify either the current
                             player <code>session</code> or the selected <code>treasure-hunt-id</code>. Optionally,
                             also use the <code>sorted</code> flag to indicate that you want the list of scores to be
-                            sorted from higher to smaller score.
+                            sorted from higher to smaller score. You can also specify the optional <code>limit</code>
+                            parameter to <i>limit</i> the number of entries that appear in the leaderboard.
                         </p>
                         <p>
                             The API call is as follows:
                         </p>
                         <div class="card card-body">
                             <div>
-                                <code>https://codecyprus.org/th/api/leaderboard?session=ag9nfmNv...oMa0gQoM&sorted</code>
-                                <a class="btn btn-primary" href="https://codecyprus.org/th/api/leaderboard?session=ag9nfmNvZGVjeXBydXNvcmdyFAsSB1Nlc3Npb24YgICAoMa0gQoM&sorted" target="_blank">Try it</a>
-                                <a class="btn btn-primary" data-clipboard-text="https://codecyprus.org/th/api/leaderboard?session=ag9nfmNvZGVjeXBydXNvcmdyFAsSB1Nlc3Npb24YgICAoMa0gQoM&sorted" data-clipboard->Copy</a>
+                                <code>https://codecyprus.org/th/api/leaderboard?session=ag9nfmNv...oMa0gQoM&sorted&limit=10</code>
+                                <a class="btn btn-primary" href="https://codecyprus.org/th/api/leaderboard?session=ag9nfmNvZGVjeXBydXNvcmdyFAsSB1Nlc3Npb24YgICAoMa0gQoM&sorted&limit=10" target="_blank">Try it</a>
+                                <a class="btn btn-primary" data-clipboard-text="https://codecyprus.org/th/api/leaderboard?session=ag9nfmNvZGVjeXBydXNvcmdyFAsSB1Nlc3Npb24YgICAoMa0gQoM&sorted&limit=10" data-clipboard->Copy</a>
                             </div>
                         </div>
                         <p>
-                            The call has three possible parameters. You can only use one of <code>session</code> and
-                            <code>treasure-hunt-id</code>. If you specify both, the latter is ignored. The parameters
-                            are as follows:
+                            The call has four possible parameters. You can only use one of <code>session</code> and
+                            <code>treasure-hunt-id</code>. If you specify both, the latter is ignored. The other
+                            parameters are as follows:
                         </p>
                         <div class="card card-body">
                             <div>
@@ -756,13 +758,23 @@
                                         <code>session</code> described previously.</li>
                                     <li><code>sorted</code> is an <i>optional</i> parameter for specifying that the
                                         score list is to be sorted from higher to lower scores.</li>
+                                    <li><code>limit</code> is also an <i>optional</i> parameter for limiting the number
+                                        of entries that appear in the leaderboard. This parameter is <i>ignored</i> if
+                                        you do not also specify the <code>sorted</code> flag. Also it is ignored if not
+                                        a valid integer value not less than the <i>minimum limit of
+                                            <%=LeaderboardServlet.MIN_LIMIT%></i>. When specified, it returns the
+                                        <code>limit</code> top entries in the sorted leaderboard.</li>
                                 </ul>
                             </div>
                         </div>
                         <p>
                             The output includes the <code>status</code>, the <code>numOfPlayers</code>, a Boolean
-                            value indicating whether the list is <code>sorted</code> and the <code>leaderboard</code>.
-                            The latter consists of a JSON array containing <code>numOfPlayers</code> entries, where
+                            value indicating whether the list is <code>sorted</code>, the applied <code>limit</code>
+                            and the <code>leaderboard</code>. When not specified or when invalid, the <code>limit</code>
+                            is automatically set to the max integer value, i.e. <%=Integer.MAX_VALUE%>.
+                        </p>
+                        <p>
+                            The leaderboard consists of a JSON array containing <code>numOfPlayers</code> entries, where
                             each entry has a <code>player</code> name, a <code>score</code> and a
                             <code>completionTime</code>. The latter is a timestamp of when the player answered the last
                             question, expressed in <a href="https://en.wikipedia.org/wiki/Unix_time" target="_blank">
@@ -771,9 +783,9 @@
                         <p>
                             Players with higher <code>score</code> are ranked higher irrespective of
                             <code>completionTime</code>. When players have the same <code>score</code> then the player
-                            with the smallest <code>completionTime</code> is ranked before (as the player answered the
-                            last question earlier). Players with a <code>completionTime</code> of zero ar ranked after
-                            other players with the same <code>score</code>.
+                            with the earliest <code>completionTime</code> is ranked higher (as the player answered the
+                            last question first). Players with a <code>completionTime</code> of zero (i.e. unfinished)
+                            are ranked lower to other players with the same <code>score</code>.
                         </p>
                         <div class="card card-body">
                             <p>
