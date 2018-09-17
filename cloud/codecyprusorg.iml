@@ -25,6 +25,7 @@
     <orderEntry type="library" scope="PROVIDED" name="AppEngine Dev 1.9.63" level="application_server_libraries" />
     <orderEntry type="library" scope="PROVIDED" name="javax.servlet:servlet-api:2.5" level="project" />
     <orderEntry type="library" name="com.google.appengine:appengine-api-1.0-sdk:Release" level="project" />
+    <orderEntry type="module" module-name="model" />
     <orderEntry type="library" name="com.google.code.gson:gson:2.8.5" level="project" />
   </component>
 </module>

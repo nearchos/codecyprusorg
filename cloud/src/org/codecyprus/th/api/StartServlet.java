@@ -4,20 +4,16 @@ import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.annotations.SerializedName;
 import org.codecyprus.th.db.ConfiguredQuestionFactory;
 import org.codecyprus.th.db.SessionFactory;
 import org.codecyprus.th.db.TreasureHuntFactory;
-import org.codecyprus.th.model.ConfiguredQuestion;
-import org.codecyprus.th.model.Session;
-import org.codecyprus.th.model.TreasureHunt;
+import org.codecyprus.th.model.*;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.logging.Logger;
@@ -70,26 +66,26 @@ public class StartServlet extends HttpServlet {
 
         if(!errorMessages.isEmpty()) {
             // parse to JSON and return errors
-            final ErrorReply errorReply = new ErrorReply(errorMessages);
+            final Replies.ErrorReply errorReply = new Replies.ErrorReply(errorMessages);
             printWriter.println(gson.toJson(errorReply));
         } else {
             // first retrieve corresponding treasure hunt...
             final TreasureHunt treasureHunt = TreasureHuntFactory.getTreasureHunt(treasureHuntId);
             if(treasureHunt == null) {
                 // parse to JSON and return errors
-                final ErrorReply errorReply = new ErrorReply("Could not find a treasure hunt for the specified id: " + treasureHuntId);
+                final Replies.ErrorReply errorReply = new Replies.ErrorReply("Could not find a treasure hunt for the specified id: " + treasureHuntId);
                 printWriter.println(gson.toJson(errorReply));
             } else {
                 if(!treasureHunt.isActiveNow()) {
                     // parse to JSON and return errors
-                    final ErrorReply errorReply = new ErrorReply("The specified treasure hunt is not active right now.");
+                    final Replies.ErrorReply errorReply = new Replies.ErrorReply("The specified treasure hunt is not active right now.");
                     printWriter.println(gson.toJson(errorReply));
                 } else {
                     // ...next retrieve treasure hunt's questions
                     final ArrayList<ConfiguredQuestion> configuredQuestions = ConfiguredQuestionFactory.getConfiguredQuestionsForTreasureHunt(treasureHuntId);
                     if(configuredQuestions.isEmpty()) {
                         // parse to JSON and return errors
-                        final ErrorReply errorReply = new ErrorReply("The specified treasure hunt is empty (i.e. contains no questions).");
+                        final Replies.ErrorReply errorReply = new Replies.ErrorReply("The specified treasure hunt is empty (i.e. contains no questions).");
                         printWriter.println(gson.toJson(errorReply));
                     } else {
                         // prepare and create session
@@ -110,11 +106,11 @@ public class StartServlet extends HttpServlet {
                         if(key != null) {
                             final String sessionId = KeyFactory.keyToString(key);
                             // parse to JSON and return results
-                            final Reply reply = new Reply(sessionId, configuredQuestionsList.size());
+                            final Replies.StartReply reply = new Replies.StartReply(sessionId, configuredQuestionsList.size());
                             printWriter.println(gson.toJson(reply));
                         } else { // specified playerName already exists for given treasure hunt
                             // parse to JSON and return errors
-                            final ErrorReply errorReply = new ErrorReply("The specified playerName: " + playerName + ", is already in use (try a different one).");
+                            final Replies.ErrorReply errorReply = new Replies.ErrorReply("The specified playerName: " + playerName + ", is already in use (try a different one).");
                             printWriter.println(gson.toJson(errorReply));
                         }
                     }
@@ -129,19 +125,5 @@ public class StartServlet extends HttpServlet {
             configuredQuestionIds.add(configuredQuestion.getUuid());
         }
         return configuredQuestionIds;
-    }
-
-    public class Reply implements Serializable {
-
-        private String status = "OK";
-        @SerializedName("session")
-        private String sessionId;
-        @SerializedName("numOfQuestions")
-        private int numOfQuestions;
-
-        public Reply(String sessionId, int numOfQuestions) {
-            this.sessionId = sessionId;
-            this.numOfQuestions = numOfQuestions;
-        }
     }
 }

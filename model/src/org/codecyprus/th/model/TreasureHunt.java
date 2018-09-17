@@ -1,11 +1,12 @@
 package org.codecyprus.th.model;
 
-import org.codecyprus.th.db.TreasureHuntFactory;
-
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class TreasureHunt implements Serializable {
+
+    public static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
 
     private String uuid; // PK
     private String name; // non-null, non-empty
@@ -66,7 +67,7 @@ public class TreasureHunt implements Serializable {
     }
 
     public String getStartsOnAsString() {
-        return TreasureHuntFactory.SIMPLE_DATE_FORMAT.format(new Date(startsOn));
+        return SIMPLE_DATE_FORMAT.format(new Date(startsOn));
     }
 
     public long getEndsOn() {
@@ -74,7 +75,7 @@ public class TreasureHunt implements Serializable {
     }
 
     public String getEndsOnAsString() {
-        return TreasureHuntFactory.SIMPLE_DATE_FORMAT.format(new Date(endsOn));
+        return SIMPLE_DATE_FORMAT.format(new Date(endsOn));
     }
 
     public long getMaxDuration() {

@@ -2,8 +2,8 @@ package org.codecyprus.th.api;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.annotations.SerializedName;
 import org.codecyprus.th.db.TreasureHuntFactory;
+import org.codecyprus.th.model.Replies;
 import org.codecyprus.th.model.TreasureHunt;
 
 import javax.servlet.http.HttpServlet;
@@ -45,27 +45,9 @@ public class ListServlet extends HttpServlet {
 
         // formulate reply
         final Vector<TreasureHunt> selectedTreasureHunts = TreasureHuntFactory.getPublicTreasureHunts(includeFinished);
-        final Reply reply = new Reply(selectedTreasureHunts);
+        final Replies.ListReply listReply = new Replies.ListReply(selectedTreasureHunts);
 
         // parse to JSON and return results
-        printWriter.println(gson.toJson(reply));
-    }
-
-    public class Reply {
-        private String status = "OK";
-        @SerializedName("treasureHunts")
-        private final Vector<TreasureHunt> selectedTreasureHunts;
-
-        public Reply(Vector<TreasureHunt> selectedTreasureHunts) {
-            this.selectedTreasureHunts = selectedTreasureHunts;
-        }
-
-        public String getStatus() {
-            return status;
-        }
-
-        public Vector<TreasureHunt> getSelectedTreasureHunts() {
-            return selectedTreasureHunts;
-        }
+        printWriter.println(gson.toJson(listReply));
     }
 }

@@ -51,13 +51,13 @@ public class AddOrEditTreasureHuntServlet extends HttpServlet {
                 long endsOn;
                 long maxDuration;
                 try {
-                    startsOn = TreasureHuntFactory.SIMPLE_DATE_FORMAT.parse(request.getParameter(TreasureHuntFactory.PROPERTY_STARTS_ON)).getTime();
+                    startsOn = TreasureHunt.SIMPLE_DATE_FORMAT.parse(request.getParameter(TreasureHuntFactory.PROPERTY_STARTS_ON)).getTime();
                 } catch (ParseException pe) {
                     startsOn = 0L;
                     log.warning(pe.getMessage());
                 }
                 try {
-                    endsOn = TreasureHuntFactory.SIMPLE_DATE_FORMAT.parse(request.getParameter(TreasureHuntFactory.PROPERTY_ENDS_ON)).getTime();
+                    endsOn = TreasureHunt.SIMPLE_DATE_FORMAT.parse(request.getParameter(TreasureHuntFactory.PROPERTY_ENDS_ON)).getTime();
                 } catch (ParseException pe) {
                     endsOn = 0L;
                     log.warning(pe.getMessage());

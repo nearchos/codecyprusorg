@@ -3,6 +3,7 @@ package org.codecyprus.th.api;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.codecyprus.th.db.SessionFactory;
+import org.codecyprus.th.model.Replies;
 import org.codecyprus.th.model.Session;
 
 import javax.servlet.http.HttpServlet;
@@ -10,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.Serializable;
 import java.util.logging.Logger;
 
 public class ScoreServlet extends HttpServlet {
@@ -31,33 +31,17 @@ public class ScoreServlet extends HttpServlet {
 
         // check for errors/missing parameters
         if(sessionId == null || sessionId.trim().isEmpty()) {
-            final ErrorReply errorReply = new ErrorReply("Missing or empty parameter: " + PARAMETER_SESSION);
+            final Replies.ErrorReply errorReply = new Replies.ErrorReply("Missing or empty parameter: " + PARAMETER_SESSION);
             printWriter.println(gson.toJson(errorReply));
         } else {
             final Session session = SessionFactory.getSession(sessionId);
             if(session == null) {
-                final ErrorReply errorReply = new ErrorReply("Unknown session. The specified session ID could not be found.");
+                final Replies.ErrorReply errorReply = new Replies.ErrorReply("Unknown session. The specified session ID could not be found.");
                 printWriter.println(gson.toJson(errorReply));
             } else {
-                final Reply reply = new Reply(session.isCompleted(), session.isFinished(), session.getPlayerName(), session.getScore());
+                final Replies.ScoreReply reply = new Replies.ScoreReply(session.isCompleted(), session.isFinished(), session.getPlayerName(), session.getScore());
                 printWriter.println(gson.toJson(reply));
             }
-        }
-    }
-
-    public class Reply implements Serializable {
-
-        private String status = "OK";
-        private boolean completed;
-        private boolean finished;
-        private String player;
-        private long score;
-
-        public Reply(boolean completed, boolean finished, String player, long score) {
-            this.completed = completed;
-            this.finished = finished;
-            this.player = player;
-            this.score = score;
         }
     }
 }

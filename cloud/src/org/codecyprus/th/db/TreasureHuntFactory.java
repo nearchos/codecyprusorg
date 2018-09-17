@@ -6,7 +6,6 @@ import com.google.appengine.api.memcache.MemcacheServiceFactory;
 import org.codecyprus.th.model.TreasureHunt;
 import org.codecyprus.th.model.Visibility;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.Logger;
@@ -14,8 +13,6 @@ import java.util.logging.Logger;
 public class TreasureHuntFactory {
 
     public static final Logger log = Logger.getLogger("codecyprus-th");
-
-    public static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
 
     public static final String KIND = "TreasureHunt";
 
