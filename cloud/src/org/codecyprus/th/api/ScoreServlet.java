@@ -39,7 +39,7 @@ public class ScoreServlet extends HttpServlet {
                 final ErrorReply errorReply = new ErrorReply("Unknown session. The specified session ID could not be found.");
                 printWriter.println(gson.toJson(errorReply));
             } else {
-                final Reply reply = new Reply(session.isCompleted(), session.isFinished(), session.getScore());
+                final Reply reply = new Reply(session.isCompleted(), session.isFinished(), session.getPlayerName(), session.getScore());
                 printWriter.println(gson.toJson(reply));
             }
         }
@@ -50,11 +50,13 @@ public class ScoreServlet extends HttpServlet {
         private String status = "OK";
         private boolean completed;
         private boolean finished;
+        private String player;
         private long score;
 
-        public Reply(boolean completed, boolean finished, long score) {
+        public Reply(boolean completed, boolean finished, String player, long score) {
             this.completed = completed;
             this.finished = finished;
+            this.player = player;
             this.score = score;
         }
     }

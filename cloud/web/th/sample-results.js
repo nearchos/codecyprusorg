@@ -77,6 +77,7 @@ var callScoreResult = {
     "status": "OK",
     "completed": false,
     "finished": false,
+    "player": "Homer",
     "score": 12
 };
 

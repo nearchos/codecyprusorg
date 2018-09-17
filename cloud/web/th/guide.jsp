@@ -692,7 +692,8 @@
                         <p>
                             The output includes the <code>status</code>, a Boolean indication of whether the treasure
                             hunt is <code>completed</code>, i.e. there are no more unanswered questions, and whether
-                            the treasure hunt is <code>finished</code>, i.e. it has ended time-wise. Last, a
+                            the treasure hunt is <code>finished</code>, i.e. it has ended time-wise. Last, the
+                            <code>player</code> property gives the selected player name and the
                             <code>score</code> property gives the score as an integer, e.g. 23.
                         </p>
                         <div class="card card-body">
