@@ -1,6 +1,7 @@
 <%@ page import="java.util.Vector" %>
 <%@ page import="org.codecyprus.th.admin.DeleteEntity" %>
-<%@ page import="java.net.URLEncoder" %><%--
+<%@ page import="java.net.URLEncoder" %>
+<%--
   Created by IntelliJ IDEA.
   User: Nearchos
   Date: 18-Aug-18

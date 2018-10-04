@@ -3,8 +3,10 @@ package org.codecyprus.th.api;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.codecyprus.th.db.SessionFactory;
+import org.codecyprus.th.db.TreasureHuntFactory;
 import org.codecyprus.th.model.Replies;
 import org.codecyprus.th.model.Session;
+import org.codecyprus.th.model.TreasureHunt;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -58,30 +60,25 @@ public class LeaderboardServlet extends HttpServlet {
             final Replies.ErrorReply errorReply = new Replies.ErrorReply("Too many parameters. Must define exactly one of these parameters: " + PARAMETER_SESSION + ", " + PARAMETER_TREASURE_HUNT_ID);
             printWriter.println(gson.toJson(errorReply));
         } else {
+            final TreasureHunt treasureHunt;
             if(sessionIdSpecified) { // user-specific leaderboard
                 final Session session = SessionFactory.getSession(sessionId);
                 if(session == null) {
                     final Replies.ErrorReply errorReply = new Replies.ErrorReply("Unknown session. The specified session ID could not be found.");
                     printWriter.println(gson.toJson(errorReply));
                 } else {
+                    treasureHunt = TreasureHuntFactory.getTreasureHunt(session.getTreasureHuntUuid());
+                    assert treasureHunt != null;
                     final Vector<Session> sessions = SessionFactory.getSessionsByTreasureHuntId(session.getTreasureHuntUuid());
-                    if(sessions.isEmpty()) {
-                        final Replies.ErrorReply errorReply = new Replies.ErrorReply("No Sessions for Session with laptoTreasure Hunt with id: " + session.getTreasureHuntUuid());
-                        printWriter.println(gson.toJson(errorReply));
-                    } else {
-                        final Replies.LeaderboardReply reply = new Replies.LeaderboardReply(sorted, limit, sessions);
-                        printWriter.println(gson.toJson(reply));
-                    }
-                }
-            } else { // general, treasure hunt leaderboard
-                final Vector<Session> sessions = SessionFactory.getSessionsByTreasureHuntId(treasureHuntId);
-                if(sessions.isEmpty()) {
-                    final Replies.ErrorReply errorReply = new Replies.ErrorReply("No Sessions for Treasure Hunt with id: " + treasureHuntId);
-                    printWriter.println(gson.toJson(errorReply));
-                } else {
-                    final Replies.LeaderboardReply reply = new Replies.LeaderboardReply(sorted, limit, sessions);
+                    final Replies.LeaderboardReply reply = new Replies.LeaderboardReply(sorted, limit, sessions, treasureHunt.getName());
                     printWriter.println(gson.toJson(reply));
                 }
+            } else { // treasureHuntIdSpecified thus general, treasure hunt leaderboard
+                treasureHunt = TreasureHuntFactory.getTreasureHunt(treasureHuntId);
+                assert treasureHunt != null;
+                final Vector<Session> sessions = SessionFactory.getSessionsByTreasureHuntId(treasureHuntId);
+                final Replies.LeaderboardReply reply = new Replies.LeaderboardReply(sorted, limit, sessions, treasureHunt.getName());
+                printWriter.println(gson.toJson(reply));
             }
         }
     }

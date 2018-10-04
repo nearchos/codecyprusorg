@@ -423,9 +423,11 @@
                             can be skipped or must be answered. The <code>requires-location</code> indicates whether
                             this is a location sensitive question where the player must be at a specific location for
                             their answer to be checked. The <code>numOfQuestions</code> specifies the total number of
-                            questions in the treasure hunt, and finally the <code>currentQuestionIndex</code> defines
-                            the zero-based index of the current question (the first one is 0, and the last one is
-                            <code>numOfQuestions</code>-1).
+                            questions in the treasure hunt, and the <code>currentQuestionIndex</code> defines the
+                            zero-based index of the current question (the first one is 0, and the last one is
+                            <code>numOfQuestions</code>-1). Finally, the <code>correctScore</code>,
+                            <code>wrongScore</code> and <code>skipScore</code> specify the score adjustment for when
+                            the answer is correct, wrong, or the question was skipped, respectively.
                         </p>
                         <div class="card card-body">
                             <p>
@@ -692,9 +694,11 @@
                         <p>
                             The output includes the <code>status</code>, a Boolean indication of whether the treasure
                             hunt is <code>completed</code>, i.e. there are no more unanswered questions, and whether
-                            the treasure hunt is <code>finished</code>, i.e. it has ended time-wise. Last, the
-                            <code>player</code> property gives the selected player name and the
-                            <code>score</code> property gives the score as an integer, e.g. 23.
+                            the treasure hunt is <code>finished</code>, i.e. it has ended time-wise. The
+                            <code>player</code> property gives the selected player name, the <code>score</code> property
+                            gives the score as an integer, e.g. 23. Last, the <code>hasPrize</code> property shows
+                            whether there is a prize associated with the current treasure hunt (this is needed for
+                            some special applications).
                         </p>
                         <div class="card card-body">
                             <p>
@@ -772,7 +776,9 @@
                             The output includes the <code>status</code>, the <code>numOfPlayers</code>, a Boolean
                             value indicating whether the list is <code>sorted</code>, the applied <code>limit</code>
                             and the <code>leaderboard</code>. When not specified or when invalid, the <code>limit</code>
-                            is automatically set to the max integer value, i.e. <%=Integer.MAX_VALUE%>.
+                            is automatically set to the max integer value, i.e. <%=Integer.MAX_VALUE%>. Finally, the
+                            nae of the corresponding <a href="#concepts">Treasure Hunt</a> is provided for convenience
+                            as the named value <code>treasureHuntName</code>.
                         </p>
                         <p>
                             The leaderboard consists of a JSON array containing <code>numOfPlayers</code> entries, where

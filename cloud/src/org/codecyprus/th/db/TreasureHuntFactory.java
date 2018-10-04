@@ -26,6 +26,7 @@ public class TreasureHuntFactory {
     public static final String PROPERTY_MAX_DURATION = "th-max-duration";
     public static final String PROPERTY_SHUFFLED = "th-shuffled";
     public static final String PROPERTY_REQUIRES_AUTHENTICATION = "th-requires-authentication";
+    public static final String PROPERTY_HAS_PRIZE = "th-has-prize";
     public static final String PROPERTY_EMAIL_RESULTS = "th-email-results";
 
     private static final MemcacheService memcacheService = MemcacheServiceFactory.getMemcacheService();
@@ -100,6 +101,7 @@ public class TreasureHuntFactory {
         treasureHuntEntity.setProperty(PROPERTY_SHUFFLED, treasureHunt.isShuffled());
         treasureHuntEntity.setProperty(PROPERTY_REQUIRES_AUTHENTICATION, treasureHunt.isRequiresAuthentication());
         treasureHuntEntity.setProperty(PROPERTY_EMAIL_RESULTS, treasureHunt.isEmailResults());
+        treasureHuntEntity.setProperty(PROPERTY_HAS_PRIZE, treasureHunt.isHasPrize());
 
         return datastoreService.put(treasureHuntEntity);
     }
@@ -119,6 +121,7 @@ public class TreasureHuntFactory {
             treasureHuntEntity.setProperty(PROPERTY_SHUFFLED, treasureHunt.isShuffled());
             treasureHuntEntity.setProperty(PROPERTY_REQUIRES_AUTHENTICATION, treasureHunt.isRequiresAuthentication());
             treasureHuntEntity.setProperty(PROPERTY_EMAIL_RESULTS, treasureHunt.isEmailResults());
+            treasureHuntEntity.setProperty(PROPERTY_HAS_PRIZE, treasureHunt.isHasPrize());
             datastoreService.put(treasureHuntEntity);
 
             MemcacheServiceFactory.getMemcacheService().delete(uuid); // invalidate cached entry
@@ -139,7 +142,8 @@ public class TreasureHuntFactory {
                 (Long) entity.getProperty(PROPERTY_MAX_DURATION),
                 (Boolean) entity.getProperty(PROPERTY_SHUFFLED),
                 (Boolean) entity.getProperty(PROPERTY_REQUIRES_AUTHENTICATION),
-                (Boolean) entity.getProperty(PROPERTY_EMAIL_RESULTS)
+                (Boolean) entity.getProperty(PROPERTY_EMAIL_RESULTS),
+                entity.getProperty(PROPERTY_HAS_PRIZE) != null ? (Boolean) entity.getProperty(PROPERTY_HAS_PRIZE) : false
         );
     }
 }

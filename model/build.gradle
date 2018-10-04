@@ -1,0 +1,9 @@
+apply plugin: 'java-library'
+
+dependencies {
+    api 'com.google.code.gson:gson:2.8.5'
+}
+
+repositories {
+    jcenter()
+}

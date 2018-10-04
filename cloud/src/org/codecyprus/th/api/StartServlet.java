@@ -81,6 +81,8 @@ public class StartServlet extends HttpServlet {
                     final Replies.ErrorReply errorReply = new Replies.ErrorReply("The specified treasure hunt is not active right now.");
                     printWriter.println(gson.toJson(errorReply));
                 } else {
+//                    if(treasureHunt.isRequiresAuthentication()) { /* todo handle it */ }
+
                     // ...next retrieve treasure hunt's questions
                     final ArrayList<ConfiguredQuestion> configuredQuestions = ConfiguredQuestionFactory.getConfiguredQuestionsForTreasureHunt(treasureHuntId);
                     if(configuredQuestions.isEmpty()) {

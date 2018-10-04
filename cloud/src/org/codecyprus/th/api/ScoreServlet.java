@@ -3,8 +3,10 @@ package org.codecyprus.th.api;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.codecyprus.th.db.SessionFactory;
+import org.codecyprus.th.db.TreasureHuntFactory;
 import org.codecyprus.th.model.Replies;
 import org.codecyprus.th.model.Session;
+import org.codecyprus.th.model.TreasureHunt;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -39,7 +41,9 @@ public class ScoreServlet extends HttpServlet {
                 final Replies.ErrorReply errorReply = new Replies.ErrorReply("Unknown session. The specified session ID could not be found.");
                 printWriter.println(gson.toJson(errorReply));
             } else {
-                final Replies.ScoreReply reply = new Replies.ScoreReply(session.isCompleted(), session.isFinished(), session.getPlayerName(), session.getScore());
+                final TreasureHunt treasureHunt = TreasureHuntFactory.getTreasureHunt(session.getTreasureHuntUuid());
+                final boolean hasPrize = treasureHunt != null && treasureHunt.isHasPrize();
+                final Replies.ScoreReply reply = new Replies.ScoreReply(session.isCompleted(), session.isFinished(), session.getPlayerName(), session.getScore(), hasPrize);
                 printWriter.println(gson.toJson(reply));
             }
         }

@@ -144,11 +144,11 @@
                 <%--</tr>--%>
                 <tr>
                     <td>Starts On</td>
-                    <td><input type="datetime-local" name="<%= TreasureHuntFactory.PROPERTY_STARTS_ON%>" value="<%= TreasureHuntFactory.SIMPLE_DATE_FORMAT.format(new Date(treasureHunt.getStartsOn())) %>"/></td>
+                    <td><input type="datetime-local" name="<%= TreasureHuntFactory.PROPERTY_STARTS_ON%>" value="<%= TreasureHunt.SIMPLE_DATE_FORMAT.format(new Date(treasureHunt.getStartsOn())) %>"/></td>
                 </tr>
                 <tr>
                     <td>Ends on</td>
-                    <td><input type="datetime-local" name="<%= TreasureHuntFactory.PROPERTY_ENDS_ON%>" value="<%= TreasureHuntFactory.SIMPLE_DATE_FORMAT.format(new Date(treasureHunt.getEndsOn())) %>"/></td>
+                    <td><input type="datetime-local" name="<%= TreasureHuntFactory.PROPERTY_ENDS_ON%>" value="<%= TreasureHunt.SIMPLE_DATE_FORMAT.format(new Date(treasureHunt.getEndsOn())) %>"/></td>
                 </tr>
                 <tr>
                     <td>Max Duration</td>
@@ -165,6 +165,10 @@
                 <tr>
                     <td>Email Results</td>
                     <td><input type="checkbox" name="<%= TreasureHuntFactory.PROPERTY_EMAIL_RESULTS%>" <%=treasureHunt.isEmailResults() ? "checked" : ""%>/></td>
+                </tr>
+                <tr>
+                    <td>Has Prize</td>
+                    <td><input type="checkbox" name="<%= TreasureHuntFactory.PROPERTY_HAS_PRIZE%>" <%=treasureHunt.isHasPrize() ? "checked" : ""%>/></td>
                 </tr>
                 <tr>
                     <td>Is Active Now</td>

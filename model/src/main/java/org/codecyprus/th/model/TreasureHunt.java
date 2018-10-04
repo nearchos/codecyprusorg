@@ -19,12 +19,13 @@ public class TreasureHunt implements Serializable {
     private boolean shuffled; // if true, each player gets a shuffled sequence of questions
     private boolean requiresAuthentication; // if true, only authenticated users can play
     private boolean emailResults; // if true, sends a summary of results after the end of the competition (not of the player's session)
+    private boolean hasPrize; // if true, indicates that the treasure hunt has an associated prize
 
-    public TreasureHunt(String name, String description, String ownerEmail, Visibility visibility, long startsOn, long endsOn, long maxDuration, boolean shuffled, boolean requiresAuthentication, boolean emailResults) {
-        this(null, name, description, ownerEmail, visibility, startsOn, endsOn, maxDuration, shuffled, requiresAuthentication, emailResults);
+    public TreasureHunt(String name, String description, String ownerEmail, Visibility visibility, long startsOn, long endsOn, long maxDuration, boolean shuffled, boolean requiresAuthentication, boolean emailResults, boolean hasPrize) {
+        this(null, name, description, ownerEmail, visibility, startsOn, endsOn, maxDuration, shuffled, requiresAuthentication, emailResults, hasPrize);
     }
 
-    public TreasureHunt(String uuid, String name, String description, String ownerEmail, Visibility visibility, long startsOn, long endsOn, long maxDuration, boolean shuffled, boolean requiresAuthentication, boolean emailResults) {
+    public TreasureHunt(String uuid, String name, String description, String ownerEmail, Visibility visibility, long startsOn, long endsOn, long maxDuration, boolean shuffled, boolean requiresAuthentication, boolean emailResults, boolean hasPrize) {
         this.uuid = uuid;
         this.name = name;
         this.description = description;
@@ -36,6 +37,7 @@ public class TreasureHunt implements Serializable {
         this.shuffled = shuffled;
         this.requiresAuthentication = requiresAuthentication;
         this.emailResults = emailResults;
+        this.hasPrize = hasPrize;
     }
 
     public String getUuid() {
@@ -94,6 +96,10 @@ public class TreasureHunt implements Serializable {
         return emailResults;
     }
 
+    public boolean isHasPrize() {
+        return hasPrize;
+    }
+
     public boolean isNotStarted() {
         final long now = System.currentTimeMillis();
         return now < startsOn;
@@ -112,5 +118,9 @@ public class TreasureHunt implements Serializable {
     public boolean hasFinished() {
         final long now = System.currentTimeMillis();
         return now > endsOn;
+    }
+
+    public String toString() {
+        return getName();
     }
 }

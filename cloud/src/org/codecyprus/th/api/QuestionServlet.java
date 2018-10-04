@@ -46,7 +46,7 @@ public class QuestionServlet extends HttpServlet {
                 final int numOfQuestions = configuredQuestionUuids.size();
                 final int currentConfiguredQuestionIndex = session.getCurrentConfiguredQuestionIndex().intValue();
                 if(currentConfiguredQuestionIndex >= numOfQuestions) {
-                    final Replies.QuestionReply reply = new Replies.QuestionReply(true, "No more unanswered questions", QuestionType.TEXT, false, false, numOfQuestions, currentConfiguredQuestionIndex);
+                    final Replies.QuestionReply reply = new Replies.QuestionReply(true, "No more unanswered questions", QuestionType.TEXT, false, false, numOfQuestions, currentConfiguredQuestionIndex, 0, 0, 0);
                     printWriter.println(gson.toJson(reply));
                 } else {
                     final String currentConfiguredQuestionUuid = configuredQuestionUuids.get(currentConfiguredQuestionIndex);
@@ -61,7 +61,7 @@ public class QuestionServlet extends HttpServlet {
                             final Replies.ErrorReply errorReply = new Replies.ErrorReply("Internal error. Could not find Question for uuid: " + configuredQuestion.getQuestionUuid());
                             printWriter.println(gson.toJson(errorReply));
                         } else {
-                            final Replies.QuestionReply reply = new Replies.QuestionReply(false, question.getQuestionText(), question.getQuestionType(), configuredQuestion.isCanBeSkipped(), configuredQuestion.isLocationRelevant(), numOfQuestions, currentConfiguredQuestionIndex);
+                            final Replies.QuestionReply reply = new Replies.QuestionReply(false, question.getQuestionText(), question.getQuestionType(), configuredQuestion.isCanBeSkipped(), configuredQuestion.isLocationRelevant(), numOfQuestions, currentConfiguredQuestionIndex, configuredQuestion.getCorrectScore(), configuredQuestion.getWrongScore(), configuredQuestion.getSkipScore());
                             printWriter.println(gson.toJson(reply));
                         }
                     }

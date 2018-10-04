@@ -71,15 +71,16 @@ public class AddOrEditTreasureHuntServlet extends HttpServlet {
                 final boolean shuffled = "on".equalsIgnoreCase(request.getParameter(TreasureHuntFactory.PROPERTY_SHUFFLED));
                 final boolean requiresAuthentication = "on".equalsIgnoreCase(request.getParameter(TreasureHuntFactory.PROPERTY_REQUIRES_AUTHENTICATION));
                 final boolean emailResults = "on".equalsIgnoreCase(request.getParameter(TreasureHuntFactory.PROPERTY_EMAIL_RESULTS));
+                final boolean hasPrize = "on".equalsIgnoreCase(request.getParameter(TreasureHuntFactory.PROPERTY_HAS_PRIZE));
 
                 if(uuid != null && !uuid.isEmpty()) { // editing existing category
-                    final TreasureHunt treasureHunt = new TreasureHunt(uuid, name, description, ownerEmail, visibility, startsOn, endsOn, maxDuration, shuffled, requiresAuthentication, emailResults);
+                    final TreasureHunt treasureHunt = new TreasureHunt(uuid, name, description, ownerEmail, visibility, startsOn, endsOn, maxDuration, shuffled, requiresAuthentication, emailResults, hasPrize);
                     TreasureHuntFactory.editTreasureHunt(treasureHunt);
 
                     // use ably to update treasure hunt name
                     pushAblyUpdate(uuid, name, startsOn, endsOn);
                 } else { // adding a new category
-                    final TreasureHunt treasureHunt = new TreasureHunt(name, description, ownerEmail, visibility, startsOn, endsOn, maxDuration, shuffled, requiresAuthentication, emailResults);
+                    final TreasureHunt treasureHunt = new TreasureHunt(name, description, ownerEmail, visibility, startsOn, endsOn, maxDuration, shuffled, requiresAuthentication, emailResults, hasPrize);
                     final Key key = TreasureHuntFactory.addTreasureHunt(treasureHunt);
                     uuid = KeyFactory.keyToString(key);
                 }

@@ -5,7 +5,6 @@
 <%@ page import="org.codecyprus.th.db.TreasureHuntFactory" %>
 <%@ page import="org.codecyprus.th.admin.DeleteEntity" %>
 <%@ page import="org.codecyprus.th.model.Visibility" %>
-<%@ page import="org.codecyprus.th.model.ConfiguredQuestion" %>
 <%@ page import="org.codecyprus.th.db.ConfiguredQuestionFactory" %>
 <%@ page import="java.util.ArrayList" %>
 <%--
@@ -61,6 +60,7 @@ You are not logged in!
             <th>Shuffled</th>
             <th>Requires Authentication</th>
             <th>Email Results</th>
+            <th>Has Prize</th>
             <th></th>
             <th></th>
             <th></th>
@@ -87,6 +87,7 @@ You are not logged in!
             <td><%= treasureHunt.isShuffled() %></td>
             <td><%= treasureHunt.isRequiresAuthentication() %></td>
             <td><%= treasureHunt.isEmailResults() %></td>
+            <td><%= treasureHunt.isHasPrize() %></td>
             <td>
                 <div>
                     <input type="button" value="Sessions" onclick="window.open('sessions?th-uuid=<%=treasureHunt.getUuid()%>')" />
@@ -154,11 +155,11 @@ You are not logged in!
             </tr>
             <tr>
                 <td>Starts On</td>
-                <td><input type="datetime-local" name="<%= TreasureHuntFactory.PROPERTY_STARTS_ON%>" value="<%= TreasureHuntFactory.SIMPLE_DATE_FORMAT.format(new Date(now)) %>"/></td>
+                <td><input type="datetime-local" name="<%= TreasureHuntFactory.PROPERTY_STARTS_ON%>" value="<%= TreasureHunt.SIMPLE_DATE_FORMAT.format(new Date(now)) %>"/></td>
             </tr>
             <tr>
                 <td>Ends on</td>
-                <td><input type="datetime-local" name="<%= TreasureHuntFactory.PROPERTY_ENDS_ON%>" value="<%= TreasureHuntFactory.SIMPLE_DATE_FORMAT.format(new Date(now+SEVEN_DAYS)) %>"/></td>
+                <td><input type="datetime-local" name="<%= TreasureHuntFactory.PROPERTY_ENDS_ON%>" value="<%= TreasureHunt.SIMPLE_DATE_FORMAT.format(new Date(now+SEVEN_DAYS)) %>"/></td>
             </tr>
             <tr>
                 <td>Max Duration</td>
@@ -175,6 +176,10 @@ You are not logged in!
             <tr>
                 <td>Email Results</td>
                 <td><input type="checkbox" name="<%= TreasureHuntFactory.PROPERTY_REQUIRES_AUTHENTICATION%>"/></td>
+            </tr>
+            <tr>
+                <td>Has Prize</td>
+                <td><input type="checkbox" name="<%= TreasureHuntFactory.PROPERTY_HAS_PRIZE%>"/></td>
             </tr>
             <tr><td colspan="2"><i>Please note that all times are in <a href="http://en.wikipedia.org/wiki/UTC">UTC (Coordinated Universal Time)</a></i></td></tr>
         </table>

@@ -79,8 +79,7 @@ public class AnswerServlet extends HttpServlet {
                             final Replies.ErrorReply errorReply = new Replies.ErrorReply("Internal error. Could not find Question for uuid: " + configuredQuestion.getQuestionUuid());
                             printWriter.println(gson.toJson(errorReply));
                         } else {
-                            final String correctAnswer = question.getCorrectAnswer();
-                            final boolean correct = answer.trim().equalsIgnoreCase(correctAnswer.trim());
+                            final boolean correct = processAnswer(question, answer);
                             if(!correct) { // answer is incorrect
                                 final int scoreAdjustment = configuredQuestion.getWrongScore().intValue();
                                 SessionFactory.updateSession(session, scoreAdjustment);
@@ -122,6 +121,19 @@ public class AnswerServlet extends HttpServlet {
                     }
                 }
             }
+        }
+    }
+
+    /** Indicates that any answer provided by player is considered correct */
+    private static final String SPECIAL_ALWAYS_CORRECT = "%any%";
+
+    private boolean processAnswer(final Question question, final String answer) {
+        final String correctAnswer = question.getCorrectAnswer();
+
+        if(correctAnswer.equals(SPECIAL_ALWAYS_CORRECT)) {
+            return true;
+        } else {
+            return answer.trim().equalsIgnoreCase(correctAnswer.trim());
         }
     }
 }

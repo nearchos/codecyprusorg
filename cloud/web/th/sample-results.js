@@ -29,7 +29,8 @@ var callLeaderboardSortedResult = {
             "score": 0,
             "completionTime": 0
         }
-    ]
+    ],
+    "treasureHuntName": "Sample treasure hunt"
 };
 
 var callLeaderboardUnsortedResult = {
@@ -63,7 +64,8 @@ var callLeaderboardUnsortedResult = {
             "score": 7,
             "completionTime": 1534834087000
         }
-    ]
+    ],
+    "treasureHuntName": "Sample treasure hunt"
 };
 
 callLeaderboardErrorUnknownSession = {
@@ -152,7 +154,10 @@ var callQuestionResult = {
     "questionType": "INTEGER",
     "canBeSkipped": true,
     "numOfQuestions": 4,
-    "currentQuestionIndex": 0
+    "currentQuestionIndex": 0,
+    "correctScore": 10,
+    "wrongScore": -3,
+    "skipScore": -5
 };
 
 var callQuestionErrorMissingParameter = {

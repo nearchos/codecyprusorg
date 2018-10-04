@@ -59,7 +59,7 @@ public class AddOrEditQuestionServlet extends HttpServlet {
                     final Question question = new Question(uuid, questionText, questionType, correctAnswer, creatorEmail, creationTimestamp, shared);
                     QuestionFactory.editQuestion(question);
                 } else { // adding a new category
-                    final Question question = new Question(questionText, questionType, correctAnswer, email, creationTimestamp, shared);
+                    final Question question = new Question(questionText, questionType, correctAnswer, creatorEmail, creationTimestamp, shared);
                     final Key key = QuestionFactory.addQuestion(question);
                     uuid = KeyFactory.keyToString(key);
                     log.info("Added new Question with UUID: " + uuid);
