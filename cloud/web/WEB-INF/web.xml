@@ -79,6 +79,17 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>TestGuide</servlet-name>
+        <jsp-file>/th/test-guide.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TestGuide</servlet-name>
+        <url-pattern>/th/testing</url-pattern>
+        <url-pattern>/th/test-guide</url-pattern>
+        <url-pattern>/th/test-guide/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>AdminTreasureHunt</servlet-name>
         <jsp-file>/th/admin/TreasureHunt.jsp</jsp-file>
     </servlet>
@@ -245,6 +256,57 @@
         <url-pattern>/th/api/leaderboard</url-pattern>
     </servlet-mapping>
     <!--End of API Servlets-->
+
+    <!--Test API Servlets-->
+    <servlet>
+        <servlet-name>TestListServlet</servlet-name>
+        <servlet-class>org.codecyprus.th.api.test.TestListServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TestListServlet</servlet-name>
+        <url-pattern>/th/test-api/list</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>TestStartServlet</servlet-name>
+        <servlet-class>org.codecyprus.th.api.test.TestStartServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TestStartServlet</servlet-name>
+        <url-pattern>/th/test-api/start</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>TestQuestionServlet</servlet-name>
+        <servlet-class>org.codecyprus.th.api.test.TestQuestionServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TestQuestionServlet</servlet-name>
+        <url-pattern>/th/test-api/question</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>TestAnswerServlet</servlet-name>
+        <servlet-class>org.codecyprus.th.api.test.TestAnswerServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TestAnswerServlet</servlet-name>
+        <url-pattern>/th/test-api/answer</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>TestScoreServlet</servlet-name>
+        <servlet-class>org.codecyprus.th.api.test.TestScoreServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TestScoreServlet</servlet-name>
+        <url-pattern>/th/test-api/score</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>TestLeaderboardServlet</servlet-name>
+        <servlet-class>org.codecyprus.th.api.test.TestLeaderboardServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TestLeaderboardServlet</servlet-name>
+        <url-pattern>/th/test-api/leaderboard</url-pattern>
+    </servlet-mapping>
+    <!--End of Test API Servlets-->
 
     <security-constraint>
         <web-resource-collection>

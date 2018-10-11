@@ -63,6 +63,13 @@ public class LocationServlet extends HttpServlet {
             errorMessages.add("Invalid non-numeric parameter: " + PARAMETER_LONGITUDE);
         }
 
+        if(latitude < -90 || latitude > 90) {
+            errorMessages.add("Invalid latitude value: " + latitude + " - must be in range [-90,90]");
+        }
+        if(longitude < -180 || longitude > 180) {
+            errorMessages.add("Invalid longitude value: " + longitude + " - must be in range [-180,180]");
+        }
+
         if(!errorMessages.isEmpty()) {
             final Replies.ErrorReply errorReply = new Replies.ErrorReply(errorMessages);
             printWriter.println(gson.toJson(errorReply));

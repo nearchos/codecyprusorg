@@ -1,12 +1,11 @@
 <%@ page import="org.codecyprus.th.model.QuestionType" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>
-<%@ page import="org.codecyprus.th.api.LeaderboardServlet" %><%--
-  Created by IntelliJ IDEA.
-  User: Nearchos
+<%@ page import="org.codecyprus.th.api.LeaderboardServlet" %>
+<%--
+  Created by Nearchos Paspallis
   Date: 19-Aug-18
   Time: 9:52 PM
-  To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!doctype html>
@@ -93,6 +92,9 @@
             <p>
                 This is version <kbd>1.0.0</kbd> of the Treasure Hunt API Guide. It is available online at <code>http://www.codecyprus.org/th/guide</code>.
             </p>
+            <p>
+                There is also a Treasure Hunt <i>testing</i> API Guide, available at <code><a href="/th/testing" target="_blank">http://www.codecyprus.org/th/testing</a></code>.
+            </p>
         </div>
 
         <div class="row">
@@ -101,10 +103,11 @@
                 <div style="height: 58px;"></div>
                 <h3>Introduction</h3>
                 <p>
-                    This app provides the server-side functionality for the Treasure Hunt challenge. This challenge is
-                    undertaken by students pursuing the <a href="http://computing.uclancyprus.ac.cy" target="_blank">
+                    This service provides the server-side functionality for the Treasure Hunt challenge. This challenge
+                    is undertaken by students pursuing the <a href="http://computing.uclancyprus.ac.cy" target="_blank">
                     BSc (Hons) Computing degree</a> at <a href="http://uclancyprus.ac.cy" target="_blank">UCLan Cyprus</a>,
-                    as part of module CO1111 (The Computing Challenge). This backend is deployed on Google's app-engine.
+                    as part of module CO1111 (The Computing Challenge). This backend is designed for and deployed on
+                    Google's App-Engine platform.
                 </p>
                 <p>
                     The concept of the challenge is inspired from the equivalent Four-week challenge, originally
@@ -485,7 +488,7 @@
                                     <li><code>session</code> is a <i>mandatory</i> parameter specifying the id of the
                                         session which corresponds to this player.</li>
                                     <li><code>answer</code> is a <i>mandatory</i> parameter for specifying the tries
-                                        answer. The answer is provided in text form but must math the question type as
+                                        answer. The answer is provided in text form but must match the question type as
                                         indicated in the reply of the <a href="#question">question</a> call.</li>
                                 </ul>
                             </div>
@@ -829,7 +832,7 @@
 
     <footer class="footer">
         <div class="container">
-            <span class="text-muted">Code Cyprus &mdash; Treasure Hunt API Guide &copy; <%=new SimpleDateFormat("yyyy").format(new Date())%></span>
+            <span class="text-muted">Code Cyprus &mdash; Treasure Hunt Testing API Guide &copy; <%=new SimpleDateFormat("yyyy").format(new Date())%></span>
         </div>
     </footer>
 
