@@ -170,17 +170,18 @@
                         <p>
                             Simulates the <code>/th/api/start</code> call.
                             Also see the actual API's call in the <a href="/th/guide#start" target="_blank">guide</a>.
-                            In this call, the player must use the <code>start</code> call and specify their name, app id
-                            and requested treasure hunt id.
+                            In this call, the player must use the <code>start</code> call and either not specify
+                            anything (in which case a valid message with random values is returned) or specify an
+                            error by setting the <code>player</code> parameter, as discussed below.
                         </p>
                         <p>
                             The API call is as follows:
                         </p>
                         <div class="card card-body">
                             <div>
-                                <code>https://codecyprus.org/th/test-api/start?error=inactive</code>
-                                <a class="btn btn-primary" href="https://codecyprus.org/th/test-api/start?error=inactive" target="_blank">Try it</a>
-                                <a class="btn btn-primary" data-clipboard-text="https://codecyprus.org/th/test-api/start?error=inactive" data-clipboard->Copy</a>
+                                <code>https://codecyprus.org/th/test-api/start?player=inactive</code>
+                                <a class="btn btn-primary" href="https://codecyprus.org/th/test-api/start?player=inactive" target="_blank">Try it</a>
+                                <a class="btn btn-primary" data-clipboard-text="https://codecyprus.org/th/test-api/start?player=inactive" data-clipboard->Copy</a>
                             </div>
                         </div>
                         <p>
@@ -189,7 +190,7 @@
                         <div class="card card-body">
                             <div>
                                 <ul>
-                                    <li><code>error</code> specifies the type of error message to be returned. The
+                                    <li><code>player</code> specifies the type of error message to be returned. The
                                     available options are:
                                         <ul>
                                             <li><%=INACTIVE%>: produces the error message '<%=TestStartServlet.ERROR_MESSAGES.get(INACTIVE)%>'</li>
@@ -201,7 +202,7 @@
                                         </ul>
                                     </li>
                                     <li>
-                                        If you skip the parameter, then a default correct message is replied, with random data.
+                                        If you skip the parameter, then a default correct message is returned, containing random data.
                                     </li>
                                 </ul>
                             </div>
@@ -438,43 +439,9 @@
     <script src="https://cdn.rawgit.com/zenorocha/clipboard.js/v2.0.0/dist/clipboard.min.js"></script>
     <script src="https://d3js.org/d3.v3.min.js" language="JavaScript"></script>
 
-    <%--Custom JavaScript containing sample replies--%>
-    <script src="/th/sample-results.js" crossorigin="anonymous"></script>
-
     <script>
         // init clipboard
         new ClipboardJS('.btn'); // initialize clipboard code for buttons of class 'btn'
-
-        // init sample results
-        document.getElementById("call-list-result-pre").innerHTML = JSON.stringify(callListResult, undefined, 2);
-
-        document.getElementById("call-start-result-pre").innerHTML = JSON.stringify(callStartResult, undefined, 2);
-        document.getElementById("call-start-error-player-in-use-pre").innerHTML = JSON.stringify(callStartErrorPlayer, undefined, 2);
-        document.getElementById("call-start-error-missing-parameter-pre").innerHTML = JSON.stringify(callStartErrorMissingParameter, undefined, 2);
-        document.getElementById("call-start-error-unknown-th-pre").innerHTML = JSON.stringify(callStartErrorUnknownTH, undefined, 2);
-
-        document.getElementById("call-question-result-pre").innerHTML = JSON.stringify(callQuestionResult, undefined, 2);
-        document.getElementById("call-question-error-missing-parameter-pre").innerHTML = JSON.stringify(callQuestionErrorMissingParameter, undefined, 2);
-        document.getElementById("call-question-error-invalid-th-pre").innerHTML = JSON.stringify(callQuestionErrorUnknownTH, undefined, 2);
-
-        document.getElementById("call-answer-correct-result-pre").innerHTML = JSON.stringify(callAnswerResultCorrectAnswer, undefined, 2);
-        document.getElementById("call-answer-wrong-result-pre").innerHTML = JSON.stringify(callAnswerResultWrongAnswer, undefined, 2);
-        document.getElementById("call-answer-error-run-out-of-time-pre").innerHTML = JSON.stringify(callAnswerErrorRunOutOfTime, undefined, 2);
-
-        document.getElementById("call-location-correct-result-pre").innerHTML = JSON.stringify(callLocationResultCorrectAnswer, undefined, 2);
-        document.getElementById("call-location-wrong-result-pre").innerHTML = JSON.stringify(callLocationResultWrongAnswer, undefined, 2);
-        document.getElementById("call-location-missing-parameters-pre").innerHTML = JSON.stringify(callLocationMissingParameters, undefined, 2);
-
-        document.getElementById("call-skip-result-pre").innerHTML = JSON.stringify(callSkipResult, undefined, 2);
-        document.getElementById("call-skip-error-cannot-be-skipped-pre").innerHTML = JSON.stringify(callSkipErrorCannotBeSkipped, undefined, 2);
-
-        document.getElementById("call-score-result-pre").innerHTML = JSON.stringify(callScoreResult, undefined, 2);
-        document.getElementById("call-score-error-unknown-session-pre").innerHTML = JSON.stringify(callScoreErrorUnknownSession, undefined, 2);
-
-        document.getElementById("call-leaderboard-sorted-result-pre").innerHTML = JSON.stringify(callLeaderboardSortedResult, undefined, 2);
-        document.getElementById("call-leaderboard-unsorted-result-pre").innerHTML = JSON.stringify(callLeaderboardUnsortedResult, undefined, 2);
-        document.getElementById("call-leaderboard-unknown-session").innerHTML = JSON.stringify(callLeaderboardErrorUnknownSession, undefined, 2);
-
     </script>
 
 </body>

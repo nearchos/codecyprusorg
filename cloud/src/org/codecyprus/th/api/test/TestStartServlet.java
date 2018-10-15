@@ -19,7 +19,7 @@ import static org.codecyprus.th.api.test.TestStartServlet.StartError.*;
 
 public class TestStartServlet extends HttpServlet {
 
-    public static final String PARAMETER_ERROR = "error";
+    public static final String PARAMETER_ERROR = "player";
     public enum StartError { INACTIVE, EMPTY, PLAYER, APP, UNKNOWN, MISSING_PARAMETER, DEFAULT};
     public static final Map<StartError,String> ERROR_MESSAGES = new HashMap<>();
     static {
@@ -54,8 +54,6 @@ public class TestStartServlet extends HttpServlet {
             } catch (IllegalArgumentException iae) {
                 startError = StartError.DEFAULT;
             }
-            System.out.println("error name: " + StartError.INACTIVE.name());
-            System.out.println("error: " + error + " -> " + startError);
             switch (startError) {
                 case INACTIVE: {
                     // parse to JSON and return errors
