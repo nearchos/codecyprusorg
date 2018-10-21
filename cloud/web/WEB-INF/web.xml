@@ -52,8 +52,6 @@
     <servlet-mapping>
         <servlet-name>2018</servlet-name>
         <url-pattern>/2018</url-pattern>
-        <url-pattern>/current</url-pattern>
-        <url-pattern>/</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>2019</servlet-name>
@@ -62,6 +60,7 @@
     <servlet-mapping>
         <servlet-name>2019</servlet-name>
         <url-pattern>/2019</url-pattern>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
     <!--End of Static JSPs-->
 

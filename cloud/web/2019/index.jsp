@@ -1,17 +1,26 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Nearchos
-  Date: 31-Aug-18
-  Time: 8:22 AM
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Code Cyprus 2019</title>
-</head>
-<body>
 
-    Under construction ...
-</body>
+    <meta charset='utf-8'>
+    <meta content='https://codecyprus.org/2019/images/facebook.png' property='og:image'>
+    <meta content='Code Cyprus 2019' property='og:title'>
+    <meta content='website' property='og:type'>
+    <meta content='Code Cyprus 2019' property='og:site_name'>
+    <meta content='http://codecyprus.org/2019' property='og:url'>
+    <meta content='Learning to code while having fun!' property='og:description'>
+    <meta content='width=device-width, initial-scale=1.0, minimum-scale=1.0, minimal-ui' name='viewport'>
+    <meta content='always' name='referrer'>
+    <link href="favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+    <link href='http://fonts.googleapis.com/css?family=Press+Start+2P' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <title>Code Cyprus 2019 | Παίξε. Μάθε. Διασκέδασε!</title>
+    <script language="JavaScript">
+        <!--
+        function changeSite() {
+            location = "2019/index_el.htm";
+        }
+        // -->
+    </script>
+</head>
+<body onload="changeSite()"></body>
 </html>
