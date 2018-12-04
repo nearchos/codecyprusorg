@@ -153,6 +153,7 @@ var callQuestionResult = {
     "questionText": "What is the answer to life?",
     "questionType": "INTEGER",
     "canBeSkipped": true,
+    "requiresLocation": false,
     "numOfQuestions": 4,
     "currentQuestionIndex": 0,
     "correctScore": 10,
