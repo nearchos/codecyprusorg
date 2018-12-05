@@ -291,11 +291,11 @@
                 </tr>
                 <tr>
                     <th>Latitude</th>
-                    <td><input type="number" name="<%= ConfiguredQuestionFactory.PROPERTY_LATITUDE %>" value="0.0" /></td>
+                    <td><input type="number" min="-90" max ="90" step="0.000001" name="<%= ConfiguredQuestionFactory.PROPERTY_LATITUDE %>" value="0.0" /></td>
                 </tr>
                 <tr>
                     <th>Longitude</th>
-                    <td><input type="number" name="<%= ConfiguredQuestionFactory.PROPERTY_LONGITUDE %>" value="0.0" /></td>
+                    <td><input type="number" min="-180" max="180" step="0.000001" name="<%= ConfiguredQuestionFactory.PROPERTY_LONGITUDE %>" value="0.0" /></td>
                 </tr>
                 <tr>
                     <th>Distance Threshold</th>
