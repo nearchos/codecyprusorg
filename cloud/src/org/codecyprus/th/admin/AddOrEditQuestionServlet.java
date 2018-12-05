@@ -45,7 +45,6 @@ public class AddOrEditQuestionServlet extends HttpServlet {
                     log.warning("Could not parse 'questionType' value: " + questionTypeS);
                 }
                 final String correctAnswer = request.getParameter(QuestionFactory.PROPERTY_CORRECT_ANSWER);
-                final String creatorEmail = request.getParameter(QuestionFactory.PROPERTY_CREATOR_EMAIL);
                 final String creationTimestampS = request.getParameter(QuestionFactory.PROPERTY_CREATION_TIMESTAMP);
                 long creationTimestamp = System.currentTimeMillis();
                 try {
@@ -56,10 +55,10 @@ public class AddOrEditQuestionServlet extends HttpServlet {
                 final boolean shared = "on".equalsIgnoreCase(request.getParameter(QuestionFactory.PROPERTY_SHARED));
 
                 if(uuid != null && !uuid.isEmpty()) { // editing existing question
-                    final Question question = new Question(uuid, questionText, questionType, correctAnswer, creatorEmail, creationTimestamp, shared);
+                    final Question question = new Question(uuid, questionText, questionType, correctAnswer, email, creationTimestamp, shared);
                     QuestionFactory.editQuestion(question);
                 } else { // adding a new category
-                    final Question question = new Question(questionText, questionType, correctAnswer, creatorEmail, creationTimestamp, shared);
+                    final Question question = new Question(questionText, questionType, correctAnswer, email, creationTimestamp, shared);
                     final Key key = QuestionFactory.addQuestion(question);
                     uuid = KeyFactory.keyToString(key);
                     log.info("Added new Question with UUID: " + uuid);

@@ -110,7 +110,7 @@ You are not logged in!
             </tr>
             <tr>
                 <th>Creator Email</th>
-                <td><input type="hidden" name="<%= QuestionFactory.PROPERTY_CREATOR_EMAIL %>" /> <%= user.getEmail() %> </td>
+                <td> <%= user.getEmail() %> </td>
             </tr>
             <tr>
                 <th>Shared</th>
