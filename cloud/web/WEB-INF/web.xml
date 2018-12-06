@@ -143,6 +143,24 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>AdminParameters</servlet-name>
+        <jsp-file>/th/admin/Parameters.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminParameters</servlet-name>
+        <url-pattern>/th/admin/parameters</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>LeaderboardMap</servlet-name>
+        <jsp-file>/th/leaderboard/map.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LeaderboardMap</servlet-name>
+        <url-pattern>/th/leaderboard/map</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>AddOrEditTreasureHuntServlet</servlet-name>
         <servlet-class>org.codecyprus.th.admin.AddOrEditTreasureHuntServlet</servlet-class>
     </servlet>
@@ -173,6 +191,26 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>AddOrEditTimedServlet</servlet-name>
+        <servlet-class>org.codecyprus.th.admin.AddOrEditTimedServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddOrEditTimedServlet</servlet-name>
+        <url-pattern>/th/admin/add-timed</url-pattern>
+        <url-pattern>/th/admin/edit-timed</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AddOrEditParameterServlet</servlet-name>
+        <servlet-class>org.codecyprus.th.admin.AddOrEditParameterServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddOrEditParameterServlet</servlet-name>
+        <url-pattern>/th/admin/add-parameter</url-pattern>
+        <url-pattern>/th/admin/edit-parameter</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>AdminDeleteEntity</servlet-name>
         <servlet-class>org.codecyprus.th.admin.DeleteEntity</servlet-class>
     </servlet>
@@ -181,6 +219,17 @@
         <url-pattern>/th/admin/delete-entity</url-pattern>
     </servlet-mapping>
     <!--End of Admin JSPs and Servlets-->
+
+    <!--Timed JSPs-->
+    <servlet>
+        <servlet-name>TimedIndex</servlet-name>
+        <jsp-file>/th/timed/Index.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TimedIndex</servlet-name>
+        <url-pattern>/th/timed</url-pattern>
+    </servlet-mapping>
+    <!--End of Timed JSPs-->
 
     <!--API Servlets-->
     <servlet>
@@ -253,6 +302,15 @@
     <servlet-mapping>
         <servlet-name>LeaderboardServlet</servlet-name>
         <url-pattern>/th/api/leaderboard</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>LeaderboardWithLocationsServlet</servlet-name>
+        <servlet-class>org.codecyprus.th.api.LeaderboardWithLocationsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LeaderboardWithLocationsServlet</servlet-name>
+        <url-pattern>/th/api/leaderboardWithLocations</url-pattern>
     </servlet-mapping>
     <!--End of API Servlets-->
 

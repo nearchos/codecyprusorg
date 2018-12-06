@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Map;
 import java.util.Vector;
 
 public class Replies {
@@ -319,6 +320,106 @@ public class Replies {
                     "player='" + player + '\'' +
                     ", score=" + score +
                     ", completionTime=" + completionTime +
+                    '}';
+        }
+    }
+
+    static public class LeaderboardWithLocationReply extends Reply {
+
+        @SerializedName("numOfPlayers")
+        private int numOfPlayers;
+        private boolean sorted;
+        private int limit;
+        private String name;
+        private String treasureHuntName;
+        private long startsOn;
+        private long endsOn;
+        private Vector<LeaderboardWithLocationEntry> leaderboard;
+
+        public LeaderboardWithLocationReply(final boolean sorted, final int limit, final long startsOn, final long endsOn, final Vector<Session> sessions, final String treasureHuntName, final Map<String,Coordinates> latestCoordinates) {
+            super(Status.OK);
+            this.numOfPlayers = sessions.size();
+            this.sorted = sorted;
+            this.limit = limit;
+            this.name = treasureHuntName;
+            this.treasureHuntName = treasureHuntName;
+            this.startsOn = startsOn;
+            this.endsOn = endsOn;
+            this.leaderboard = new Vector<>();
+            // add all entries
+            for(final Session session : sessions) {
+                final Coordinates coordinates = latestCoordinates.get(session.getUuid());
+                final double latitude = coordinates == null ? 0d : coordinates.getLatitude();
+                final double longitude = coordinates == null ? 0d : coordinates.getLongitude();
+                this.leaderboard.add(new LeaderboardWithLocationEntry(session.getPlayerName(), session.getScore(), session.getCompletionTime(), latitude, longitude));
+            }
+
+            // always sort
+            Collections.sort(leaderboard);
+        }
+
+        public int getNumOfPlayers() {
+            return numOfPlayers;
+        }
+
+        public boolean isSorted() {
+            return sorted;
+        }
+
+        public int getLimit() {
+            return limit;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getTreasureHuntName() {
+            return treasureHuntName;
+        }
+
+        public Vector<LeaderboardWithLocationEntry> getLeaderboard() {
+            return leaderboard;
+        }
+    }
+
+    static public class LeaderboardWithLocationEntry implements Comparable<LeaderboardWithLocationEntry>, Serializable {
+        private String player;
+        private long score;
+        @SerializedName("completionTime")
+        private long completionTime;
+        private double latitude;
+        private double longitude;
+
+        public LeaderboardWithLocationEntry(String player, long score, long completionTime, double latitude, double longitude) {
+            this.player = player;
+            this.score = score;
+            this.completionTime = completionTime;
+            this.latitude = latitude;
+            this.longitude = longitude;
+        }
+
+        @Override
+        public int compareTo(LeaderboardWithLocationEntry other) {
+            // first compare by score (higher is 'before')
+            final int scoreCompare = Long.compare(this.score, other.score);
+            if(scoreCompare != 0) {
+                return -scoreCompare;
+            } else {
+                // if scores are equal, compare completion times (smaller is 'before' except 0 which means unfinished which is the largest)
+                return Long.compare(this.completionTime == 0 ? Integer.MAX_VALUE : this.completionTime,
+                        other.completionTime == 0 ? Integer.MAX_VALUE : other.completionTime);
+            }
+        }
+
+        @Override
+        public String toString() {
+            return "\nLeaderboardEntry{" +
+                    "player='" + player + '\'' +
+                    ", score=" + score +
+                    ", completionTime=" + completionTime +
+                    ", latitude=" + latitude +
+                    ", longitude=" + longitude +
                     '}';
         }
     }

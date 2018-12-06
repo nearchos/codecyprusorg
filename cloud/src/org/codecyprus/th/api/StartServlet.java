@@ -4,7 +4,11 @@ import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import io.ably.lib.rest.AblyRest;
+import io.ably.lib.rest.Channel;
+import io.ably.lib.types.AblyException;
 import org.codecyprus.th.db.ConfiguredQuestionFactory;
+import org.codecyprus.th.db.ParameterFactory;
 import org.codecyprus.th.db.SessionFactory;
 import org.codecyprus.th.db.TreasureHuntFactory;
 import org.codecyprus.th.model.*;
@@ -49,12 +53,12 @@ public class StartServlet extends HttpServlet {
         final ArrayList<String> errorMessages = new ArrayList<>();
 
         // get parameters
-        final String playerName = request.getParameter(PARAMETER_PLAYER);
+        final String player = request.getParameter(PARAMETER_PLAYER);
         final String app = request.getParameter(PARAMETER_APP);
         final String treasureHuntId = request.getParameter(PARAMETER_TREASURE_HUNT_ID);
 
         // check for errors/missing parameters
-        if(playerName == null || playerName.trim().isEmpty()) {
+        if(player == null || player.trim().isEmpty()) {
             errorMessages.add("Missing or empty parameter: " + PARAMETER_PLAYER);
         }
         if(app == null || app.trim().isEmpty()) {
@@ -102,17 +106,21 @@ public class StartServlet extends HttpServlet {
                             startTime + treasureHunt.getMaxDuration() : // endTime is maxDuration after start
                             treasureHunt.getEndsOn(); // endTime is treasureHunt end time
 
-                        final Session session = new Session(treasureHuntId, playerName, app, startTime, endTime, configuredQuestionsList);
+                        final Session session = new Session(treasureHuntId, player, app, startTime, endTime, configuredQuestionsList);
                         final Key key = SessionFactory.synchronouslyAddSession(session);
 
                         if(key != null) {
                             final String sessionId = KeyFactory.keyToString(key);
+
+                            // ably push
+                            pushAblyUpdate(treasureHuntId, new AblyUpdate(sessionId, app, player, 0L, 0L, 0d, 0d));
+
                             // parse to JSON and return results
                             final Replies.StartReply reply = new Replies.StartReply(sessionId, configuredQuestionsList.size());
                             printWriter.println(gson.toJson(reply));
                         } else { // specified playerName already exists for given treasure hunt
                             // parse to JSON and return errors
-                            final Replies.ErrorReply errorReply = new Replies.ErrorReply("The specified playerName: " + playerName + ", is already in use (try a different one).");
+                            final Replies.ErrorReply errorReply = new Replies.ErrorReply("The specified playerName: " + player + ", is already in use (try a different one).");
                             printWriter.println(gson.toJson(errorReply));
                         }
                     }
@@ -127,5 +135,26 @@ public class StartServlet extends HttpServlet {
             configuredQuestionIds.add(configuredQuestion.getUuid());
         }
         return configuredQuestionIds;
+    }
+
+    private void pushAblyUpdate(final String thUuid, final AblyUpdate ablyUpdate) {
+        // ably push
+        try {
+            double lat = 0d;
+            double lng = 0d;
+
+            final Parameter parameter = ParameterFactory.getParameter("ABLY_PRIVATE_KEY");
+            if(parameter != null) {
+                final String ablyKey = parameter.getValue();
+                final AblyRest ably = new AblyRest(ablyKey);
+                final Channel channel = ably.channels.get("th-" + thUuid);
+                final String json = gson.toJson(ablyUpdate);
+                io.ably.lib.types.Message[] messages = new io.ably.lib.types.Message[]{new io.ably.lib.types.Message("new_session", json)};
+                channel.publish(messages);
+            }
+        } catch (AblyException ae) {
+            log.severe("Ably error: " + ae.errorInfo);
+        }
+
     }
 }

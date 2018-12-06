@@ -2,9 +2,15 @@ package org.codecyprus.th.api;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import io.ably.lib.rest.AblyRest;
+import io.ably.lib.rest.Channel;
+import io.ably.lib.types.AblyException;
+import io.ably.lib.types.Message;
 import org.codecyprus.th.db.LocationFactory;
+import org.codecyprus.th.db.ParameterFactory;
 import org.codecyprus.th.db.SessionFactory;
 import org.codecyprus.th.model.Location;
+import org.codecyprus.th.model.Parameter;
 import org.codecyprus.th.model.Replies;
 import org.codecyprus.th.model.Session;
 
@@ -93,10 +99,32 @@ public class LocationServlet extends HttpServlet {
                         printWriter.println(gson.toJson(reply));
                     } else {
                         LocationFactory.addLocation(new Location(sessionId, now, latitude, longitude));
+
+                        // ably push
+                        pushAblyUpdate(
+                                session.getTreasureHuntUuid(),
+                                new AblyUpdate(session.getUuid(), session.getAppName(), session.getPlayerName(), session.getScore(), session.getCompletionTime(), latitude, longitude));
+
                         final Replies.LocationReply reply = new Replies.LocationReply("Added location (" + latitude + ", " + longitude + ")");
                         printWriter.println(gson.toJson(reply));
                     }
                 }
+            }
+        }
+    }
+
+    private void pushAblyUpdate(final String treasureHuntUUID, final AblyUpdate ablyUpdate) {
+        final Parameter parameter = ParameterFactory.getParameter("ABLY_PRIVATE_KEY");
+        if(parameter != null) {
+            try {
+                final String ablyKey = parameter.getValue();
+                final AblyRest ably = new AblyRest(ablyKey);
+                final Channel channel = ably.channels.get("th-" + treasureHuntUUID);
+                final String json = gson.toJson(ablyUpdate);
+                final Message[] messages = new Message[]{new Message("session_update", json)};
+                channel.publish(messages);
+            } catch (AblyException ae) {
+                log.severe("Ably error: " + ae.errorInfo);
             }
         }
     }

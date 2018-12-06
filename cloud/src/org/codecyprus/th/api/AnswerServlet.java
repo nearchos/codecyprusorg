@@ -2,10 +2,10 @@ package org.codecyprus.th.api;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import org.codecyprus.th.db.ConfiguredQuestionFactory;
-import org.codecyprus.th.db.LocationFactory;
-import org.codecyprus.th.db.QuestionFactory;
-import org.codecyprus.th.db.SessionFactory;
+import io.ably.lib.rest.AblyRest;
+import io.ably.lib.rest.Channel;
+import io.ably.lib.types.AblyException;
+import org.codecyprus.th.db.*;
 import org.codecyprus.th.model.*;
 
 import javax.servlet.http.HttpServlet;
@@ -117,6 +117,14 @@ public class AnswerServlet extends HttpServlet {
                                     printWriter.println(gson.toJson(reply));
                                 }
                             }
+                            // ably push
+                            final Session updatedSession = SessionFactory.getSession(sessionUuid);
+                            assert updatedSession != null;
+                            final Location location = LocationFactory.getLatestLocation(updatedSession.getUuid());
+                            final double latitude = location == null ? 0d : location.getLatitude();
+                            final double longitude = location == null ? 0d : location.getLongitude();
+                            pushAblyAnswer(updatedSession.getTreasureHuntUuid(),
+                                    new AblyUpdate(updatedSession.getUuid(), updatedSession.getAppName(), updatedSession.getPlayerName(), updatedSession.getScore(), updatedSession.getCompletionTime(), latitude, longitude));
                         }
                     }
                 }
@@ -134,6 +142,22 @@ public class AnswerServlet extends HttpServlet {
             return true;
         } else {
             return answer.trim().equalsIgnoreCase(correctAnswer.trim());
+        }
+    }
+
+    private void pushAblyAnswer(final String treasureHuntUUID, final AblyUpdate ablyUpdate) {
+        try {
+            final Parameter parameter = ParameterFactory.getParameter("ABLY_PRIVATE_KEY");
+            if(parameter != null) {
+                final String ablyKey = parameter.getValue();
+                final AblyRest ably = new AblyRest(ablyKey);
+                final Channel channel = ably.channels.get("th-" + treasureHuntUUID);
+                final String json = gson.toJson(ablyUpdate);
+                io.ably.lib.types.Message[] messages = new io.ably.lib.types.Message[]{new io.ably.lib.types.Message("session_update", json)};
+                channel.publish(messages);
+            }
+        } catch (AblyException ae) {
+            log.severe("Ably error: " + ae.errorInfo);
         }
     }
 }

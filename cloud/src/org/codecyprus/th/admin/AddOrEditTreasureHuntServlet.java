@@ -4,8 +4,14 @@ import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
+import io.ably.lib.rest.AblyRest;
+import io.ably.lib.rest.Channel;
+import io.ably.lib.types.AblyException;
+import io.ably.lib.types.Message;
+import org.codecyprus.th.db.ParameterFactory;
 import org.codecyprus.th.db.TreasureHuntFactory;
 import org.codecyprus.th.db.UserFactory;
+import org.codecyprus.th.model.Parameter;
 import org.codecyprus.th.model.TreasureHunt;
 import org.codecyprus.th.model.User;
 import org.codecyprus.th.model.Visibility;
@@ -76,7 +82,6 @@ public class AddOrEditTreasureHuntServlet extends HttpServlet {
                 if(uuid != null && !uuid.isEmpty()) { // editing existing category
                     final TreasureHunt treasureHunt = new TreasureHunt(uuid, name, description, ownerEmail, visibility, startsOn, endsOn, maxDuration, shuffled, requiresAuthentication, emailResults, hasPrize);
                     TreasureHuntFactory.editTreasureHunt(treasureHunt);
-
                     // use ably to update treasure hunt name
                     pushAblyUpdate(uuid, name, startsOn, endsOn);
                 } else { // adding a new category
@@ -90,7 +95,26 @@ public class AddOrEditTreasureHuntServlet extends HttpServlet {
         }
     }
 
+    private static final String EOL = System.getProperty("line.separator");
+
     private void pushAblyUpdate(final String uuid, final String name, final long startsOn, final long endsOn) {
-        // todo integrate ably
+        try {
+            // ably push
+            final Parameter parameter = ParameterFactory.getParameter("ABLY_PRIVATE_KEY");
+            if(parameter != null) {
+                final String ablyKey = parameter.getValue();
+                final AblyRest ably = new AblyRest(ablyKey);
+                final Channel channel = ably.channels.get("th-" + uuid);
+                final String json = "  {" + EOL +
+                        "    \"name\": \"" + name + "\"," + EOL +
+                        "    \"startsOn\": " + startsOn + "," + EOL +
+                        "    \"endsOn\": " + endsOn + EOL +
+                        "  }" + EOL;
+                final Message[] messages = new Message[] {new Message("th_update", json)};
+                channel.publish(messages);
+            }
+        } catch (AblyException ae) {
+            log.severe("Ably problem: " + ae.errorInfo.message);
+        }
     }
 }

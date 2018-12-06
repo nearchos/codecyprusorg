@@ -2,11 +2,9 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.util.Vector" %>
-<%@ page import="org.codecyprus.th.db.TreasureHuntFactory" %>
 <%@ page import="org.codecyprus.th.admin.DeleteEntity" %>
-<%@ page import="org.codecyprus.th.db.ConfiguredQuestionFactory" %>
-<%@ page import="org.codecyprus.th.db.QuestionFactory" %>
 <%@ page import="org.codecyprus.th.model.*" %>
+<%@ page import="org.codecyprus.th.db.*" %>
 <%--
   ~ This file is part of UCLan-THC server.
   ~
@@ -181,7 +179,7 @@
 
         <hr/>
         <form action="delete-entity" onsubmit="deleteButton.disabled = true; return true;">
-            <div><input type="submit" value="Delete category" name="deleteButton"/></div>
+            <div><input type="submit" value="Delete treasure hunt" name="deleteButton"/></div>
             <input type="hidden" name="<%= TreasureHuntFactory.PROPERTY_UUID %>" value="<%= treasureHunt.getUuid() %>"/>
             <input type="hidden" name="<%= DeleteEntity.REDIRECT_URL %>" value="<%= URLEncoder.encode("treasure-hunts", "UTF-8") %>"/>
         </form>
@@ -350,9 +348,70 @@
 </form>
 
 <p><a href="questions">View or edit questions</a></p>
+
+<hr/>
+<%
+    final ArrayList<Timed> timeds = TimedFactory.getTimedsForTreasureHunt(treasureHunt.getUuid());
+%>
+<h2>Timed</h2>
+<p>Contains <%=timeds.size()%> timeds</p>
+
+<table border="1">
+    <tr>
+        <th>UUID</th>
+        <th>Title</th>
+        <th>Body</th>
+        <th>URL</th>
+        <th></th>
+    </tr>
+    <%
+        for(final Timed timed : timeds) {
+            final String uuid = timed.getUuid();
+            final String shortUuid = uuid.length() > 8 ? uuid.substring(uuid.length() - 8) : uuid;
+    %>
+    <tr>
+        <td><div class="tooltip"><%=shortUuid%><span class="tooltiptext"><%=uuid%></span></div></td>
+        <td><%= timed.getTitleText() %></td>
+        <td><%= timed.getBodyText() %></td>
+        <td> <a href="/th/timed?uuid=<%=uuid%>" target="_blank">/th/timed?uuid=<%=uuid%></a></td>
+        <td>
+            <form action="delete-entity">
+                <div><input type="submit" value="Delete" /></div>
+                <input type="hidden" name="<%= TimedFactory.PROPERTY_UUID %>" value="<%= uuid %>"/>
+                <input type="hidden" name="<%= DeleteEntity.REDIRECT_URL %>" value="<%= URLEncoder.encode("treasure-hunt?uuid=" + treasureHunt.getUuid(), "UTF-8") %>"/>
+            </form>
+        </td>
+    </tr>
+    <%
+        }
+    %>
+</table>
+
+<hr/>
+
+<h2>Add Timed</h2>
+
+<form action="add-timed" method="post" onsubmit="addTimedButton.disabled=true; return true;">
+    <table>
+        <tr>
+            <th>Title</th>
+            <td><input type="text" name="<%= TimedFactory.PROPERTY_TITLE_TEXT %>" /></td>
+        </tr>
+        <tr>
+            <th>Body</th>
+            <td><input type="text" name="<%= TimedFactory.PROPERTY_BODY_TEXT %>" /></td>
+        </tr>
+    </table>
+    <div><input type="submit" value="Add timed" name="addTimedButton"/></div>
+    <input type="hidden" name="<%= TimedFactory.PROPERTY_TREASURE_HUNT_ID %>" value="<%= treasureHunt.getUuid() %>" />
+    <input type="hidden" name="redirect" value="treasure-hunt?uuid=<%= treasureHunt.getUuid() %>" />
+</form>
+
+<hr/>
 <%
     }
 %>
+
     </body>
 
 </html>
