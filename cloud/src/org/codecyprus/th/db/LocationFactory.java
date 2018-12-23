@@ -32,7 +32,11 @@ public class LocationFactory {
     }
 
     static public Location getLatestLocation(final String sessionUuid) {
-        final Query query = new Query(KIND).addSort(PROPERTY_TIMESTAMP, Query.SortDirection.DESCENDING);
+        final Query.Filter filterCode = new Query.FilterPredicate(
+                PROPERTY_SESSION_UUID,
+                Query.FilterOperator.EQUAL,
+                sessionUuid);
+        final Query query = new Query(KIND).setFilter(filterCode).addSort(PROPERTY_TIMESTAMP, Query.SortDirection.DESCENDING);
         final PreparedQuery preparedQuery = datastoreService.prepare(query);
         final List<Entity> entities = preparedQuery.asList(FetchOptions.Builder.withLimit(1));
         return entities.isEmpty() ? null : getFromEntity(entities.get(0));

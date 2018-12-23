@@ -125,6 +125,15 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>AdminConfiguredQuestion</servlet-name>
+        <jsp-file>/th/admin/ConfiguredQuestion.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminConfiguredQuestion</servlet-name>
+        <url-pattern>/th/admin/configured-question</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>AdminSessions</servlet-name>
         <jsp-file>/th/admin/Sessions.jsp</jsp-file>
     </servlet>
@@ -209,6 +218,15 @@
         <url-pattern>/th/admin/add-parameter</url-pattern>
         <url-pattern>/th/admin/edit-parameter</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>AddOrEditUrlShortenerServlet</servlet-name>
+        <servlet-class>org.codecyprus.th.admin.AddOrEditUrlShortenerServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddOrEditUrlShortenerServlet</servlet-name>
+        <url-pattern>/th/admin/add-url-shortener</url-pattern>
+        <url-pattern>/th/admin/edit-url-shortener</url-pattern>
+    </servlet-mapping>
 
     <servlet>
         <servlet-name>AdminDeleteEntity</servlet-name>
@@ -220,7 +238,7 @@
     </servlet-mapping>
     <!--End of Admin JSPs and Servlets-->
 
-    <!--Timed JSPs-->
+    <!--Timed JSP-->
     <servlet>
         <servlet-name>TimedIndex</servlet-name>
         <jsp-file>/th/timed/Index.jsp</jsp-file>
@@ -229,7 +247,18 @@
         <servlet-name>TimedIndex</servlet-name>
         <url-pattern>/th/timed</url-pattern>
     </servlet-mapping>
-    <!--End of Timed JSPs-->
+    <!--End of Timed JSP-->
+
+    <!--Forwarding JSP-->
+    <servlet>
+        <servlet-name>ForwardingServlet</servlet-name>
+        <servlet-class>org.codecyprus.th.api.ForwardingServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ForwardingServlet</servlet-name>
+        <url-pattern>/th/fwd/*</url-pattern>
+    </servlet-mapping>
+    <!--End of Forwarding JSP-->
 
     <!--API Servlets-->
     <servlet>

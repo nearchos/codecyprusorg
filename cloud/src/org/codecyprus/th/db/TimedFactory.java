@@ -11,7 +11,7 @@ public class TimedFactory {
 
     public static final Logger log = Logger.getLogger("codecyprus-th");
 
-    public static final String KIND = "Timed";
+    private static final String KIND = "Timed";
 
     public static final String PROPERTY_UUID = "uuid";
     public static final String PROPERTY_TREASURE_HUNT_ID = "t-th-id";
@@ -68,7 +68,7 @@ public class TimedFactory {
         }
     }
 
-    static public Timed getFromEntity(final Entity entity) {
+    static private Timed getFromEntity(final Entity entity) {
         return new Timed(
                 KeyFactory.keyToString(entity.getKey()),
                 (String) entity.getProperty(PROPERTY_TREASURE_HUNT_ID),

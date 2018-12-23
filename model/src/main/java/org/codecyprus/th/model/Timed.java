@@ -6,7 +6,7 @@ public class Timed implements Serializable {
 
     private String uuid; // PK
     private String treasureHuntUuid; // FK
-    private String titleText; // can be HTML
+    private String titleText;
     private String bodyText; // can be HTML
 
     public Timed(String treasureHuntUuid, String titleText, String bodyText) {

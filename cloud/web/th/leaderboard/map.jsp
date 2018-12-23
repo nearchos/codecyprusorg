@@ -160,7 +160,7 @@
                                 <th>Player</th>
                                 <!--<th>App ID</th>-->
                                 <th style="width: 72px; text-align: right">Score</th>
-                                <th style="width: 125px; text-align: right">Finish time</th>
+                                <th style="width: 125px; text-align: right">Time</th>
                             </tr>
                         </thead>
 
@@ -170,7 +170,7 @@
                                 <td>{{ session.player | truncate(23) }}</td>
                                 <!--<td>{{ session.appId }}</td>-->
                                 <td style="width: 72px; text-align: right">{{ session.score }}</td>
-                                <td style="width: 125px; text-align: right">{{ finishedStatus(session.finishTime) }}</td>
+                                <td style="width: 125px; text-align: right">{{ finishedStatus(session.completionTime) }}</td>
                             </tr>
                         </transition-group>
                     </table>
@@ -292,8 +292,8 @@
         return tcText.slice(0, last) + clamp;
     });
 
-    var mapLabels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
-        mapColours = ['red', 'yellow', 'green', 'orange'],
+    var mapLabels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789',
+        mapColours = ['blue', 'green', 'orange', 'pink', 'red', 'yellow' ],
         nextMapLabelIndex = 0,
         nextMapColourIndex = 0,
         mapIconsMap = {}; // naming is hard....
@@ -390,7 +390,7 @@
         methods : {
             finishedStatus: function (duration) {
                 if (duration === 0) {
-                    return 'Not yet';
+                    return 'Unfinished';
                 }
 
                 duration = moment.duration(duration);
@@ -404,21 +404,24 @@
             },
 
             mapIconUrl: function (session) {
-                if (!mapIconsMap.hasOwnProperty(session.uuid)) {
-                    mapIconsMap[session.uuid] = {
+                if (!mapIconsMap.hasOwnProperty(session.player)) {
+                    mapIconsMap[session.player] = {
                         label: mapLabels[nextMapLabelIndex],
                         colour: mapColours[nextMapColourIndex]
                     };
 
+                    nextMapColourIndex++;
                     nextMapLabelIndex++;
 
+                    if (nextMapColourIndex >= mapColours.length) {
+                        nextMapColourIndex = 0;
+                    }
                     if (nextMapLabelIndex >= mapLabels.length) {
                         nextMapLabelIndex = 0;
-                        nextMapColourIndex++;
                     }
                 }
 
-                var icon = mapIconsMap[session.uuid];
+                var icon = mapIconsMap[session.player];
 
                 return '/th/leaderboard/map-markers/' + icon.colour + '_Marker' + icon.label + '.png';
             }

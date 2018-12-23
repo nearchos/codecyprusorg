@@ -1,15 +1,12 @@
 <%@ page import="java.net.URLEncoder" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.Map" %>
-<%@ page import="java.util.Vector" %>
-<%@ page import="java.util.HashMap" %>
 <%@ page import="org.codecyprus.th.model.TreasureHunt" %>
 <%@ page import="org.codecyprus.th.db.TreasureHuntFactory" %>
 <%@ page import="org.codecyprus.th.model.ConfiguredQuestion" %>
 <%@ page import="org.codecyprus.th.db.ConfiguredQuestionFactory" %>
 <%@ page import="org.codecyprus.th.model.Session" %>
 <%@ page import="org.codecyprus.th.db.SessionFactory" %>
-<%@ page import="org.codecyprus.th.admin.DeleteEntity" %><%--
+<%@ page import="org.codecyprus.th.admin.DeleteEntity" %>
+<%@ page import="java.util.*" %><%--
   Created by IntelliJ IDEA.
   User: Nearchos
   Date: 17-Aug-18
@@ -57,6 +54,7 @@ You are not logged in!
             <th>App Name</th>
             <th>Start Time</th>
             <th>Score</th>
+            <th>Completion Time</th>
             <th>Question Seq Numbers</th>
             <th>Current Index</th>
             <th></th>
@@ -75,6 +73,7 @@ You are not logged in!
             <td><%=session1.getAppName()%></td>
             <td><%=session1.getStartTimeFormatted()%></td>
             <td><%=session1.getScore()%></td>
+            <td><%=TreasureHunt.SIMPLE_DATE_FORMAT.format(new Date(session1.getCompletionTime()))%></td>
             <td><%=configuredQuestionSeqNumbers%></td>
             <td><%=session1.getCurrentConfiguredQuestionIndex()%></td>
             <td>

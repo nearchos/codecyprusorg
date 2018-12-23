@@ -27,5 +27,7 @@
     <orderEntry type="library" name="com.google.appengine:appengine-api-1.0-sdk:Release" level="project" />
     <orderEntry type="module" module-name="model" />
     <orderEntry type="library" name="com.google.code.gson:gson:2.8.5" level="project" />
+    <orderEntry type="library" name="ably-java-1.0.1" level="project" />
+    <orderEntry type="library" name="msgpack-core-0.8.11" level="project" />
   </component>
 </module>

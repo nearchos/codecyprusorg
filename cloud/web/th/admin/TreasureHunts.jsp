@@ -61,8 +61,8 @@ You are not logged in!
             <th>Requires Authentication</th>
             <th>Email Results</th>
             <th>Has Prize</th>
-            <th></th>
-            <th></th>
+            <th>Sessions</th>
+            <th>Live Map</th>
             <th></th>
             <th></th>
         </tr>
@@ -95,7 +95,7 @@ You are not logged in!
             </td>
             <td>
                 <div>
-                    <%--<input type="button" value="Live map" onclick="window.open('/live/map.jsp?<%=CategoryFactory.PROPERTY_UUID%>=<%=category.getUUID()%>')" />--%>
+                    <input type="button" value="Live map" onclick="window.open('/th/leaderboard/map?treasure-hunt-id=<%=treasureHunt.getUuid()%>')" />
                 </div>
             </td>
             <td>

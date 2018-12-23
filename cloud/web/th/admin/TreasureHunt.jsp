@@ -313,7 +313,11 @@
     <table>
         <tr>
             <th>Question Text</th>
-            <td><input type="text" name="<%= QuestionFactory.PROPERTY_QUESTION_TEXT%>" /></td>
+            <td>
+                <label>
+                    <textarea rows="20" cols="120" name="<%= QuestionFactory.PROPERTY_QUESTION_TEXT%>" title="Question Text"></textarea>
+                </label>
+            </td>
         </tr>
         <tr>
             <th>Question Type</th>
@@ -359,9 +363,9 @@
 <table border="1">
     <tr>
         <th>UUID</th>
+        <th>URL</th>
         <th>Title</th>
         <th>Body</th>
-        <th>URL</th>
         <th></th>
     </tr>
     <%
@@ -371,9 +375,9 @@
     %>
     <tr>
         <td><div class="tooltip"><%=shortUuid%><span class="tooltiptext"><%=uuid%></span></div></td>
+        <td> <a href="/th/timed?uuid=<%=uuid%>" target="_blank">/th/timed?uuid=<%=uuid%></a></td>
         <td><%= timed.getTitleText() %></td>
         <td><%= timed.getBodyText() %></td>
-        <td> <a href="/th/timed?uuid=<%=uuid%>" target="_blank">/th/timed?uuid=<%=uuid%></a></td>
         <td>
             <form action="delete-entity">
                 <div><input type="submit" value="Delete" /></div>
@@ -404,6 +408,61 @@
     </table>
     <div><input type="submit" value="Add timed" name="addTimedButton"/></div>
     <input type="hidden" name="<%= TimedFactory.PROPERTY_TREASURE_HUNT_ID %>" value="<%= treasureHunt.getUuid() %>" />
+    <input type="hidden" name="redirect" value="treasure-hunt?uuid=<%= treasureHunt.getUuid() %>" />
+</form>
+
+<hr/>
+<%
+    final Vector<UrlShortener> urlShorteners = UrlShortenerFactory.getAllUrlShorteners();
+%>
+<h2>Url Shorteners</h2>
+<p><%=urlShorteners.size()%> url shorteners</p>
+
+<table border="1">
+    <tr>
+        <th>UUID</th>
+        <th>Key</th>
+        <th>Target</th>
+        <th></th>
+    </tr>
+    <%
+        for(final UrlShortener urlShortener : urlShorteners) {
+            final String uuid = urlShortener.getUuid();
+            final String shortUuid = uuid.length() > 8 ? uuid.substring(uuid.length() - 8) : uuid;
+    %>
+    <tr>
+        <td><div class="tooltip"><%=shortUuid%><span class="tooltiptext"><%=uuid%></span></div></td>
+        <td><%= urlShortener.getKey() %></td>
+        <td> <a href="<%=urlShortener.getTarget()%>" target="_blank"><%=urlShortener.getTarget()%></a></td>
+        <td>
+            <form action="delete-entity">
+                <div><input type="submit" value="Delete" /></div>
+                <input type="hidden" name="<%= UrlShortenerFactory.PROPERTY_UUID %>" value="<%= uuid %>"/>
+                <input type="hidden" name="<%= DeleteEntity.REDIRECT_URL %>" value="<%= URLEncoder.encode("treasure-hunt?uuid=" + treasureHunt.getUuid(), "UTF-8") %>"/>
+            </form>
+        </td>
+    </tr>
+    <%
+        }
+    %>
+</table>
+
+<hr/>
+
+<h2>Add Url Shortener</h2>
+
+<form action="add-url-shortener" method="post" onsubmit="addUrlShortenerButton.disabled=true; return true;">
+    <table>
+        <tr>
+            <th>Key</th>
+            <td><input type="text" name="<%= UrlShortenerFactory.PROPERTY_KEY%>" /></td>
+        </tr>
+        <tr>
+            <th>Target (absolute URL)</th>
+            <td><input type="text" name="<%= UrlShortenerFactory.PROPERTY_TARGET %>" /></td>
+        </tr>
+    </table>
+    <div><input type="submit" value="Add timed" name="addUrlShortenerButton"/></div>
     <input type="hidden" name="redirect" value="treasure-hunt?uuid=<%= treasureHunt.getUuid() %>" />
 </form>
 

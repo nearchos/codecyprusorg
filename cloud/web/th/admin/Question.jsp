@@ -40,7 +40,11 @@ You are not logged in!
             </tr>
             <tr>
                 <th>Question Text</th>
-                <td><input type="text" name="<%= QuestionFactory.PROPERTY_QUESTION_TEXT%>" title="Question Text" value="<%=question.getQuestionText()%>"/></td>
+                <td>
+                    <label>
+                        <textarea rows="20" cols="120" name="<%= QuestionFactory.PROPERTY_QUESTION_TEXT%>" title="Question Text"><%=question.getQuestionText()%></textarea>
+                    </label>
+                </td>
             </tr>
             <tr>
                 <th>Question Type</th>
