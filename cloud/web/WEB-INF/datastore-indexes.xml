@@ -22,10 +22,9 @@
         <property name="s-start-time" direction="asc"/>
     </datastore-index>
 
-    <datastore-index kind="TreasureHunt" ancestor="false" source="manual">
-        <property name="th-visibility" direction="asc"/>
-        <property name="th-ends-on" direction="asc"/>
-        <property name="th-starts-on" direction="asc"/>
+    <datastore-index kind="Location" ancestor="false" source="manual">
+        <property name="l-session-uuid" direction="asc"/>
+        <property name="l-timestamp" direction="desc"/>
     </datastore-index>
 
 </datastore-indexes>
