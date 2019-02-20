@@ -9,6 +9,7 @@
     <include path="/css/*"/>
     <include path="/images/*"/>
     <include path="/about/**"/>
+    <include path="/app/**"/>
     <include path="/2014/**"/>
     <include path="/2015/**"/>
     <include path="/2016/**"/>

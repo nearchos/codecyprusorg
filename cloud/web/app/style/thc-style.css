@@ -1,0 +1,829 @@
+/********************************************************************************
+	File Name: 
+		thc-style.css
+	Description:
+		Contains styling for the Treasure Hunt Web App.
+*********************************************************************************/
+
+
+/********************************************************************************
+								BASIC STYLING
+*********************************************************************************/
+
+@charset "utf-8";
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,greek,greek-ext);
+
+html,body {
+	height:100%;
+	margin:0;
+	padding:0;	
+}
+
+body {
+	word-wrap:break-word;
+	background:url(../images/bg_pixels.png) repeat;	
+	font-family: 'Roboto', sans-serif;
+}
+
+.clearFloat { clear:both; }
+
+#container {
+	display:none;
+	margin-top:60px;
+}
+
+@media only screen and (max-width: 240px) {
+	#container { margin-top:50px }
+}
+
+#question { text-align:left; }
+
+/*** STICKY HEADER ***/
+.header {
+    width:100%;
+    position:fixed;
+    top:0px;
+    z-index: 1000;
+}
+
+.bubble {
+	border:2px solid red;
+	background-color:white;
+	border-radius:10px;	
+	padding:5px;
+	width:80%;
+	max-width:500px;
+}
+
+@media only screen and (max-width: 320px) {
+    p { font-size:70%; }
+}
+
+#message {
+	color:red;
+	text-decoration:blink;
+}
+
+.content { /*intentionally empty*/ }
+
+.disabled {
+	color:grey;
+	cursor:not-allowed;
+	padding:5px;
+}
+
+@media only screen and (min-width: 1024px) {
+	.disabled {
+		padding:15px;
+    }
+}
+
+#score {
+	color:orange;	
+	float:left;
+	padding-left:3px;
+}
+
+p {
+	transition:0.5s;
+	animation:ease-in;
+}
+
+#isLocationRelevant {
+	display:none;
+	color:red;	
+	text-decoration:underline;
+}
+
+@media only screen and (max-width: 320px) {
+	small { font-size: 70%; }
+}
+
+/********************************************************************************
+									IMAGES
+*********************************************************************************/
+
+.pirateImage { margin:auto; }
+
+@media only screen and (max-width: 320px) {
+	.pirateImage { width:30%; }
+}
+
+@media only screen and (min-width: 1024px) {
+	.pirateImage { width:auto; }
+}
+
+#categoriesPirateImage { width:20%; }
+
+@media only screen and (min-width: 1024px) {
+	#categoriesPirateImage { width:auto; }
+}
+
+#registerPirateImage {
+	width:20%;
+	float:left;	
+}
+
+@media only screen and (min-width: 1024px) {
+	#registerPirateImage { width:auto; }
+}
+
+#questionsPirateImage {
+	width:20%;	
+	float:left;
+}
+
+@media only screen and (min-width: 1024px) {
+	#questionsPirateImage { width:auto; }
+}
+
+#gappsBadge {
+	display:none;	
+}
+
+.gappsBadgeImage {
+	width:50%;
+	max-width: 250px;
+}
+
+.aboutImage {
+	width:100%;
+	max-width: 200px;
+}
+
+.codeCyImage {
+	width:100%;
+	max-width: 300px;
+}
+
+/********************************************************************************
+								TOP NAVIGATION BAR
+*********************************************************************************/
+
+ul.topNav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+	border: 1px solid #e7e7e7;
+    background-color: #D8D8D8;
+}
+
+ul.topNav li {
+    float: left;
+	border-left: 1px solid #CCCCCC;
+}
+
+@media only screen and (max-width: 320px) {
+    ul.topNav li { font-size:70%; }
+}
+
+ul.topNav li a {
+	display: block;
+    color: black;
+    text-align: center;
+    padding: 8px 10px;
+    text-decoration: none;
+	text-transform:uppercase;
+	font-weight:700;
+}
+
+ul.topNav li a:hover:not(.active) { background-color: #8C8C8C; }
+
+.topNavImage {
+	float:left;
+	margin:5px;
+	margin-right: 2px;
+}
+
+@media only screen and (max-width: 320px) {
+	.topNavImage {max-height: 20px; }
+}
+
+.codeCy {
+	float:left;
+	margin:8px;
+	margin-left: 1px;
+	margin-right: 1px;
+}
+
+/********************************************************************************
+								SESSION INFO BANNER
+*********************************************************************************/
+
+ul.scoreBanner {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+	border: 1px solid #e7e7e7;
+    background-color: rgba(0,0,0,0.15);
+}
+
+ul.scoreBanner li {
+    float: left;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+ul.scoreBanner li a {
+	display: block;
+    color: black;
+    text-align: center;
+    padding: 8px 10px;
+    text-decoration: none;
+	text-transform:uppercase;
+	font-weight:700;
+}
+
+ul.scoreBanner li a:hover:not(.active) { background-color: #8C8C8C; }
+
+.scoreBannerImage {
+	float:left;
+	width:40%;
+	height:100%;
+	max-width:120px;
+	max-height:80px;
+	margin:4px;
+}
+
+/********************************************************************************
+									BUTTONS
+*********************************************************************************/
+
+.THCButton {
+	background-color:rgba(0,0,0,0.45);
+    border:1px solid white;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+	box-shadow:2px 2px 10px black;
+	transition:1s;
+}
+
+.THCButton:hover { background-color:rgba(0,0,0,0.75); }
+
+.THCButton:active { background-color:rgba(0,0,0,1); }
+
+@media only screen and (min-width: 320px) {
+	.THCButton { padding:10px; }
+}
+
+@media only screen and (min-width: 1024px) {
+	.THCButton {
+		padding:20px;
+		font-size:130%;
+    }
+}
+
+@media only screen and (min-width: 1024px) {
+	#skipBtn { padding: 10px 20px; }
+}
+
+.MCQ {
+	width:20%;
+	margin:2px;
+	height:50px;
+}
+
+@media only screen and (min-width: 1024px) {
+	.MCQ {
+		height:100px;
+		margin-top:30px;
+	}
+}
+
+.startButton {
+	width:80%;	
+	max-width:300px;
+}
+
+.startImage {
+	height:30px;	
+	float:right;
+}
+
+/********************************************************************************
+									LISTS
+*********************************************************************************/
+
+/**** CATEGORY LISTS ****/
+
+#categoryList {
+	list-style-type:none;
+	margin: 0;
+    padding: 0;
+    overflow: hidden;
+	width:98%;
+	margin:auto;
+	max-width:600px;
+	border-left:1px solid #CFCFCF;	
+	border-right:1px solid #CFCFCF;	
+	text-align:center;
+}
+
+/**** Styles inactive categories ****/
+#categoryList li { border-bottom: 1px solid #CFCFCF; }
+
+@media only screen and (max-width: 320px) {
+	#categoryList li { font-size: 80%; }
+}
+
+#categoryList li:last-child  { border-bottom:none; }
+
+/**** Styles active categories ****/
+#categoryList li a {
+	display:block;
+	color:#C30003;
+	font-weight:700;
+	text-decoration:none;
+	padding:5px;
+	transition:0.5s;
+}	
+
+@media only screen and (min-width: 1024px) {
+	#categoryList li a { padding:15px; }
+}
+
+#categoryList li a:hover {
+	background-color:rgba(0,0,0,0.25);	
+	color:red;
+}
+
+#categoryList li a:active {
+	background-color:black;
+	color:white;	
+}
+
+/**** SCOREBOARD LISTS ****/
+
+#scoreboardList {
+	margin: 0;
+    padding: 0;
+    overflow: hidden;
+	width:98%;
+	margin:auto;
+	max-width:600px;
+	border-left:1px solid #CFCFCF;	
+	border-right:1px solid #CFCFCF;	
+	text-align:center;
+	list-style-type:none;
+	box-shadow:2px 2px 10px #787878;
+    border-radius: 5px;
+}
+
+.noRadius {
+    border-radius: 0 !important;
+}
+
+#scoreboardList li { border-bottom: 1px solid #CFCFCF; background-color: rgba(100, 100, 100, 0.75); }
+
+#scoreboardList li:first-child { border-top: 1px solid #CFCFCF; }
+
+.rank {
+	float:left;
+	padding-left:10px;
+	font-size:150%;
+	font-weight:700;
+	position: relative;
+	bottom: 18px;
+    color: white;
+}
+
+.rankFix {
+    bottom: -24px;
+}
+
+.currentPlayer {
+    background-color:rgba(255,255,0,0.75) !important;
+}
+
+.currentPlayer .rank {
+    color: black;
+}
+
+.currentPlayer .playerName {
+    color: black;
+}
+
+.currentPlayer .timeFinished {
+    color: grey;
+}
+
+@media only screen and (max-width: 320px) {
+	#scoreboardList li { font-size: 80%; }
+}
+
+.scoreBox {
+	color:white;
+	background-color: rgba(255,0,0,1);
+	border:2px solid red;
+	border-radius:2px;
+	display:inline;
+	float:right;
+	padding:2px;
+	margin-right:5px;
+	margin-bottom:5px;
+	position: relative;
+	bottom: 27px;
+}
+
+.timeFinished { color: #CCC; }
+
+.playerName {
+    font-weight:700;
+    padding-top: 25px;
+    position: relative;
+    top: 5px;
+    color: white;
+}
+
+.playerRankingMiniScoreboard {
+    padding: 10px;
+    background-color: white;
+}
+
+/********************************************************************************
+									BUBBLES
+*********************************************************************************/
+
+#categoriesBubble {
+	width:60%;
+	margin:10px;
+	max-width:250px;
+}
+
+#registerBubble {
+	font-size:100%;
+	width:60%;
+	max-width:300px;
+	margin:10px;	
+	float:left;
+}
+
+#questionBubble {
+	font-size:100%;
+	width:60%;
+	max-width:300px;
+	margin:10px;
+}
+
+.instructions { margin:5px; }
+
+/********************************************************************************
+									FORMS
+*********************************************************************************/
+
+#mcqForm { display:none; }
+
+#textForm { display:none; }
+
+#booleanForm {display: none; }
+
+#integerForm {display: none; }
+
+#numberForm {display: none; }
+
+#registerPiratesForm { text-align:center; }
+
+input[type=text] {
+	width:95%;	
+	background-color: transparent;
+	padding: 2px 4px;
+    margin: 2px 0;
+    box-sizing: border-box;
+	border:none;
+	border-bottom: 1px solid #0087C0;
+    border-radius: 4px;
+	max-width: 400px;
+}
+
+input[type=number] {
+	width:95%;
+	background-color: transparent;
+	padding: 2px 4px;
+	margin: 2px 0;
+	box-sizing: border-box;
+	border:none;
+	border-bottom: 1px solid #0087C0;
+	border-radius: 4px;
+	max-width: 400px;
+}
+
+input:focus { outline:0; }
+
+@media only screen and (min-width: 320px) {
+	input[type=text] {
+		padding: 12px 20px;
+   		margin: 8px 0;
+		font-size:110%;
+    }
+	input[type=number] {
+		padding: 12px 20px;
+		margin: 8px 0;
+		font-size:110%;
+	}
+}
+
+input[type=email] {
+	width:95%;	
+	background-color: transparent;
+	padding: 2px 4px;
+    margin: 2px 0;
+    box-sizing: border-box;
+	border:none;
+	border-bottom: 1px solid #0087C0;
+    border-radius: 4px;
+	max-width: 400px;
+}
+
+@media only screen and (min-width: 320px) {
+	input[type=email] {
+		padding: 12px 20px;
+   		margin: 8px 0;
+		font-size:110%;
+    }
+}
+
+input { transition:1s; }
+
+select {
+	width: 95%;
+	background-color:transparent;
+	border-radius: 10px;
+	max-width: 400px;
+	padding: 2px 4px;
+}
+
+@media only screen and (min-width: 320px) {
+	select {
+		padding: 12px 20px;
+   		margin: 8px 0;
+		font-size:110%;
+    }
+}
+
+/********************************************************************************
+								PLACEHOLDERS
+*********************************************************************************/
+input::-webkit-input-placeholder { font-style:italic !important; }
+ 
+input:-moz-placeholder { font-style:italic !important; }
+ 
+input::-moz-placeholder { font-style:italic !important; }
+ 
+input:-ms-input-placeholder { font-style:italic !important; }
+
+/********************************************************************************
+								MODALS/DIALOGS
+*********************************************************************************/
+
+.modal {
+	z-index:3;
+	display:none;
+	padding-top:100px;
+	position:fixed;
+	left:0;
+	top:0;
+	width:100%;
+	height:100%;
+	overflow:auto;
+	background-color:rgb(0,0,0);
+	background-color:rgba(0,0,0,0.4);
+}
+
+.modal-content {
+	margin:auto;
+	background-color:#fff;
+	position:relative;
+	padding:0;
+	outline:0;
+	width:600px;
+}
+
+.closebtn {
+	text-decoration:none;
+	float:right;
+	font-size:24px;
+	font-weight:bold;
+	color:inherit;
+}
+
+.closebtn:hover,.closebtn:focus{color:#000;text-decoration:none;cursor:pointer}
+
+@media (max-width:600px) {
+	.modal-content {
+		margin:0 10px;
+		width:auto!important;
+	}
+	
+	.modal { padding-top:30px; }
+}
+
+@media (max-width:768px) {
+	.modal-content { width:500px; }
+	
+	.modal { padding-top:50px; }
+}
+
+@media (min-width:993px) {
+	.modal-content { width:900px; }
+}
+
+.scoreboardBottomPadding { padding:0; }	
+
+@media (max-height:640px) {
+	.scoreboardBottomPadding { padding-bottom: 50px; }
+}
+
+.modalContainer { padding:0.01em 16px; }
+
+.modalContainer:after { 
+	content:"";
+	display:table;
+	clear:both;
+}
+
+.card {
+	box-shadow:0 8px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)!important
+}
+
+.hasBackground {
+	color:#fff!important;
+	background-color:#636363!important;
+	border:1px solid white;
+}
+
+/********************************************************************************
+									ANIMATIONS
+*********************************************************************************/
+.animate-top {
+	position:relative;
+	-webkit-animation:animatetop 0.4s;
+	animation:animatetop 0.4s
+}
+
+@-webkit-keyframes animatetop {
+	from {
+		top:-300px;
+		opacity:0;
+	} 
+	
+	to {
+		top:0;
+		opacity:1;
+	}
+}
+
+@keyframes animatetop {
+	from {
+		top:-300px;
+		opacity:0;
+	} 
+	
+	to {
+		top:0;
+		opacity:1;
+	}
+}
+
+.closebtn {
+	-webkit-transition:background-color .3s,color .15s,box-shadow .3s,opacity 0.3s;
+	transition:background-color .3s,color .15s,box-shadow .3s,opacity 0.3s
+}
+
+/********************************************************************************
+								TOASTS/SNACKBARS
+*********************************************************************************/
+
+.paper-snackbar {
+  transition-property: opacity, bottom, left, right, width, margin, border-radius;
+  transition-duration: 0.5s;
+  transition-timing-function: ease;
+  font-size: 14px;
+  min-height: 14px;
+  background-color: #323232;
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  line-height: 22px;
+  padding: 9px 12px;
+  bottom: 0px;
+  opacity: 0;
+  text-align:center;
+}
+
+@media (min-width: 360px) {
+  .paper-snackbar {
+    min-width: 288px;
+    max-width: 568px;
+    display: inline-flex;
+    border-radius: 2px;
+    margin: 24px;
+    bottom: -100px;
+  }
+}
+
+@media (max-width: 640px) {
+  .paper-snackbar {
+    left: 0px;
+    right: 0px;
+  }
+}
+
+@media (max-height: 320px) {
+	.paper-snackbar {
+		padding: 4px 6px;
+		font-size: 70%;	
+	}
+}
+
+.paper-snackbar .action {
+  background: inherit;
+  display: inline-block;
+  border: none;
+  font-size: inherit;
+  text-transform: uppercase;
+  color: #ffeb3b;
+  margin: 0px 0px 0px 24px;
+  padding: 0px;
+  min-width: min-content;
+}
+
+/********************************************************************************
+									LOADERS
+*********************************************************************************/
+
+#loader {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  width: 150px;
+  height: 150px;
+  margin: -75px 0 0 -75px;
+  border: 16px solid #8F8F8F;
+  border-radius: 50%;
+  border-top: 16px solid red;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@media (max-height: 480px) {
+	#loader {
+	  width: 50px;
+	  height: 50px;
+	  margin: -40px 0 0 -35px;
+	  border: 10px solid #8F8F8F;
+	  border-radius: 50%;
+	  border-top: 10px solid red;
+	}
+}
+
+/********************************************************************************
+									TOOLTIPS
+*********************************************************************************/
+.tooltip { /*intentionally empty*/ }
+
+.tooltip .tooltipText {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 5px;
+    position:relative;
+    z-index: 1;
+}
+
+.tooltip:active .tooltipText {
+    visibility: visible;
+    left: 20%; 
+}
+
+/********************************************************************************/
+
+#qrCode {
+	display: none;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}

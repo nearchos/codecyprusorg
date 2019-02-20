@@ -91,15 +91,17 @@ public class AnswerServlet extends HttpServlet {
                                 if(configuredQuestion.isLocationRelevant()) {
                                     final Location location = LocationFactory.getLatestLocation(sessionUuid); // get latest location fingerprint
                                     if(location == null) { // no location fingerprints in record
-                                        final Replies.AnswerReply reply = new Replies.AnswerReply(false, false, "This is a location-sensitive question but no location fingerprint is found for session: " + session.getUuid(), 0);
+                                        final Replies.AnswerReply reply = new Replies.AnswerReply(false, false, "This is a location-sensitive question but no location fingerprint is found for player: " + session.getPlayerName(), 0);
                                         printWriter.println(gson.toJson(reply));
                                     } else if(location.getTimestamp() + TIME_THRESHOLD < System.currentTimeMillis()) { // the latest location is too old
                                         final Replies.AnswerReply reply = new Replies.AnswerReply(false, false, "This is a location-sensitive question but there is no recent fingerprint. Latest one is from: " + new Date(location.getTimestamp()) + ".", 0);
                                         printWriter.println(gson.toJson(reply));
                                     } else {
-                                        if(location.distanceTo(configuredQuestion.getLatitude(), configuredQuestion.getLongitude()) > configuredQuestion.getDistanceThreshold()) {
+                                        final double actualDistance = location.distanceTo(configuredQuestion.getLatitude(), configuredQuestion.getLongitude());
+                                        final double threshold = configuredQuestion.getDistanceThreshold();
+                                        if(actualDistance > threshold) {
                                             // too far
-                                            final Replies.AnswerReply reply = new Replies.AnswerReply(false, false, "This is a location-sensitive question and your current location appears to be further than: " + configuredQuestion.getDistanceThreshold() + " meters from the intended target.", 0);
+                                            final Replies.AnswerReply reply = new Replies.AnswerReply(false, false, "This is a location-sensitive question and your current location appears to be " + actualDistance + " meters from the target which is further than the limit of " + threshold + " meters.", 0);
                                             printWriter.println(gson.toJson(reply));
                                         } else { // ok, location is fine
                                             final int scoreAdjustment = configuredQuestion.getCorrectScore().intValue();

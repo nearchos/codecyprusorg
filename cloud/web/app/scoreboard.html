@@ -1,0 +1,52 @@
+<!------------------------------------------------------------------------------------------
+	File Name: 
+		scoreboard.html
+	Description:
+		Shows the scoreboard after the user has finished the quiz.
+-------------------------------------------------------------------------------------------->
+
+
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link href="style/thc-style.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" href="images/pirate_android_small.png">
+<title>Scoreboard</title>
+<script src="js/utilities.js"></script>
+<script> var sessionID = fetchGetVariable("sessionID"); </script>
+<script src="js/cookies.js"></script>
+<script src="js/getScoreboard.js"></script> 
+</head>
+
+<body onload="getScoreboard();">
+
+<div id="loader"></div>
+
+<div id="container" align='center'>
+
+<div class="header">
+    <ul class="topNav">
+    <img class="topNavImage" src="images/pirate_android_verysmall.png" alt="Code Cyprus Image" />
+    <p class="codeCy"> Code Cyprus </p>
+      <li style="float:right"><a href="index.html">Play Again</a></li>
+      <li style="float:right"><a onclick="location.reload();">Reload</a></li>
+      <div class="clearFloat"></div>
+    </ul>
+</div>
+
+<hr/>
+<p id="message" style="font-weight:700"></p>
+<div id="qrCode"></div>
+<hr/>
+
+<h1> Scoreboard </h1>
+
+<ol id="scoreboardList"> </ol>
+
+</div> <!--CONTAINER-->
+
+</body>
+</html>

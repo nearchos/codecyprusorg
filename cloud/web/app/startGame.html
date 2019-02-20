@@ -1,0 +1,78 @@
+<!------------------------------------------------------------------------------------------
+	File Name: 
+		startGame.html
+	Description:
+		Starts a session with the user's information.
+-------------------------------------------------------------------------------------------->
+
+
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" type="text/css" href="style/thc-style.css">
+<link rel="icon" href="images/pirate_android_small.png">
+<title>Register</title>
+<script type="text/javascript" src="js/utilities.js"> </script>
+
+</head>
+
+<body>
+
+<script src="js/cookies.js"></script>
+
+<div id="loader"></div>
+
+<div id="container">
+
+<script>
+
+
+	var categoryUUID = fetchGetVariable("categoryUUID");
+	var categoryName = fetchGetVariable("categoryName");
+	var playerName = fetchGetVariable("firstPirateName");
+	var playerGender = fetchGetVariable("gender");
+	const APP_ID = "THC-WebApp";
+
+	var xhttp = new XMLHttpRequest();
+  	xhttp.onreadystatechange = function() {
+		if (xhttp.readyState == 4 && xhttp.status == 200) {
+			var jsonData = JSON.parse(xhttp.responseText);
+			var statusItem = jsonData.status;
+
+			if (statusItem == "OK") {
+				var sessionID = jsonData.session;
+				var numOfQuestions = jsonData.numOfQuestions;
+				setCookie(COOKIE_SESSION_ID, sessionID, 365);
+				setCookie(COOKIE_PLAYER_NAME, playerName, 365);
+				setCookie(COOKIE_CATEGORY_NAME, categoryName, 365);
+                setCookie(COOKIE_NUM_OF_QUESTIONS, numOfQuestions, 365);
+				window.location.href = "currentQuestion.html";
+			}//end if OK
+			else {
+			    var errorMessages = "";
+			    for (var i = 0; i < jsonData.errorMessages.length; i++) {
+			        errorMessages += jsonData.errorMessages[i] + "\n";
+                }
+				alert(jsonData.status + ":\n" + errorMessages);
+				window.location.href = "register.html?cuuid=" + categoryUUID + "&cname=" + categoryName;
+			}//end if not OK
+
+            //Hide the loader, display page:
+			document.getElementById("loader").style.display = "none";
+			document.getElementById("container").style.display = "block";
+
+		}//end if ready
+  	};//end if function()
+  	xhttp.open("GET", API_START + "?player=" + playerName + "&app=" + APP_ID + "&treasure-hunt-id=" + categoryUUID + "&gender=" + playerGender, true);
+  	xhttp.send();
+
+</script>
+
+</div> <!--CONTAINER-->
+
+</body>
+
+</html>
