@@ -42,6 +42,13 @@ public class Location implements Serializable {
         return longitude;
     }
 
+    /**
+     * Returns the distance between this {@link Location} and the specified lat and lng, in meters.
+     *
+     * @param latitude
+     * @param longitude
+     * @return the distance between this {@link Location} and the specified lat and lng, in meters
+     */
     public double distanceTo(final double latitude, final double longitude) {
         final double R = 6371f; // earth diameter, in Km
         final double dLat = toRad(this.latitude -latitude);
@@ -52,7 +59,7 @@ public class Location implements Serializable {
         final double a = Math.sin(dLat/2d) * Math.sin(dLat/2d) + Math.sin(dLng/2d) * Math.sin(dLng/2d) * Math.cos(latRadian1) * Math.cos(latRadian2);
         final double c = 2d * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 
-        return (float) (R * c);
+        return (float) (R * c) * 1000d;
     }
 
     private double toRad(final double n)
