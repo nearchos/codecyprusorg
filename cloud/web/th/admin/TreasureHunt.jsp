@@ -89,6 +89,7 @@
         <p><b>Name</b>: <%= treasureHunt.getName() %></p>
         <p><b>Description</b>: <%= treasureHunt.getDescription() %></p>
         <p><b>Owner Email</b>: <%= treasureHunt.getOwnerEmail() %></p>
+        <p><b>Secret Code</b>: <span style="background-color: yellow"><%= treasureHunt.getSecretCode() %></span></p>
         <p><b>Visibility</b>: <%= treasureHunt.getVisibility().name() %></p>
         <p><b>Starts On</b>: <%= treasureHunt.getStartsOnAsString() %></p>
         <p><b>Ends On</b>: <%= treasureHunt.getEndsOnAsString() %></p>
@@ -101,6 +102,15 @@
         <hr/>
 
         <p>View <a href="sessions?th-uuid=<%=treasureHunt.getUuid()%>">sessions</a></p>
+
+        <hr/>
+
+        <p>Generate Codes</p>
+
+        <form action="code-generator?code=<%=treasureHunt.getSecretCode()%>">
+            <input type="hidden" name="<%=TreasureHuntFactory.PROPERTY_UUID%>" value="<%=key%>">
+            <input type="submit" value="Generate codes" />
+        </form>
 
         <hr/>
 
@@ -121,6 +131,10 @@
                 <tr>
                     <td>Owner Email</td>
                     <td><input type="hidden" name="<%= TreasureHuntFactory.PROPERTY_OWNER_EMAIL %>" value="<%=treasureHunt.getOwnerEmail()%>" /> <%=treasureHunt.getOwnerEmail()%></td>
+                </tr>
+                <tr>
+                    <td>Secret Code</td>
+                    <td><input type="text" name="<%= TreasureHuntFactory.PROPERTY_SECRET_CODE %>" value="<%=treasureHunt.getSecretCode()%>" /> </td>
                 </tr>
                 <tr>
                     <td>Visibility</td>
@@ -416,7 +430,9 @@
     final Vector<UrlShortener> urlShorteners = UrlShortenerFactory.getAllUrlShorteners();
 %>
 <h2>Url Shorteners</h2>
+
 <p><%=urlShorteners.size()%> url shorteners</p>
+<p>Use the prefix '/th/fwd/...'</p>
 
 <table border="1">
     <tr>
@@ -432,7 +448,7 @@
     %>
     <tr>
         <td><div class="tooltip"><%=shortUuid%><span class="tooltiptext"><%=uuid%></span></div></td>
-        <td><%= urlShortener.getKey() %></td>
+        <td><a href="/th/fwd/<%= urlShortener.getKey() %>" target="_blank"><%= urlShortener.getKey() %></a></td>
         <td> <a href="<%=urlShortener.getTarget()%>" target="_blank"><%=urlShortener.getTarget()%></a></td>
         <td>
             <form action="delete-entity">
@@ -462,7 +478,7 @@
             <td><input type="text" name="<%= UrlShortenerFactory.PROPERTY_TARGET %>" /></td>
         </tr>
     </table>
-    <div><input type="submit" value="Add timed" name="addUrlShortenerButton"/></div>
+    <div><input type="submit" value="Add Url Shortener" name="addUrlShortenerButton"/></div>
     <input type="hidden" name="redirect" value="treasure-hunt?uuid=<%= treasureHunt.getUuid() %>" />
 </form>
 

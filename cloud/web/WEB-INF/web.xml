@@ -169,6 +169,15 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>CodeGenerator</servlet-name>
+        <jsp-file>/th/admin/CodeGenerator.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CodeGenerator</servlet-name>
+        <url-pattern>/th/admin/code-generator</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>LeaderboardMap</servlet-name>
         <jsp-file>/th/leaderboard/map.jsp</jsp-file>
     </servlet>

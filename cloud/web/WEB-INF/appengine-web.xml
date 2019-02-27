@@ -8,6 +8,7 @@
     <include path="/th/*"/>
     <include path="/css/*"/>
     <include path="/images/*"/>
+    <include path="/js/*"/>
     <include path="/about/**"/>
     <include path="/app/**"/>
     <include path="/2014/**"/>

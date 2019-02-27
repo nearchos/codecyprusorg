@@ -20,6 +20,7 @@ public class TreasureHuntFactory {
     public static final String PROPERTY_NAME = "th-name";
     public static final String PROPERTY_DESCRIPTION = "th-description";
     public static final String PROPERTY_OWNER_EMAIL = "th-owner-email";
+    public static final String PROPERTY_SECRET_CODE = "th-secret-code";
     public static final String PROPERTY_VISIBILITY = "th-visibility";
     public static final String PROPERTY_STARTS_ON = "th-starts-on";
     public static final String PROPERTY_ENDS_ON = "th-ends-on";
@@ -93,6 +94,7 @@ public class TreasureHuntFactory {
         treasureHuntEntity.setProperty(PROPERTY_NAME, treasureHunt.getName());
         treasureHuntEntity.setProperty(PROPERTY_DESCRIPTION, treasureHunt.getDescription());
         treasureHuntEntity.setProperty(PROPERTY_OWNER_EMAIL, treasureHunt.getOwnerEmail());
+        treasureHuntEntity.setProperty(PROPERTY_SECRET_CODE, treasureHunt.getSecretCode());
         treasureHuntEntity.setProperty(PROPERTY_VISIBILITY, treasureHunt.getVisibility().name());
         treasureHuntEntity.setProperty(PROPERTY_STARTS_ON, treasureHunt.getStartsOn());
         treasureHuntEntity.setProperty(PROPERTY_ENDS_ON, treasureHunt.getEndsOn());
@@ -113,6 +115,7 @@ public class TreasureHuntFactory {
             treasureHuntEntity.setProperty(PROPERTY_NAME, treasureHunt.getName());
             treasureHuntEntity.setProperty(PROPERTY_DESCRIPTION, treasureHunt.getDescription());
             treasureHuntEntity.setProperty(PROPERTY_OWNER_EMAIL, treasureHunt.getOwnerEmail());
+            treasureHuntEntity.setProperty(PROPERTY_SECRET_CODE, treasureHunt.getSecretCode());
             treasureHuntEntity.setProperty(PROPERTY_VISIBILITY, treasureHunt.getVisibility().name());
             treasureHuntEntity.setProperty(PROPERTY_STARTS_ON, treasureHunt.getStartsOn());
             treasureHuntEntity.setProperty(PROPERTY_ENDS_ON, treasureHunt.getEndsOn());
@@ -136,6 +139,7 @@ public class TreasureHuntFactory {
                 (String) entity.getProperty(PROPERTY_NAME),
                 (String) entity.getProperty(PROPERTY_DESCRIPTION),
                 (String) entity.getProperty(PROPERTY_OWNER_EMAIL),
+                (String) (entity.getProperty(PROPERTY_SECRET_CODE) == null ? "" : entity.getProperty(PROPERTY_SECRET_CODE)),
                 Visibility.valueOf((String) entity.getProperty(PROPERTY_VISIBILITY)),
                 (Long) entity.getProperty(PROPERTY_STARTS_ON),
                 (Long) entity.getProperty(PROPERTY_ENDS_ON),

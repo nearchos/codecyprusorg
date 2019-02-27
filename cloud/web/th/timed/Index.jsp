@@ -19,6 +19,7 @@
 
         final String titleText;
         String bodyText;
+        boolean isActiveNow = false;
 
         final String timedUuid = request.getParameter("uuid");
         final Timed timed = timedUuid == null || timedUuid.isEmpty() ? null : TimedFactory.getTimed(timedUuid);
@@ -30,7 +31,8 @@
             if(treasureHunt != null) {
                 isOwner = userService.getCurrentUser() != null && userService.getCurrentUser().getEmail().equalsIgnoreCase(treasureHunt.getOwnerEmail());
             }
-            if(treasureHunt != null && treasureHunt.isActiveNow()) {
+            isActiveNow = treasureHunt != null && treasureHunt.isActiveNow();
+            if(isActiveNow) {
                 titleText = timed.getTitleText();
                 bodyText = timed.getBodyText();
             } else {
@@ -53,7 +55,7 @@
     <%=bodyText%>
 
     <%
-        if (!signedIn) {
+        if (!signedIn && !isActiveNow) {
     %>
     <p><small><a href="<%=userService.createLoginURL(request.getRequestURL().toString())%>">admin sign in</a></small></p>
     <%

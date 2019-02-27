@@ -46,6 +46,7 @@ public class AddOrEditTreasureHuntServlet extends HttpServlet {
                 final String name = request.getParameter(TreasureHuntFactory.PROPERTY_NAME);
                 final String description = request.getParameter(TreasureHuntFactory.PROPERTY_DESCRIPTION);
                 final String ownerEmail = user.getEmail();
+                final String secretCode = request.getParameter(TreasureHuntFactory.PROPERTY_SECRET_CODE);
                 final String visibilityS = request.getParameter(TreasureHuntFactory.PROPERTY_VISIBILITY);
                 Visibility visibility = Visibility.UNLISTED;
                 try {
@@ -80,12 +81,12 @@ public class AddOrEditTreasureHuntServlet extends HttpServlet {
                 final boolean hasPrize = "on".equalsIgnoreCase(request.getParameter(TreasureHuntFactory.PROPERTY_HAS_PRIZE));
 
                 if(uuid != null && !uuid.isEmpty()) { // editing existing category
-                    final TreasureHunt treasureHunt = new TreasureHunt(uuid, name, description, ownerEmail, visibility, startsOn, endsOn, maxDuration, shuffled, requiresAuthentication, emailResults, hasPrize);
+                    final TreasureHunt treasureHunt = new TreasureHunt(uuid, name, description, ownerEmail, secretCode, visibility, startsOn, endsOn, maxDuration, shuffled, requiresAuthentication, emailResults, hasPrize);
                     TreasureHuntFactory.editTreasureHunt(treasureHunt);
                     // use ably to update treasure hunt name
                     pushAblyUpdate(uuid, name, startsOn, endsOn);
                 } else { // adding a new category
-                    final TreasureHunt treasureHunt = new TreasureHunt(name, description, ownerEmail, visibility, startsOn, endsOn, maxDuration, shuffled, requiresAuthentication, emailResults, hasPrize);
+                    final TreasureHunt treasureHunt = new TreasureHunt(name, description, ownerEmail, secretCode, visibility, startsOn, endsOn, maxDuration, shuffled, requiresAuthentication, emailResults, hasPrize);
                     final Key key = TreasureHuntFactory.addTreasureHunt(treasureHunt);
                     uuid = KeyFactory.keyToString(key);
                 }

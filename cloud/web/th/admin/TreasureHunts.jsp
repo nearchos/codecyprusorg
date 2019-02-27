@@ -53,6 +53,7 @@ You are not logged in!
             <th>Description</th>
             <th>Num Of Questions</th>
             <th>Owner Email</th>
+            <th>Secret Code</th>
             <th>Visibility</th>
             <th>Starts On</th>
             <th>Ends On</th>
@@ -80,6 +81,7 @@ You are not logged in!
             <td><%= treasureHunt.getDescription() %></td>
             <td><%= numOfQuestions %></td>
             <td><%= treasureHunt.getOwnerEmail() %></td>
+            <td><%= treasureHunt.getSecretCode() %></td> <%--todo: convert to hidden with a button to show it--%>
             <td><%= treasureHunt.getVisibility().name() %></td>
             <td style="color:<%=categoryColor%>"><%= treasureHunt.getStartsOnAsString() %></td>
             <td style="color:<%=categoryColor%>"><%= treasureHunt.getEndsOnAsString() %></td>
@@ -138,6 +140,10 @@ You are not logged in!
             <tr>
                 <td>Owner Email</td>
                 <td><%= user.getEmail() %></td>
+            </tr>
+            <tr>
+                <td>Secret Code</td>
+                <td><input type="text" name="<%= TreasureHuntFactory.PROPERTY_SECRET_CODE%>"/></td>
             </tr>
             <tr>
                 <td>Visibility</td>

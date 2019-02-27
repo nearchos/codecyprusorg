@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.logging.Logger;
 
 public class StartServlet extends HttpServlet {
@@ -27,6 +28,7 @@ public class StartServlet extends HttpServlet {
     public static final String PARAMETER_PLAYER = "player";
     public static final String PARAMETER_APP = "app";
     public static final String PARAMETER_TREASURE_HUNT_ID = "treasure-hunt-id";
+    public static final String PARAMETER_SECRET_CODE = "code";
 
     public static final Logger log = Logger.getLogger("codecyprus-th");
 
@@ -56,6 +58,7 @@ public class StartServlet extends HttpServlet {
         final String player = request.getParameter(PARAMETER_PLAYER);
         final String app = request.getParameter(PARAMETER_APP);
         final String treasureHuntId = request.getParameter(PARAMETER_TREASURE_HUNT_ID);
+        final String secretCode = request.getParameter(PARAMETER_SECRET_CODE);
 
         // check for errors/missing parameters
         if(player == null || player.trim().isEmpty()) {
@@ -80,12 +83,13 @@ public class StartServlet extends HttpServlet {
                 final Replies.ErrorReply errorReply = new Replies.ErrorReply("Could not find a treasure hunt for the specified id: " + treasureHuntId);
                 printWriter.println(gson.toJson(errorReply));
             } else {
-                if(!treasureHunt.isActiveNow()) {
+                final boolean secretKeyIsValid = secretCode != null && secretCode.equals(treasureHunt.getSecretCode()); // the secretCode enables to bypass inactive THs
+                if(!secretKeyIsValid && !treasureHunt.isActiveNow()) {
                     // parse to JSON and return errors
                     final Replies.ErrorReply errorReply = new Replies.ErrorReply("The specified treasure hunt is not active right now.");
                     printWriter.println(gson.toJson(errorReply));
                 } else {
-//                    if(treasureHunt.isRequiresAuthentication()) { /* todo handle it */ }
+//                    if(treasureHunt.isRequiresAuthentication()) { ... } // todo handle it
 
                     // ...next retrieve treasure hunt's questions
                     final ArrayList<ConfiguredQuestion> configuredQuestions = ConfiguredQuestionFactory.getConfiguredQuestionsForTreasureHunt(treasureHuntId);
@@ -97,7 +101,15 @@ public class StartServlet extends HttpServlet {
                         // prepare and create session
                         final long startTime = System.currentTimeMillis();
                         final int score = 0;
+
+                        // sort only those with distinct seq. nums. --- i.e. if 2 or more questions have the same seq. num. they are shuffled 'internally'
+                        Collections.shuffle(configuredQuestions); // prepare by shuffling fully
+                        configuredQuestions.sort(Comparator.comparing(ConfiguredQuestion::getSeqNumber));
+
+                        // get IDs in the order of the configuredQuestions list
                         final ArrayList<String> configuredQuestionsList = getIds(configuredQuestions);
+
+                        // if needed, fully shuffle again
                         if(treasureHunt.isShuffled()) {
                             Collections.shuffle(configuredQuestionsList);
                         }

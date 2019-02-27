@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Logger;
@@ -79,7 +82,7 @@ public class AnswerServlet extends HttpServlet {
                             final Replies.ErrorReply errorReply = new Replies.ErrorReply("Internal error. Could not find Question for uuid: " + configuredQuestion.getQuestionUuid());
                             printWriter.println(gson.toJson(errorReply));
                         } else {
-                            final boolean correct = processAnswer(question, answer);
+                            final boolean correct = processAnswer(session, question, answer);
                             if(!correct) { // answer is incorrect
                                 final int scoreAdjustment = configuredQuestion.getWrongScore().intValue();
                                 SessionFactory.updateSession(session, scoreAdjustment);
@@ -140,11 +143,30 @@ public class AnswerServlet extends HttpServlet {
     /** Indicates that any answer provided by player is considered correct */
     private static final String SPECIAL_ALWAYS_CORRECT = "%any%";
 
-    private boolean processAnswer(final Question question, final String answer) {
+    /** Indicates that the question must somehow match a code challenge, based on a hash of the team and a unique code handed out before the treasure hunt */
+    private static final String SPECIAL_TEAM_CODE_CHALLENGE = "%teamChallenge%";
+
+    private boolean processAnswer(final Session session, final Question question, final String answer) {
         final String correctAnswer = question.getCorrectAnswer();
 
-        if(correctAnswer.equals(SPECIAL_ALWAYS_CORRECT)) {
+        if(SPECIAL_ALWAYS_CORRECT.equals(correctAnswer)) {
             return true;
+        } else if(SPECIAL_TEAM_CODE_CHALLENGE.equalsIgnoreCase(correctAnswer)) {
+            assert session != null;
+            final String playerName = session.getPlayerName() == null ? "" : session.getPlayerName().toLowerCase().trim();
+            final String treasureHuntUUID = session.getTreasureHuntUuid();
+            final TreasureHunt treasureHunt = TreasureHuntFactory.getTreasureHunt(treasureHuntUUID);
+            // assert TreasureHunt is not null
+            assert treasureHunt != null;
+            try {
+                final String secretCode = treasureHunt.getSecretCode();
+                String code = md5(playerName + secretCode);
+                code = code.substring(code.length() > 4 ? code.length() - 4 : 0);
+                return answer.equalsIgnoreCase(code);
+            } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+                // todo log error
+                return false;
+            }
         } else {
             return answer.trim().equalsIgnoreCase(correctAnswer.trim());
         }
@@ -164,5 +186,34 @@ public class AnswerServlet extends HttpServlet {
         } catch (AblyException ae) {
             log.severe("Ably error: " + ae.errorInfo);
         }
+    }
+
+    private static String convertToHex(byte[] data) {
+        final StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < data.length; i++) {
+            int halfbyte = (data[i] >>> 4) & 0x0F;
+            int two_halfs = 0;
+            do {
+                if ((0 <= halfbyte) && (halfbyte <= 9)) {
+                    stringBuilder.append((char) ('0' + halfbyte));
+                } else {
+                    stringBuilder.append((char) ('a' + (halfbyte - 10)));
+                }
+                halfbyte = data[i] & 0x0F;
+            } while(two_halfs++ < 1);
+        }
+        return stringBuilder.toString();
+    }
+
+    public static String md5(String text, int sliceRight) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+        return md5(text).substring(text.length() - sliceRight);
+    }
+
+    public static String md5(String text) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+        final MessageDigest md = MessageDigest.getInstance("MD5");
+        byte [] md5hash = new byte[32];
+        md.update(text.getBytes("iso-8859-1"), 0, text.length());
+        md5hash = md.digest();
+        return convertToHex(md5hash);
     }
 }

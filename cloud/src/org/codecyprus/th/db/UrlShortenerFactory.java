@@ -65,6 +65,7 @@ public class UrlShortenerFactory {
         urlShortenerEntity.setProperty(PROPERTY_KEY, urlShortener.getKey());
         urlShortenerEntity.setProperty(PROPERTY_TARGET, urlShortener.getTarget());
 
+        memcacheService.put(getCacheKey(urlShortener.getKey()), urlShortener);
         return datastoreService.put(urlShortenerEntity);
     }
 
@@ -76,7 +77,7 @@ public class UrlShortenerFactory {
             urlShortenerEntity.setProperty(PROPERTY_TARGET, urlShortener.getTarget());
             datastoreService.put(urlShortenerEntity);
 
-            MemcacheServiceFactory.getMemcacheService().delete(getCacheKey(urlShortener.getKey())); // invalidate cached entry
+            memcacheService.put(getCacheKey(urlShortener.getKey()), urlShortener);
         } catch (EntityNotFoundException enfe) {
             log.severe("Could not find " + KIND + " with key: " + uuid);
         }
