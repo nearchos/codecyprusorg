@@ -44,8 +44,9 @@ public class LeaderboardWithLocationsServlet extends HttpServlet {
                 latestCoordinatesMap.put(sessionUuid, new Coordinates(location.getLatitude(), location.getLongitude()));
             }
         }
+        final boolean hasPrize = treasureHunt.isHasPrize();
         final Replies.LeaderboardWithLocationReply reply = new Replies.LeaderboardWithLocationReply(
-                true, Integer.MAX_VALUE, treasureHunt.getStartsOn(), treasureHunt.getEndsOn(), sessions, treasureHunt.getName(), latestCoordinatesMap);
+                true, Integer.MAX_VALUE, hasPrize, treasureHunt.getStartsOn(), treasureHunt.getEndsOn(), sessions, treasureHunt.getName(), latestCoordinatesMap);
         printWriter.println(gson.toJson(reply));
     }
 }

@@ -21,6 +21,7 @@ public class TestLeaderboardServlet extends HttpServlet {
 
     public static final String PARAMETER_SIZE = "size";
     public static final String PARAMETER_SORTED = "sorted";
+    public static final String PARAMETER_HAS_PRIZE = "hasPrize";
 
     public static final int TEN_MINUTES = 10 * 60 * 1000;
     public static final int DEFAULT_SIZE = 42;
@@ -46,11 +47,13 @@ public class TestLeaderboardServlet extends HttpServlet {
         }
         if(size < 0 || size > 1000) size = DEFAULT_SIZE;
         final boolean sorted = Common.checkUrlBooleanParameter(request.getParameter(PARAMETER_SORTED));
+        final boolean hasPrize = Common.checkUrlBooleanParameter(request.getParameter(PARAMETER_HAS_PRIZE));
 
         int limit = Integer.MAX_VALUE;
         final String treasureHuntName = "Test Treasure Hunt";
         final Vector<Session> sessions = getSessions(size);
-        final Replies.LeaderboardReply reply = new Replies.LeaderboardReply(sorted, limit, sessions, treasureHuntName);
+
+        final Replies.LeaderboardReply reply = new Replies.LeaderboardReply(sorted, limit, hasPrize, sessions, treasureHuntName);
         printWriter.println(gson.toJson(reply));
     }
 

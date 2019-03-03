@@ -243,14 +243,16 @@ public class Replies {
         private int numOfPlayers;
         private boolean sorted;
         private int limit;
+        private boolean hasPrize;
         private Vector<LeaderboardEntry> leaderboard;
         private String treasureHuntName;
 
-        public LeaderboardReply(final boolean sorted, final int limit, final Vector<Session> sessions, final String treasureHuntName) {
+        public LeaderboardReply(final boolean sorted, final int limit, final boolean hasPrize, final Vector<Session> sessions, final String treasureHuntName) {
             super(Status.OK);
             this.numOfPlayers = sessions.size();
             this.sorted = sorted;
             this.limit = limit;
+            this.hasPrize = hasPrize;
             this.leaderboard = new Vector<>();
             this.treasureHuntName = treasureHuntName;
             // add all entries
@@ -278,6 +280,10 @@ public class Replies {
 
         public int getLimit() {
             return limit;
+        }
+
+        public boolean isHasPrize() {
+            return hasPrize;
         }
 
         public Vector<LeaderboardEntry> getLeaderboard() {
@@ -330,17 +336,19 @@ public class Replies {
         private int numOfPlayers;
         private boolean sorted;
         private int limit;
+        private boolean hasPrize;
         private String name;
         private String treasureHuntName;
         private long startsOn;
         private long endsOn;
         private Vector<LeaderboardWithLocationEntry> leaderboard;
 
-        public LeaderboardWithLocationReply(final boolean sorted, final int limit, final long startsOn, final long endsOn, final Vector<Session> sessions, final String treasureHuntName, final Map<String,Coordinates> latestCoordinates) {
+        public LeaderboardWithLocationReply(final boolean sorted, final int limit, final boolean hasPrize, final long startsOn, final long endsOn, final Vector<Session> sessions, final String treasureHuntName, final Map<String,Coordinates> latestCoordinates) {
             super(Status.OK);
             this.numOfPlayers = sessions.size();
             this.sorted = sorted;
             this.limit = limit;
+            this.hasPrize = hasPrize;
             this.name = treasureHuntName;
             this.treasureHuntName = treasureHuntName;
             this.startsOn = startsOn;
@@ -368,6 +376,10 @@ public class Replies {
 
         public int getLimit() {
             return limit;
+        }
+
+        public boolean isHasPrize() {
+            return hasPrize;
         }
 
         public String getName() {

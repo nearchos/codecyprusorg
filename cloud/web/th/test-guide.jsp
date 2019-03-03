@@ -388,13 +388,13 @@
                         </p>
                         <div class="card card-body">
                             <div>
-                                <code>https://codecyprus.org/th/test-api/leaderboard?sorted&size=42</code>
-                                <a class="btn btn-primary" href="https://codecyprus.org/th/test-api/leaderboard?sorted&size=42" target="_blank">Try it</a>
-                                <a class="btn btn-primary" data-clipboard-text="https://codecyprus.org/th/test-api/leaderboard?sorted&size=42" data-clipboard->Copy</a>
+                                <code>https://codecyprus.org/th/test-api/leaderboard?sorted&hasPrize&size=42</code>
+                                <a class="btn btn-primary" href="https://codecyprus.org/th/test-api/leaderboard?sorted&hasPrize&size=42" target="_blank">Try it</a>
+                                <a class="btn btn-primary" data-clipboard-text="https://codecyprus.org/th/test-api/leaderboard?sorted&hasPrize&size=42" data-clipboard->Copy</a>
                             </div>
                         </div>
                         <p>
-                            The call has two parameters:
+                            The call has three parameters:
                         </p>
                         <div class="card card-body">
                             <div>
@@ -408,6 +408,13 @@
                                     <li><code><%=TestLeaderboardServlet.PARAMETER_SORTED%></code> is an <i>optional</i>
                                         parameter for specifying that the score list is to be sorted from higher to
                                         lower scores.
+                                        This value can be specified simply by its presence, i.e. no value must be set,
+                                        or using the standard key/value pair where the value is set to <code>true</code>.
+                                        By default this is set to <code>false</code> (if not present).
+                                    </li>
+                                    <li><code><%=TestLeaderboardServlet.PARAMETER_HAS_PRIZE%></code> is another
+                                        <i>optional</i> parameter for specifying whether the corresponding treasure hunt
+                                        has a prize.
                                         This value can be specified simply by its presence, i.e. no value must be set,
                                         or using the standard key/value pair where the value is set to <code>true</code>.
                                         By default this is set to <code>false</code> (if not present).

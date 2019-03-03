@@ -1,8 +1,9 @@
 var callLeaderboardSortedResult = {
     "status": "OK",
-    "numOfPlayers": 3,
+    "numOfPlayers": 5,
     "sorted": false,
     "limit": 10,
+    "hasPrize": false,
     "leaderboard": [
         {
             "player": "Lisa",
@@ -35,9 +36,10 @@ var callLeaderboardSortedResult = {
 
 var callLeaderboardUnsortedResult = {
     "status": "OK",
-    "numOfPlayers": 3,
+    "numOfPlayers": 5,
     "sorted": false,
     "limit": 10,
+    "hasPrize": false,
     "leaderboard": [
         {
             "player": "Marge",
@@ -189,7 +191,8 @@ var callListResult = {
             "maxDuration": 0,
             "shuffled": false,
             "requiresAuthentication": false,
-            "emailResults": false
+            "emailResults": false,
+            "hasPrize": false
         },
         {
             "uuid": "ag9nfmNvZGVjeXBydXNvcmdyGQsSDFRyZWFzdXJlSHVudBiAgICAvKGCCgw",
@@ -202,7 +205,8 @@ var callListResult = {
             "maxDuration": 300000,
             "shuffled": true,
             "requiresAuthentication": false,
-            "emailResults": false
+            "emailResults": false,
+            "hasPrize": false
         }
     ]
 };

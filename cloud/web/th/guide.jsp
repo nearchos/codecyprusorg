@@ -812,7 +812,7 @@
                                     <div class="tab-pane fade show active" id="call-leaderboard-sorted-result" role="tabpanel" aria-labelledby="nav-call-leaderboard-sorted-result">
                                         <pre id="call-leaderboard-sorted-result-pre"></pre>
                                     </div>
-                                    <div class="tab-pane fade show active" id="call-leaderboard-unsorted-result" role="tabpanel" aria-labelledby="nav-call-leaderboard-unsorted-result">
+                                    <div class="tab-pane fade" id="call-leaderboard-unsorted-result" role="tabpanel" aria-labelledby="nav-call-leaderboard-unsorted-result">
                                         <pre id="call-leaderboard-unsorted-result-pre"></pre>
                                     </div>
                                     <div class="tab-pane fade" id="call-leaderboard-unknown-session" role="tabpanel" aria-labelledby="nav-call-leaderboard-unknown-session">

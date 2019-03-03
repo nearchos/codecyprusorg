@@ -69,15 +69,17 @@ public class LeaderboardServlet extends HttpServlet {
                 } else {
                     treasureHunt = TreasureHuntFactory.getTreasureHunt(session.getTreasureHuntUuid());
                     assert treasureHunt != null;
+                    final boolean hasPrize = treasureHunt.isHasPrize();
                     final Vector<Session> sessions = SessionFactory.getSessionsByTreasureHuntId(session.getTreasureHuntUuid());
-                    final Replies.LeaderboardReply reply = new Replies.LeaderboardReply(sorted, limit, sessions, treasureHunt.getName());
+                    final Replies.LeaderboardReply reply = new Replies.LeaderboardReply(sorted, limit, hasPrize, sessions, treasureHunt.getName());
                     printWriter.println(gson.toJson(reply));
                 }
             } else { // treasureHuntIdSpecified thus general, treasure hunt leaderboard
                 treasureHunt = TreasureHuntFactory.getTreasureHunt(treasureHuntId);
                 assert treasureHunt != null;
+                final boolean hasPrize = treasureHunt.isHasPrize();
                 final Vector<Session> sessions = SessionFactory.getSessionsByTreasureHuntId(treasureHuntId);
-                final Replies.LeaderboardReply reply = new Replies.LeaderboardReply(sorted, limit, sessions, treasureHunt.getName());
+                final Replies.LeaderboardReply reply = new Replies.LeaderboardReply(sorted, limit, hasPrize, sessions, treasureHunt.getName());
                 printWriter.println(gson.toJson(reply));
             }
         }
