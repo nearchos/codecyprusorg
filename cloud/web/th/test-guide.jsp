@@ -246,7 +246,10 @@
                                         for the question, i.e. whether it should be <code><%=QuestionType.BOOLEAN%></code>,
                                         <code><%=QuestionType.MCQ%></code>, <code><%=QuestionType.INTEGER%></code>,
                                         <code><%=QuestionType.NUMERIC%></code> or <code><%=QuestionType.TEXT%></code>.
-                                        By default the question type is set to <code><%=QuestionType.TEXT%></code>.
+                                        You can optionally specify the special value <code>RANDOM</code> which picks a
+                                        type in random.
+                                        By default (i.e. when you do not specify a value for this) the question type is
+                                        set to <code>RANDOM</code>.
                                     </li>
                                     <li><code><%=PARAMETER_CAN_BE_SKIPPED%></code> is a boolean parameter specifying
                                         whether the corresponding question can be skipped or not.

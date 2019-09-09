@@ -18,6 +18,7 @@ public class TestQuestionServlet extends HttpServlet {
 
     public static final String PARAMETER_COMPLETED = "completed";
     public static final String PARAMETER_QUESTION_TYPE = "question-type";
+    public static final String PARAMETER_QUESTION_TYPE_RANDOM = "RANDOM";
     public static final String PARAMETER_CAN_BE_SKIPPED = "can-be-skipped";
     public static final String PARAMETER_REQUIRES_LOCATION  = "requires-location";
 
@@ -36,7 +37,9 @@ public class TestQuestionServlet extends HttpServlet {
         final String questionTypeS = request.getParameter(PARAMETER_QUESTION_TYPE);
         QuestionType questionType;
         try {
-            questionType = questionTypeS == null ? QuestionType.TEXT : QuestionType.valueOf(questionTypeS.toUpperCase().trim());
+            questionType = questionTypeS == null || PARAMETER_QUESTION_TYPE_RANDOM.equalsIgnoreCase(questionTypeS.trim()) ?
+                    QuestionType.random() :
+                    QuestionType.valueOf(questionTypeS.toUpperCase().trim());
         } catch (IllegalArgumentException iae) {
             questionType = QuestionType.TEXT; // default value
         }
