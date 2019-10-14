@@ -251,6 +251,12 @@
                     The essence of the API is the various function calls available to the clients. This section
                     describes the available calls, their semantics, and the expected returned data.
                 </p>
+                <p>
+                    A typical flow of using the API is shown in this flow chart:
+                </p>
+                <p>
+                    <img src="/th/thc-api.png" alt="Flow chart showing typical use of the Treasure Hunt API"/>
+                </p>
 
                 <a name="list"></a>
                 <div style="height: 58px;"></div>
