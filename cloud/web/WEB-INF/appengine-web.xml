@@ -17,6 +17,7 @@
     <include path="/2017/**"/>
     <include path="/2018/**"/>
     <include path="/2019/**"/>
+    <include path="/2020/**"/>
   </resource-files>
 
 </appengine-web-app>

@@ -67,8 +67,8 @@ public class TestLeaderboardServlet extends HttpServlet {
             sessions.add(new Session(
                     UUID.randomUUID().toString(),
                     treasureHunUUID,
-                    "player-" + i,
-                    "app-" + i,
+                    randomName() + "-" + i,
+                    randomColor() + "-app-" + i,
                     commonStartTime,
                     commonStartTime + TEN_MINUTES / 2 - random.nextInt(TEN_MINUTES / 2), // end time is random around start time plus 5 mins
                     random.nextInt(MAX_SCORE),
@@ -82,5 +82,19 @@ public class TestLeaderboardServlet extends HttpServlet {
 
     private boolean flipCoin() {
         return random.nextBoolean();
+    }
+
+    private static final String [] NAMES = { "Anna", "Bob", "Christina", "David", "Eva", "Frank", "Georgia", "Howard",
+            "Io", "Jack", "Kelly", "Leonard", "Mariza", "Natalie", "Oratio", "Peggy", "Quentin", "Rachel", "Sheldon",
+            "Tina", "Uberto", "Virginia", "Wallace", "Xena", "Yiannis", "Zabrina" };
+
+    private static String randomName() {
+        return NAMES[random.nextInt(NAMES.length)];
+    }
+
+    private static final String [] COLORS = { "black", "white", "red", "green", "blue", "yellow", "purple", "pink", "brown", "orange" };
+
+    private static String randomColor() {
+        return COLORS[random.nextInt(COLORS.length)];
     }
 }
