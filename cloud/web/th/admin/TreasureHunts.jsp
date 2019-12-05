@@ -85,7 +85,10 @@ You are not logged in!
             <td><%= treasureHunt.getVisibility().name() %></td>
             <td style="color:<%=categoryColor%>"><%= treasureHunt.getStartsOnAsString() %></td>
             <td style="color:<%=categoryColor%>"><%= treasureHunt.getEndsOnAsString() %></td>
-            <td><%= String.format("%f seconds", treasureHunt.getMaxDuration()/1000d) %></td>
+            <td>
+                <%= String.format("%.1f s", treasureHunt.getMaxDuration()/1000d) %> /
+                <%= String.format("%.1f m", treasureHunt.getMaxDuration()/60000d) %>
+            </td>
             <td><%= treasureHunt.isShuffled() %></td>
             <td><%= treasureHunt.isRequiresAuthentication() %></td>
             <td><%= treasureHunt.isEmailResults() %></td>

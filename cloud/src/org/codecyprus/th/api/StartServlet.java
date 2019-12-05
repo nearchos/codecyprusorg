@@ -102,17 +102,15 @@ public class StartServlet extends HttpServlet {
                         final long startTime = System.currentTimeMillis();
                         final int score = 0;
 
-                        // sort only those with distinct seq. nums. --- i.e. if 2 or more questions have the same seq. num. they are shuffled 'internally'
-                        Collections.shuffle(configuredQuestions); // prepare by shuffling fully
-                        configuredQuestions.sort(Comparator.comparing(ConfiguredQuestion::getSeqNumber));
+                        // if needed shuffle
+                        if(treasureHunt.isShuffled()) {
+                            Collections.shuffle(configuredQuestions); // prepare by shuffling fully
+                            // sort only those with distinct seq. nums, i.e. if 2 or more questions have the same seq. num. they stay shuffled 'internally'
+                            configuredQuestions.sort(Comparator.comparing(ConfiguredQuestion::getSeqNumber));
+                        }
 
                         // get IDs in the order of the configuredQuestions list
                         final ArrayList<String> configuredQuestionsList = getIds(configuredQuestions);
-
-                        // if needed, fully shuffle again
-                        if(treasureHunt.isShuffled()) {
-                            Collections.shuffle(configuredQuestionsList);
-                        }
 
                         final long endTime = treasureHunt.getMaxDuration() > 0 ? // non-zero means each player gets a fixed time
                             startTime + treasureHunt.getMaxDuration() : // endTime is maxDuration after start
