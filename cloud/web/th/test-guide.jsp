@@ -290,7 +290,7 @@
                             </div>
                         </div>
                         <p>
-                            The call has two parameters:
+                            The call has three parameters:
                         </p>
                         <div class="card card-body">
                             <div>
@@ -308,6 +308,14 @@
                                         This value can be specified simply by its presence, i.e. no value must be set,
                                         or using the standard key/value pair where the value is set to <code>true</code>.
                                         By default this is set to <code>false</code> (if not present).
+                                    </li>
+                                    <li>
+                                        <code><%=TestAnswerServlet.PARAMETER_EXPIRED%></code> is a boolean parameter
+                                        specifying whether the corresponding session has expired (i.e. run out of time).
+                                        When set, the reply is an error message (setting the
+                                        <code><%=TestAnswerServlet.PARAMETER_CORRECT%></code> and/or the
+                                        <code><%=TestAnswerServlet.PARAMETER_COMPLETED%></code> parameters is ignored
+                                        when the <code><%=TestAnswerServlet.PARAMETER_EXPIRED%></code> parameter is set.
                                     </li>
                                 </ul>
                             </div>
@@ -343,8 +351,10 @@
                                 <ul>
                                     <li>
                                         <code><%=TestScoreServlet.PARAMETER_SCORE%></code> is used to specify the
-                                        numerical value to be returned. If invalid or negative, then a default value of
-                                        42 is returned.
+                                        numerical value to be returned.
+                                        If skipped or invalid, then a default value of <code><%=TestScoreServlet.DEFAULT_SCORE%></code> is returned.
+                                        If less than the minimum value <code><%=TestScoreServlet.MIN_SCORE%></code> then it is set to that minimum value.
+                                        Similarly, if more than the maximum value <code><%=TestScoreServlet.MAX_SCORE%></code> then it is set to that maximum value.
                                     </li>
                                     <li>
                                         <code><%=TestScoreServlet.PARAMETER_COMPLETED%></code> is an optional parameter

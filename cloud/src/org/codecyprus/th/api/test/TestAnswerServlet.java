@@ -17,6 +17,7 @@ public class TestAnswerServlet extends HttpServlet {
 
     public static final String PARAMETER_CORRECT = "correct";
     public static final String PARAMETER_COMPLETED = "completed";
+    public static final String PARAMETER_EXPIRED = "expired";
 
     public static final Logger log = Logger.getLogger("codecyprus-test-th");
 
@@ -29,11 +30,18 @@ public class TestAnswerServlet extends HttpServlet {
 
         final boolean correct = Common.checkUrlBooleanParameter(request.getParameter(PARAMETER_CORRECT));
         final boolean completed = Common.checkUrlBooleanParameter(request.getParameter(PARAMETER_COMPLETED));
+        final boolean expired = Common.checkUrlBooleanParameter(request.getParameter(PARAMETER_EXPIRED));
 
         final String message = correct ? "Correct answer, well done!" : "Wrong answer, try again.";
         final int scoreAdjustment = correct ? 10: -3;
 
         final Replies.AnswerReply reply = new Replies.AnswerReply(correct, completed, message, scoreAdjustment);
-        printWriter.println(gson.toJson(reply));
+        final Replies.ErrorReply errorReply = new Replies.ErrorReply("Finished session. The specified session has run out of time.");
+
+        if(expired) {
+            printWriter.println(gson.toJson(errorReply));
+        } else {
+            printWriter.println(gson.toJson(reply));
+        }
     }
 }

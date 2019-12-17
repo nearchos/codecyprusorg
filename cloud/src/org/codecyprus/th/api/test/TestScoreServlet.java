@@ -21,6 +21,8 @@ public class TestScoreServlet extends HttpServlet {
     public static final String PARAMETER_ERROR = "error";
 
     public static final int DEFAULT_SCORE = 42;
+    public static final int MIN_SCORE = -1000;
+    public static final int MAX_SCORE = +1000;
 
     public static final Logger log = Logger.getLogger("codecyprus-test-th");
 
@@ -38,7 +40,8 @@ public class TestScoreServlet extends HttpServlet {
         } catch (NumberFormatException nfe) {
             score = DEFAULT_SCORE;
         }
-        if(score < 0) score = DEFAULT_SCORE;
+        if(score < MIN_SCORE) score = MIN_SCORE;
+        if(score > MAX_SCORE) score = MAX_SCORE;
         final boolean completed = Common.checkUrlBooleanParameter(request.getParameter(PARAMETER_COMPLETED));
         final boolean finished = Common.checkUrlBooleanParameter(request.getParameter(PARAMETER_FINISHED));
         final boolean error = Common.checkUrlBooleanParameter(request.getParameter(PARAMETER_ERROR));
