@@ -84,6 +84,7 @@ public class UrlShortenerFactory {
     }
 
     static private UrlShortener getFromEntity(final Entity entity) {
+        if(entity == null) throw new IllegalArgumentException("Cannot decode null argument");
         return new UrlShortener(
                 KeyFactory.keyToString(entity.getKey()),
                 (String) entity.getProperty(PROPERTY_KEY),
