@@ -81,7 +81,10 @@ public class AddOrEditTreasureHuntServlet extends HttpServlet {
                 final boolean hasPrize = "on".equalsIgnoreCase(request.getParameter(TreasureHuntFactory.PROPERTY_HAS_PRIZE));
 
                 if(uuid != null && !uuid.isEmpty()) { // editing existing category
-                    final TreasureHunt treasureHunt = new TreasureHunt(uuid, name, description, ownerEmail, secretCode, visibility, startsOn, endsOn, maxDuration, shuffled, requiresAuthentication, emailResults, hasPrize);
+                    final TreasureHunt existingTreasureHunt = TreasureHuntFactory.getTreasureHunt(uuid);
+                    assert existingTreasureHunt != null;
+                    final String existingSalt = existingTreasureHunt.getSalt(); // must reuse existing 'salt'
+                    final TreasureHunt treasureHunt = new TreasureHunt(uuid, name, description, ownerEmail, secretCode, existingSalt, visibility, startsOn, endsOn, maxDuration, shuffled, requiresAuthentication, emailResults, hasPrize);
                     TreasureHuntFactory.editTreasureHunt(treasureHunt);
                     // use ably to update treasure hunt name
                     pushAblyUpdate(uuid, name, startsOn, endsOn);

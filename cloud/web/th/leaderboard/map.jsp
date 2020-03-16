@@ -393,9 +393,9 @@
                     return 'Unfinished';
                 }
 
-                duration = moment.duration(duration);
-                var returnStr = '';
+                duration = moment.duration(duration - this.th.start);
 
+                var returnStr = '';
                 returnStr += padWithZeroes(duration.minutes(), 2) + ":";
                 returnStr += padWithZeroes(duration.seconds(), 2) + ".";
                 returnStr += padWithZeroes(duration.milliseconds(), 3);

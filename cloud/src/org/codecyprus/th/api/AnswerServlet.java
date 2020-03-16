@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -164,7 +165,6 @@ public class AnswerServlet extends HttpServlet {
                 code = code.substring(code.length() > 4 ? code.length() - 4 : 0);
                 return answer.equalsIgnoreCase(code);
             } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
-                // todo log error
                 return false;
             }
         } else {
@@ -188,7 +188,7 @@ public class AnswerServlet extends HttpServlet {
         }
     }
 
-    private static String convertToHex(byte[] data) {
+    private static String convertToHex(byte [] data) {
         final StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < data.length; i++) {
             int halfbyte = (data[i] >>> 4) & 0x0F;
@@ -212,7 +212,7 @@ public class AnswerServlet extends HttpServlet {
     public static String md5(String text) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         final MessageDigest md = MessageDigest.getInstance("MD5");
         byte [] md5hash = new byte[32];
-        md.update(text.getBytes("iso-8859-1"), 0, text.length());
+        md.update(text.getBytes(StandardCharsets.ISO_8859_1), 0, text.length());
         md5hash = md.digest();
         return convertToHex(md5hash);
     }

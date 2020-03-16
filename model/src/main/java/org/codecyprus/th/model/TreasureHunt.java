@@ -3,6 +3,7 @@ package org.codecyprus.th.model;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
 
 public class TreasureHunt implements Serializable {
 
@@ -13,6 +14,7 @@ public class TreasureHunt implements Serializable {
     private String description;
     private String ownerEmail;
     private String secretCode; // can be null or empty
+    private String salt; // used to randomize team code / should not be modified after creation
     private Visibility visibility; // determines who can view the treasure hunt
     private long startsOn; // UTC unix timestamp (milliseconds)
     private long endsOn; // UTC unix timestamp (milliseconds)
@@ -23,15 +25,16 @@ public class TreasureHunt implements Serializable {
     private boolean hasPrize; // if true, indicates that the treasure hunt has an associated prize
 
     public TreasureHunt(String name, String description, String ownerEmail, String secretCode, Visibility visibility, long startsOn, long endsOn, long maxDuration, boolean shuffled, boolean requiresAuthentication, boolean emailResults, boolean hasPrize) {
-        this(null, name, description, ownerEmail, secretCode, visibility, startsOn, endsOn, maxDuration, shuffled, requiresAuthentication, emailResults, hasPrize);
+        this(null, name, description, ownerEmail, secretCode, UUID.randomUUID().toString(), visibility, startsOn, endsOn, maxDuration, shuffled, requiresAuthentication, emailResults, hasPrize);
     }
 
-    public TreasureHunt(String uuid, String name, String description, String ownerEmail, String secretCode, Visibility visibility, long startsOn, long endsOn, long maxDuration, boolean shuffled, boolean requiresAuthentication, boolean emailResults, boolean hasPrize) {
+    public TreasureHunt(String uuid, String name, String description, String ownerEmail, String secretCode, String salt, Visibility visibility, long startsOn, long endsOn, long maxDuration, boolean shuffled, boolean requiresAuthentication, boolean emailResults, boolean hasPrize) {
         this.uuid = uuid;
         this.name = name;
         this.description = description;
         this.ownerEmail = ownerEmail;
         this.secretCode = secretCode;
+        this.salt = salt;
         this.visibility = visibility;
         this.startsOn = startsOn;
         this.endsOn = endsOn;
@@ -64,6 +67,10 @@ public class TreasureHunt implements Serializable {
 
     public String getSecretCode() {
         return secretCode;
+    }
+
+    public String getSalt() {
+        return salt;
     }
 
     public Visibility getVisibility() {
@@ -122,8 +129,7 @@ public class TreasureHunt implements Serializable {
     }
 
     public boolean hasFinished() {
-        final long now = System.currentTimeMillis();
-        return now > endsOn;
+        return isFinished();
     }
 
     public String toString() {

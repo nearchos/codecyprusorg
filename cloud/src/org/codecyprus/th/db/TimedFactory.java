@@ -34,6 +34,16 @@ public class TimedFactory {
         return timeds;
     }
 
+    static public ArrayList<Timed> getAllTimed() {
+        final ArrayList<Timed> timeds = new ArrayList<>();
+        final Query query = new Query(KIND).addSort(PROPERTY_TREASURE_HUNT_ID);
+        final PreparedQuery preparedQuery = datastoreService.prepare(query);
+        for(final Entity entity : preparedQuery.asIterable()) {
+            timeds.add(getFromEntity(entity));
+        }
+        return timeds;
+    }
+
     static public Timed getTimed(final String uuid) {
         try {
             final Entity entity = datastoreService.get(KeyFactory.stringToKey(uuid));

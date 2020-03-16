@@ -77,6 +77,9 @@
         final TreasureHunt treasureHunt = TreasureHuntFactory.getTreasureHunt(key);
         assert treasureHunt != null;
 
+        final String salt = treasureHunt.getSalt();
+        final String shortenSalt = salt.substring(Math.max(0, salt.length()-4));
+
         final long THIRTY_MINUTES = 30L * 60L * 1000L;
 
 %>
@@ -90,6 +93,7 @@
         <p><b>Description</b>: <%= treasureHunt.getDescription() %></p>
         <p><b>Owner Email</b>: <%= treasureHunt.getOwnerEmail() %></p>
         <p><b>Secret Code</b>: <span style="background-color: yellow"><%= treasureHunt.getSecretCode() %></span></p>
+        <p><b>Salt</b>: <span class="tooltip"><%=shortenSalt%><span class="tooltiptext">'<%=salt%>'</span></span></p>
         <p><b>Visibility</b>: <%= treasureHunt.getVisibility().name() %></p>
         <p><b>Starts On</b>: <%= treasureHunt.getStartsOnAsString() %></p>
         <p><b>Ends On</b>: <%= treasureHunt.getEndsOnAsString() %></p>

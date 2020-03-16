@@ -99,7 +99,7 @@ public class Session implements Serializable {
      */
     public boolean isFinished() {
         // it is finished when it has run out of time
-        return System.currentTimeMillis() > endTime || currentConfiguredQuestionIndex >= configuredQuestionUuids.size();
+        return System.currentTimeMillis() > endTime || isCompleted();
     }
 
     @Override

@@ -46,7 +46,7 @@ You are not admin!
         assert treasureHunt != null;
 %>
 
-    <p>Code: <span style="background-color: yellow"><%=treasureHunt.getSecretCode()%></span> </p>
+    <p>Salt: <span style="background-color: yellow"><%=treasureHunt.getSalt()%></span> </p>
     <p>Prefix: <input type="text" id="prefix" value="team"></p>
     <p>Number: <input type="number" id="loops" value="10"></p></p>
     <p><button onclick="generateCodes()">Generate</button></p>
@@ -54,16 +54,25 @@ You are not admin!
     <div id="generatedCodes" style="font-family: 'Courier New'"></div>
 
 <script>
+    var colors = [ "blue", "brown", "green", "lime", "orange", "cyan", "pink", "purple", "red", "yellow" ];
+    var animals = [ "cheetah", "elephant", "fox", "giraffe", "impala", "jaguar", "lion", "ocelot", "panther", "rhino", "tiger", "zebra" ];
+
     function generateCodes() {
-        var code = '<%=treasureHunt.getSecretCode()%>';
+        var salt = '<%=treasureHunt.getSalt()%>';
         var element = document.getElementById('generatedCodes');
         var prefix = document.getElementById('prefix').value;
         var loops = document.getElementById('loops').value;
         var html = '';
         for(var i = 0; i < loops; i++) {
-            var playerName = prefix + i.toString().padStart(3, '0');
-            var hashcode = md5(playerName + code);
-            html += playerName + ', ' + hashcode.slice(-4) + '<br/>';
+            var playerName;
+            if(i < colors.length * animals.length) {
+                var quotient = Math.floor(i/animals.length);
+                playerName = colors[quotient] + "-" + animals[i % animals.length];
+            } else {
+                playerName = prefix + i.toString().padStart(3, '0');
+            }
+            var hashcode = md5(playerName + salt);
+            html += i + ', ' + playerName + ', ' + hashcode.slice(-4) + '<br/>';
         }
         element.innerHTML = html;
     }

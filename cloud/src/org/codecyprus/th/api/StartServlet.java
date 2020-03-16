@@ -113,7 +113,7 @@ public class StartServlet extends HttpServlet {
                         final ArrayList<String> configuredQuestionsList = getIds(configuredQuestions);
 
                         final long endTime = treasureHunt.getMaxDuration() > 0 ? // non-zero means each player gets a fixed time
-                            startTime + treasureHunt.getMaxDuration() : // endTime is maxDuration after start
+                            Math.min(treasureHunt.getEndsOn(), startTime + treasureHunt.getMaxDuration()) : // endTime is maxDuration after start (unless TH ends before then)
                             treasureHunt.getEndsOn(); // endTime is treasureHunt end time
 
                         final Session session = new Session(treasureHuntId, player, app, startTime, endTime, configuredQuestionsList);

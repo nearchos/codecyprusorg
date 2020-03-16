@@ -60,8 +60,9 @@ You are not logged in!
 <%
     final Vector<Question> allQuestions = QuestionFactory.getQuestions(true);
     for(final Question sharedQuestion : allQuestions) {
+        final boolean selected = configuredQuestion.getQuestionUuid().equalsIgnoreCase(sharedQuestion.getUuid());
 %>
-                        <option value="<%=sharedQuestion.getUuid()%>"> <%= sharedQuestion.getQuestionText() %> (<%= sharedQuestion.getQuestionType().name()%>) with correct answer '<%= sharedQuestion.getCorrectAnswer()%>'</option>
+                        <option value="<%=sharedQuestion.getUuid()%>" <%=selected ? "selected" : ""%>> <%= sharedQuestion.getQuestionText() %> (<%= sharedQuestion.getQuestionType().name()%>) with correct answer '<%= sharedQuestion.getCorrectAnswer()%>'</option>
 <%
     }
 %>

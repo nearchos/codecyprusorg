@@ -151,6 +151,15 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>AdminTimedQuestions</servlet-name>
+        <jsp-file>/th/admin/TimedQuestions.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminTimedQuestions</servlet-name>
+        <url-pattern>/th/admin/timed-questions</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>AdminSessions</servlet-name>
         <jsp-file>/th/admin/Sessions.jsp</jsp-file>
     </servlet>

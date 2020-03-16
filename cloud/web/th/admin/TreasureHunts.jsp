@@ -16,6 +16,33 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
+
+
+<style>
+    .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted black;
+    }
+
+    .tooltip .tooltiptext {
+        visibility: hidden;
+        background-color: black;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 10px;
+
+        /* Position the tooltip */
+        position: absolute;
+        z-index: 1;
+    }
+
+    .tooltip:hover .tooltiptext {
+        visibility: visible;
+    }
+</style>
+
 <head>
     <title>Admin - List of TreasureHunts</title>
 </head>
@@ -54,6 +81,7 @@ You are not logged in!
             <th>Num Of Questions</th>
             <th>Owner Email</th>
             <th>Secret Code</th>
+            <th>Salt</th>
             <th>Visibility</th>
             <th>Starts On</th>
             <th>Ends On</th>
@@ -74,6 +102,8 @@ You are not logged in!
             final String trimmedUuid = uuid.length() > 8 ? uuid.substring(uuid.length() - 8) : uuid;
             int numOfQuestions = ConfiguredQuestionFactory.getNumOfConfiguredQuestionsForTreasureHunt(uuid);
             final String categoryColor = treasureHunt.isActiveNow() ? "green" : treasureHunt.hasFinished() ? "red" : "blue";
+            final String salt = treasureHunt.getSalt();
+            final String shortenSalt = "undefined".equalsIgnoreCase(salt) ? "undefined" : salt.substring(Math.max(0, salt.length()-4));
 %>
         <tr>
             <td><a href="treasure-hunt?uuid=<%= treasureHunt.getUuid() %>"><%=trimmedUuid%></a></td>
@@ -81,7 +111,8 @@ You are not logged in!
             <td><%= treasureHunt.getDescription() %></td>
             <td><%= numOfQuestions %></td>
             <td><%= treasureHunt.getOwnerEmail() %></td>
-            <td><%= treasureHunt.getSecretCode() %></td> <%--todo: convert to hidden with a button to show it--%>
+            <td><div class="tooltip">...<span class="tooltiptext">'<%= treasureHunt.getSecretCode() %>'</span></div></td>
+            <td><div class="tooltip"><%= shortenSalt %><span class="tooltiptext">'<%= salt %>'</span></div></td>
             <td><%= treasureHunt.getVisibility().name() %></td>
             <td style="color:<%=categoryColor%>"><%= treasureHunt.getStartsOnAsString() %></td>
             <td style="color:<%=categoryColor%>"><%= treasureHunt.getEndsOnAsString() %></td>
