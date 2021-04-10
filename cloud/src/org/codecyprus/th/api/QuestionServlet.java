@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import org.codecyprus.th.db.ConfiguredQuestionFactory;
 import org.codecyprus.th.db.QuestionFactory;
 import org.codecyprus.th.db.SessionFactory;
+import org.codecyprus.th.db.TreasureHuntFactory;
 import org.codecyprus.th.model.*;
 
 import javax.servlet.http.HttpServlet;
@@ -18,6 +19,7 @@ import java.util.logging.Logger;
 public class QuestionServlet extends HttpServlet {
 
     public static final String PARAMETER_SESSION = "session";
+    public static final String PARAMETER_SECRET_CODE = "code";
 
     public static final Logger log = Logger.getLogger("codecyprus-th");
 
@@ -30,6 +32,7 @@ public class QuestionServlet extends HttpServlet {
         final PrintWriter printWriter = response.getWriter();
 
         final String sessionId = request.getParameter(PARAMETER_SESSION);
+        final String secretCode = request.getParameter(PARAMETER_SECRET_CODE);
 
         if(sessionId == null || sessionId.trim().isEmpty()) {
             // check for errors/missing parameters
@@ -42,32 +45,39 @@ public class QuestionServlet extends HttpServlet {
                 final Replies.ErrorReply errorReply = new Replies.ErrorReply("Unknown session. The specified session ID could not be found.");
                 printWriter.println(gson.toJson(errorReply));
             } else {
-                final ArrayList<String> configuredQuestionUuids = session.getConfiguredQuestionUuids();
-                final int numOfQuestions = configuredQuestionUuids.size();
-                final int currentConfiguredQuestionIndex = session.getCurrentConfiguredQuestionIndex().intValue();
-                if(currentConfiguredQuestionIndex >= numOfQuestions) {
-                    final Replies.QuestionReply reply = new Replies.QuestionReply(true, "No more unanswered questions", QuestionType.TEXT, false, false, numOfQuestions, currentConfiguredQuestionIndex, 0, 0, 0);
-                    printWriter.println(gson.toJson(reply));
+                // first retrieve corresponding treasure hunt...
+                final TreasureHunt treasureHunt = TreasureHuntFactory.getTreasureHunt(session.getTreasureHuntUuid());
+                final boolean secretKeyIsValid = secretCode != null && treasureHunt != null && secretCode.equals(treasureHunt.getSecretCode()); // the secretCode enables to bypass inactive THs
+                if (!session.isStarted() && !secretKeyIsValid) {
+                    final Replies.ErrorReply errorReply = new Replies.ErrorReply("This Treasure Hunt has not started yet.");
+                    printWriter.println(gson.toJson(errorReply));
                 } else {
-                    final String currentConfiguredQuestionUuid = configuredQuestionUuids.get(currentConfiguredQuestionIndex);
-                    final ConfiguredQuestion configuredQuestion = ConfiguredQuestionFactory.getConfiguredQuestion(currentConfiguredQuestionUuid);
-
-                    if(configuredQuestion == null) {
-                        final Replies.ErrorReply errorReply = new Replies.ErrorReply("Internal error. Could not find ConfiguredQuestion for uuid: " + currentConfiguredQuestionUuid);
-                        printWriter.println(gson.toJson(errorReply));
+                    final ArrayList<String> configuredQuestionUuids = session.getConfiguredQuestionUuids();
+                    final int numOfQuestions = configuredQuestionUuids.size();
+                    final int currentConfiguredQuestionIndex = session.getCurrentConfiguredQuestionIndex().intValue();
+                    if(currentConfiguredQuestionIndex >= numOfQuestions) {
+                        final Replies.QuestionReply reply = new Replies.QuestionReply(true, "No more unanswered questions", QuestionType.TEXT, false, false, numOfQuestions, currentConfiguredQuestionIndex, 0, 0, 0);
+                        printWriter.println(gson.toJson(reply));
                     } else {
-                            final Question question = QuestionFactory.getQuestion(configuredQuestion.getQuestionUuid());
-                        if(question == null) {
-                            final Replies.ErrorReply errorReply = new Replies.ErrorReply("Internal error. Could not find Question for uuid: " + configuredQuestion.getQuestionUuid());
+                        final String currentConfiguredQuestionUuid = configuredQuestionUuids.get(currentConfiguredQuestionIndex);
+                        final ConfiguredQuestion configuredQuestion = ConfiguredQuestionFactory.getConfiguredQuestion(currentConfiguredQuestionUuid);
+
+                        if(configuredQuestion == null) {
+                            final Replies.ErrorReply errorReply = new Replies.ErrorReply("Internal error. Could not find ConfiguredQuestion for uuid: " + currentConfiguredQuestionUuid);
                             printWriter.println(gson.toJson(errorReply));
                         } else {
-                            final Replies.QuestionReply reply = new Replies.QuestionReply(false, question.getQuestionText(), question.getQuestionType(), configuredQuestion.isCanBeSkipped(), configuredQuestion.isLocationRelevant(), numOfQuestions, currentConfiguredQuestionIndex, configuredQuestion.getCorrectScore(), configuredQuestion.getWrongScore(), configuredQuestion.getSkipScore());
-                            printWriter.println(gson.toJson(reply));
+                            final Question question = QuestionFactory.getQuestion(configuredQuestion.getQuestionUuid());
+                            if(question == null) {
+                                final Replies.ErrorReply errorReply = new Replies.ErrorReply("Internal error. Could not find Question for uuid: " + configuredQuestion.getQuestionUuid());
+                                printWriter.println(gson.toJson(errorReply));
+                            } else {
+                                final Replies.QuestionReply reply = new Replies.QuestionReply(false, question.getQuestionText(), question.getQuestionType(), configuredQuestion.isCanBeSkipped(), configuredQuestion.isLocationRelevant(), numOfQuestions, currentConfiguredQuestionIndex, configuredQuestion.getCorrectScore(), configuredQuestion.getWrongScore(), configuredQuestion.getSkipScore());
+                                printWriter.println(gson.toJson(reply));
+                            }
                         }
                     }
                 }
             }
         }
-
     }
 }

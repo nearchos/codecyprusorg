@@ -128,6 +128,17 @@ public class TreasureHunt implements Serializable {
         return now >= startsOn && now <= endsOn;
     }
 
+    public static final long ONE_HOUR = 60L * 60 * 1000;
+
+    /**
+     * Used to test if the user can register to a treasure hunt (i.e. up to 60 minutes before  the time it starts)
+     * @return
+     */
+    public boolean hasOpenedForRegistration() {
+        final long now = System.currentTimeMillis();
+        return now >= startsOn - ONE_HOUR;
+    }
+
     public boolean hasFinished() {
         return isFinished();
     }

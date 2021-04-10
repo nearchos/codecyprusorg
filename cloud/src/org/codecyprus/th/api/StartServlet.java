@@ -84,7 +84,7 @@ public class StartServlet extends HttpServlet {
                 printWriter.println(gson.toJson(errorReply));
             } else {
                 final boolean secretKeyIsValid = secretCode != null && secretCode.equals(treasureHunt.getSecretCode()); // the secretCode enables to bypass inactive THs
-                if(!secretKeyIsValid && !treasureHunt.isActiveNow()) {
+                if((!secretKeyIsValid) && (!treasureHunt.hasOpenedForRegistration())) {
                     // parse to JSON and return errors
                     final Replies.ErrorReply errorReply = new Replies.ErrorReply("The specified treasure hunt is not active right now.");
                     printWriter.println(gson.toJson(errorReply));

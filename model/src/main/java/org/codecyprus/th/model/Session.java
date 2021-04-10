@@ -97,6 +97,14 @@ public class Session implements Serializable {
     /**
      * @return true iff it is finished when it has run out of time
      */
+    public boolean isStarted() {
+        // it is finished when it has run out of time
+        return System.currentTimeMillis() < startTime;
+    }
+
+    /**
+     * @return true iff it is finished when it has run out of time
+     */
     public boolean isFinished() {
         // it is finished when it has run out of time
         return System.currentTimeMillis() > endTime || isCompleted();

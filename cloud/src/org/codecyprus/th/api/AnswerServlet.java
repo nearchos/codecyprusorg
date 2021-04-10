@@ -25,6 +25,7 @@ public class AnswerServlet extends HttpServlet {
 
     public static final String PARAMETER_SESSION = "session";
     public static final String PARAMETER_ANSWER = "answer";
+    public static final String PARAMETER_SECRET_CODE = "code";
 
     public static final long TIME_THRESHOLD = 2L * 60 * 1000; // 2 minutes
 
@@ -42,6 +43,7 @@ public class AnswerServlet extends HttpServlet {
 
         final String sessionUuid = request.getParameter(PARAMETER_SESSION);
         final String answer = request.getParameter(PARAMETER_ANSWER);
+        final String secretCode = request.getParameter(PARAMETER_SECRET_CODE);
 
         if(sessionUuid == null || sessionUuid.trim().isEmpty()) {
             errorMessages.add("Missing or empty parameter: " + PARAMETER_SESSION);
@@ -64,53 +66,72 @@ public class AnswerServlet extends HttpServlet {
                 if (session.isCompleted()) {
                     final Replies.ErrorReply errorReply = new Replies.ErrorReply("Completed session. The specified session has no more unanswered questions.");
                     printWriter.println(gson.toJson(errorReply));
-                } else if (session.isFinished()) {
-                    final Replies.ErrorReply errorReply = new Replies.ErrorReply("Finished session. The specified session has run out of time.");
-                    printWriter.println(gson.toJson(errorReply));
                 } else {
-                    final ArrayList<String> configuredQuestionUuids = session.getConfiguredQuestionUuids();
-                    final int currentConfiguredQuestionIndex = session.getCurrentConfiguredQuestionIndex().intValue();
-
-                    final String currentConfiguredQuestionUuid = configuredQuestionUuids.get(currentConfiguredQuestionIndex);
-                    final ConfiguredQuestion configuredQuestion = ConfiguredQuestionFactory.getConfiguredQuestion(currentConfiguredQuestionUuid);
-
-                    if(configuredQuestion == null) {
-                        final Replies.ErrorReply errorReply = new Replies.ErrorReply("Internal error. Could not find ConfiguredQuestion for uuid: " + currentConfiguredQuestionUuid);
+                    // first retrieve corresponding treasure hunt...
+                    final TreasureHunt treasureHunt = TreasureHuntFactory.getTreasureHunt(session.getTreasureHuntUuid());
+                    final boolean secretKeyIsValid = secretCode != null && treasureHunt != null && secretCode.equals(treasureHunt.getSecretCode()); // the secretCode enables to bypass inactive THs
+                    if (!session.isStarted() && !secretKeyIsValid) {
+                        final Replies.ErrorReply errorReply = new Replies.ErrorReply("This Treasure Hunt has not started yet.");
                         printWriter.println(gson.toJson(errorReply));
                     } else {
-                        final Question question = QuestionFactory.getQuestion(configuredQuestion.getQuestionUuid());
-                        if(question == null) {
-                            final Replies.ErrorReply errorReply = new Replies.ErrorReply("Internal error. Could not find Question for uuid: " + configuredQuestion.getQuestionUuid());
+                        if (!session.isStarted()) {
+                            final Replies.ErrorReply errorReply = new Replies.ErrorReply("This Treasure Hunt has not started yet.");
+                            printWriter.println(gson.toJson(errorReply));
+                        } else if (session.isFinished()) {
+                            final Replies.ErrorReply errorReply = new Replies.ErrorReply("Finished session. The specified session has run out of time.");
                             printWriter.println(gson.toJson(errorReply));
                         } else {
-                            final boolean correct = processAnswer(session, question, answer);
-                            if(!correct) { // answer is incorrect
-                                final int scoreAdjustment = configuredQuestion.getWrongScore().intValue();
-                                SessionFactory.updateSession(session, scoreAdjustment);
-                                // todo add to history
-                                final Replies.AnswerReply reply = new Replies.AnswerReply(false, false, "Wrong answer: " + answer, scoreAdjustment);
-                                printWriter.println(gson.toJson(reply));
-                            } else { // answer is correct
-                                // first check if location is relevant
-                                if(configuredQuestion.isLocationRelevant()) {
-                                    final Location location = LocationFactory.getLatestLocation(sessionUuid); // get latest location fingerprint
-                                    if(location == null) { // no location fingerprints in record
-                                        final Replies.AnswerReply reply = new Replies.AnswerReply(false, false, "This is a location-sensitive question but no location records are found for player: " + session.getPlayerName(), 0);
+                            final ArrayList<String> configuredQuestionUuids = session.getConfiguredQuestionUuids();
+                            final int currentConfiguredQuestionIndex = session.getCurrentConfiguredQuestionIndex().intValue();
+
+                            final String currentConfiguredQuestionUuid = configuredQuestionUuids.get(currentConfiguredQuestionIndex);
+                            final ConfiguredQuestion configuredQuestion = ConfiguredQuestionFactory.getConfiguredQuestion(currentConfiguredQuestionUuid);
+
+                            if(configuredQuestion == null) {
+                                final Replies.ErrorReply errorReply = new Replies.ErrorReply("Internal error. Could not find ConfiguredQuestion for uuid: " + currentConfiguredQuestionUuid);
+                                printWriter.println(gson.toJson(errorReply));
+                            } else {
+                                final Question question = QuestionFactory.getQuestion(configuredQuestion.getQuestionUuid());
+                                if(question == null) {
+                                    final Replies.ErrorReply errorReply = new Replies.ErrorReply("Internal error. Could not find Question for uuid: " + configuredQuestion.getQuestionUuid());
+                                    printWriter.println(gson.toJson(errorReply));
+                                } else {
+                                    final boolean correct = processAnswer(session, question, answer);
+                                    if(!correct) { // answer is incorrect
+                                        final int scoreAdjustment = configuredQuestion.getWrongScore().intValue();
+                                        SessionFactory.updateSession(session, scoreAdjustment);
+                                        // todo add to history
+                                        final Replies.AnswerReply reply = new Replies.AnswerReply(false, false, "Wrong answer: " + answer, scoreAdjustment);
                                         printWriter.println(gson.toJson(reply));
-                                    } else if(location.getTimestamp() + TIME_THRESHOLD < System.currentTimeMillis()) { // the latest location is too old
-                                        final Replies.AnswerReply reply = new Replies.AnswerReply(false, false, "This is a location-sensitive question but there is no recent location recorded for you. Latest one is from: " + new Date(location.getTimestamp()) + ".", 0);
-                                        printWriter.println(gson.toJson(reply));
-                                    } else {
-                                        final double actualDistance = location.distanceTo(configuredQuestion.getLatitude(), configuredQuestion.getLongitude());
-                                        final double threshold = configuredQuestion.getDistanceThreshold();
-                                        if(actualDistance > threshold) {
-                                            // too far
-                                            final String formattedActualDistance = actualDistance < 1000 ?
-                                                    String.format("%d meters", (Math.round(actualDistance))) :
-                                                    String.format("%.1f kilometers", actualDistance / 1000);
-                                            final Replies.AnswerReply reply = new Replies.AnswerReply(false, false, "This is a location-sensitive question and your current location appears to be " + formattedActualDistance + " from the target which is further than the limit of " + threshold + " meters.", 0);
-                                            printWriter.println(gson.toJson(reply));
-                                        } else { // ok, location is fine
+                                    } else { // answer is correct
+                                        // first check if location is relevant
+                                        if(configuredQuestion.isLocationRelevant()) {
+                                            final Location location = LocationFactory.getLatestLocation(sessionUuid); // get latest location fingerprint
+                                            if(location == null) { // no location fingerprints in record
+                                                final Replies.AnswerReply reply = new Replies.AnswerReply(false, false, "This is a location-sensitive question but no location records are found for player: " + session.getPlayerName(), 0);
+                                                printWriter.println(gson.toJson(reply));
+                                            } else if(location.getTimestamp() + TIME_THRESHOLD < System.currentTimeMillis()) { // the latest location is too old
+                                                final Replies.AnswerReply reply = new Replies.AnswerReply(false, false, "This is a location-sensitive question but there is no recent location recorded for you. Latest one is from: " + new Date(location.getTimestamp()) + ".", 0);
+                                                printWriter.println(gson.toJson(reply));
+                                            } else {
+                                                final double actualDistance = location.distanceTo(configuredQuestion.getLatitude(), configuredQuestion.getLongitude());
+                                                final double threshold = configuredQuestion.getDistanceThreshold();
+                                                if(actualDistance > threshold) {
+                                                    // too far
+                                                    final String formattedActualDistance = actualDistance < 1000 ?
+                                                            String.format("%d meters", (Math.round(actualDistance))) :
+                                                            String.format("%.1f kilometers", actualDistance / 1000);
+                                                    final Replies.AnswerReply reply = new Replies.AnswerReply(false, false, "This is a location-sensitive question and your current location appears to be " + formattedActualDistance + " from the target which is further than the limit of " + threshold + " meters.", 0);
+                                                    printWriter.println(gson.toJson(reply));
+                                                } else { // ok, location is fine
+                                                    final int scoreAdjustment = configuredQuestion.getCorrectScore().intValue();
+                                                    final boolean completed = SessionFactory.updateSessionAndAdvance(session, scoreAdjustment);
+                                                    // todo add to history
+                                                    final Replies.AnswerReply reply = new Replies.AnswerReply(true, completed, "Well done.", scoreAdjustment);
+                                                    printWriter.println(gson.toJson(reply));
+                                                }
+                                            }
+                                        } else { // location is not relevant, so just handle this as correct answer
                                             final int scoreAdjustment = configuredQuestion.getCorrectScore().intValue();
                                             final boolean completed = SessionFactory.updateSessionAndAdvance(session, scoreAdjustment);
                                             // todo add to history
@@ -118,22 +139,16 @@ public class AnswerServlet extends HttpServlet {
                                             printWriter.println(gson.toJson(reply));
                                         }
                                     }
-                                } else { // location is not relevant, so just handle this as correct answer
-                                    final int scoreAdjustment = configuredQuestion.getCorrectScore().intValue();
-                                    final boolean completed = SessionFactory.updateSessionAndAdvance(session, scoreAdjustment);
-                                    // todo add to history
-                                    final Replies.AnswerReply reply = new Replies.AnswerReply(true, completed, "Well done.", scoreAdjustment);
-                                    printWriter.println(gson.toJson(reply));
+                                    // ably push
+                                    final Session updatedSession = SessionFactory.getSession(sessionUuid);
+                                    assert updatedSession != null;
+                                    final Location location = LocationFactory.getLatestLocation(updatedSession.getUuid());
+                                    final double latitude = location == null ? 0d : location.getLatitude();
+                                    final double longitude = location == null ? 0d : location.getLongitude();
+                                    pushAblyAnswer(updatedSession.getTreasureHuntUuid(),
+                                            new AblyUpdate(updatedSession.getUuid(), updatedSession.getAppName(), updatedSession.getPlayerName(), updatedSession.getScore(), updatedSession.getCompletionTime(), latitude, longitude));
                                 }
                             }
-                            // ably push
-                            final Session updatedSession = SessionFactory.getSession(sessionUuid);
-                            assert updatedSession != null;
-                            final Location location = LocationFactory.getLatestLocation(updatedSession.getUuid());
-                            final double latitude = location == null ? 0d : location.getLatitude();
-                            final double longitude = location == null ? 0d : location.getLongitude();
-                            pushAblyAnswer(updatedSession.getTreasureHuntUuid(),
-                                    new AblyUpdate(updatedSession.getUuid(), updatedSession.getAppName(), updatedSession.getPlayerName(), updatedSession.getScore(), updatedSession.getCompletionTime(), latitude, longitude));
                         }
                     }
                 }
