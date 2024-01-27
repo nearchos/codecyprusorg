@@ -113,9 +113,13 @@ public class TreasureHunt implements Serializable {
         return hasPrize;
     }
 
-    public boolean isNotStarted() {
+    public boolean isStarted() {
         final long now = System.currentTimeMillis();
-        return now < startsOn;
+        return startsOn < now;
+    }
+
+    public boolean isNotStarted() {
+        return !isStarted();
     }
 
     public boolean isFinished() {
@@ -125,7 +129,7 @@ public class TreasureHunt implements Serializable {
 
     public boolean isActiveNow() {
         final long now = System.currentTimeMillis();
-        return now >= startsOn && now <= endsOn;
+        return startsOn <= now && now <= endsOn;
     }
 
     public static final long ONE_HOUR = 60L * 60 * 1000;

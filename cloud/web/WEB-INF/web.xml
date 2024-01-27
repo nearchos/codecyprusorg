@@ -69,6 +69,14 @@
         <servlet-name>2020</servlet-name>
         <url-pattern>/2020</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>2024</servlet-name>
+        <jsp-file>/2024/index.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>2024</servlet-name>
+        <url-pattern>/2024</url-pattern>
+    </servlet-mapping>
 
     <servlet>
         <servlet-name>About</servlet-name>

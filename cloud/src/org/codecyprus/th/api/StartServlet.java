@@ -44,7 +44,6 @@ public class StartServlet extends HttpServlet {
      *     {@link org.codecyprus.th.model.Session}, where the player name, and the app are as specified, and the
      *     selected {@link org.codecyprus.th.model.TreasureHunt} is determined by its id.</li>
      * </ul>
-     *
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 

@@ -2,6 +2,7 @@ package org.codecyprus.th.api;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import io.ably.lib.util.Log;
 import org.codecyprus.th.db.ConfiguredQuestionFactory;
 import org.codecyprus.th.db.QuestionFactory;
 import org.codecyprus.th.db.SessionFactory;
@@ -47,9 +48,15 @@ public class QuestionServlet extends HttpServlet {
             } else {
                 // first retrieve corresponding treasure hunt...
                 final TreasureHunt treasureHunt = TreasureHuntFactory.getTreasureHunt(session.getTreasureHuntUuid());
-                final boolean secretKeyIsValid = secretCode != null && treasureHunt != null && secretCode.equals(treasureHunt.getSecretCode()); // the secretCode enables to bypass inactive THs
-                if (!session.isStarted() && !secretKeyIsValid) {
-                    final Replies.ErrorReply errorReply = new Replies.ErrorReply("This Treasure Hunt has not started yet.");
+                assert treasureHunt != null;
+                final boolean treasureHuntIsActive = treasureHunt.isActiveNow();
+                final boolean secretKeyIsValid = secretCode != null && secretCode.equals(treasureHunt.getSecretCode()); // the secretCode enables to bypass inactive THs
+                if (!treasureHuntIsActive && !secretKeyIsValid) {
+                    final String errorMessage = treasureHunt.isNotStarted() ?
+                            "This Treasure Hunt has not started yet." :
+                            treasureHunt.isFinished() ? "This Treasure Hunt has already ended." :
+                            "This Treasure Hunt is not active right now";
+                    final Replies.ErrorReply errorReply = new Replies.ErrorReply(errorMessage);
                     printWriter.println(gson.toJson(errorReply));
                 } else {
                     final ArrayList<String> configuredQuestionUuids = session.getConfiguredQuestionUuids();

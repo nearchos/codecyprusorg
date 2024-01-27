@@ -4,8 +4,11 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Logger;
 
 public class Session implements Serializable {
+
+    public static final Logger log = Logger.getLogger("codecyprus-th");
 
     private String uuid; // PK
     private String treasureHuntUuid; // FK
@@ -98,8 +101,10 @@ public class Session implements Serializable {
      * @return true iff it is finished when it has run out of time
      */
     public boolean isStarted() {
-        // it is finished when it has run out of time
-        return System.currentTimeMillis() < startTime;
+        // it is started if now is 'after' the startTime
+        final long now = System.currentTimeMillis();
+        log.info("-- startTime[" + startTime + "] < now[" + now + "] ? " + (startTime < now)); // todo delete
+        return startTime < now;
     }
 
     /**
