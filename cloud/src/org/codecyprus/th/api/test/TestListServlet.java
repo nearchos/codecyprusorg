@@ -59,6 +59,8 @@ public class TestListServlet extends HttpServlet {
                     "name-" + i,
                     "description-" + i,
                     "email-" + i + "@example.com",
+                    UUID.randomUUID().toString().substring(0, 8), // randomly generated secret code, limit to 8 chars
+                    UUID.randomUUID().toString(), // randomly generated salt
                     getRandomVisibility(),
                     System.currentTimeMillis(),
                     System.currentTimeMillis() + 3600000L,
@@ -73,8 +75,8 @@ public class TestListServlet extends HttpServlet {
         return treasureHunts;
     }
 
-    private static Random random = new Random();
-    private static Visibility [] VISIBILITY_VALUES = Visibility.values();
+    private static final Random random = new Random();
+    private static final Visibility [] VISIBILITY_VALUES = Visibility.values();
 
     private Visibility getRandomVisibility() {
         return VISIBILITY_VALUES[random.nextInt(VISIBILITY_VALUES.length)];
