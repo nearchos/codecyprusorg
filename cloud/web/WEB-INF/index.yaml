@@ -1,0 +1,33 @@
+indexes:
+- kind: TreasureHunt
+  properties:
+  - direction: asc
+    name: th-ends-on
+  - direction: asc
+    name: th-visibility
+  - direction: asc
+    name: th-starts-on
+- kind: Question
+  properties:
+  - direction: asc
+    name: q-creator-email
+  - direction: asc
+    name: q-creation-timestamp
+- kind: Question
+  properties:
+  - direction: asc
+    name: q-shared
+  - direction: asc
+    name: q-creation-timestamp
+- kind: Session
+  properties:
+  - direction: asc
+    name: s-th-id
+  - direction: asc
+    name: s-start-time
+- kind: Location
+  properties:
+  - direction: asc
+    name: l-session-uuid
+  - direction: desc
+    name: l-timestamp
